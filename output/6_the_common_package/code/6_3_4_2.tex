@@ -1,0 +1,5 @@
+\begin{minted}{typescript}
+export function invalidPipeArgumentError(type: Type<any>, value: Object) {
+  return Error(`InvalidPipeArgument: '${value}' for pipe '${stringify(type)}'`);
+}
+\end{minted}

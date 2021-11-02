@@ -1,0 +1,46 @@
+\begin{minted}{typescript}
+  start(): void {
+    const broker = this._brokerFactory.createMessageBroker(RENDERER_2_CHANNEL);
+
+    this._bus.initChannel(EVENT_2_CHANNEL);
+    this._eventDispatcher = new EventDispatcher(
+      this._bus.to(EVENT_2_CHANNEL),
+      this._serializer
+    );
+
+    const [RSO, P, CRT] = [
+      SerializerTypes.RENDER_STORE_OBJECT,
+      SerializerTypes.PRIMITIVE,
+      SerializerTypes.RENDERER_TYPE_2,
+    ];
+
+    const methods: any[][] = [
+      ['createRenderer', this.createRenderer, RSO, CRT, P],
+      ['createElement', this.createElement, RSO, P, P, P],
+      ['createComment', this.createComment, RSO, P, P],
+      ['createText', this.createText, RSO, P, P],
+      ['appendChild', this.appendChild, RSO, RSO, RSO],
+      ['insertBefore', this.insertBefore, RSO, RSO, RSO, RSO],
+      ['removeChild', this.removeChild, RSO, RSO, RSO],
+      ['selectRootElement', this.selectRootElement, RSO, P, P],
+      ['parentNode', this.parentNode, RSO, RSO, P],
+      ['nextSibling', this.nextSibling, RSO, RSO, P],
+      ['setAttribute', this.setAttribute, RSO, RSO, P, P, P],
+      ['removeAttribute', this.removeAttribute, RSO, RSO, P, P],
+      ['addClass', this.addClass, RSO, RSO, P],
+      ['removeClass', this.removeClass, RSO, RSO, P],
+      ['setStyle', this.setStyle, RSO, RSO, P, P, P],
+      ['removeStyle', this.removeStyle, RSO, RSO, P, P],
+      ['setProperty', this.setProperty, RSO, RSO, P, P],
+      ['setValue', this.setValue, RSO, RSO, P],
+      ['listen', this.listen, RSO, RSO, P, P, P],
+      ['unlisten', this.unlisten, RSO, RSO],
+      ['destroy', this.destroy, RSO],
+      ['destroyNode', this.destroyNode, RSO, P],
+    ];
+
+    methods.forEach(([name, method, ...argTypes]: any[]) => {
+      broker.registerMethod(name, argTypes, method.bind(this));
+    });
+  }
+\end{minted}

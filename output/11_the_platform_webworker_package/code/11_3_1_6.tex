@@ -1,0 +1,14 @@
+\begin{minted}{ts}
+ initChannel(channel: string, runInZone: boolean = true) {
+    if (this._channels.hasOwnProperty(channel)) {
+      throw new Error(`${channel} has already been initialized`);
+    }initChannel(channel: string, runInZone: boolean = true) {
+    if (this._channels.hasOwnProperty(channel)) {
+      throw new Error(`${channel} has already been initialized`);
+    }
+
+    const emitter = new EventEmitter(false);
+    const channelInfo = new _Channel(emitter, runInZone);
+    this._channels[channel] = channelInfo;
+  }
+\end{minted}

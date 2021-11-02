@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+  attachToZone(zone: NgZone): void {
+    this._zone = zone;
+    this._zone.runOutsideAngular(() => {
+      this._zone.onStable.subscribe({
+        next: () => {
+          this._handleOnEventDone();
+        },
+      });
+    });
+  }
+\end{minted}

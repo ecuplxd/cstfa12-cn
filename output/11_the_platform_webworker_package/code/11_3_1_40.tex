@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+@Injectable()
+export class MessageBasedRenderer2 {
+  private _eventDispatcher: EventDispatcher;
+
+  constructor(
+    private _brokerFactory: ServiceMessageBrokerFactory,
+
+    private _bus: MessageBus,
+    private _serializer: Serializer,
+    private _renderStore: RenderStore,
+    private _rendererFactory: RendererFactory2
+  ) {}
+  ..
+}
+\end{minted}

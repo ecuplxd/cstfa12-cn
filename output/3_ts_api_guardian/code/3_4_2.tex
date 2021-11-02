@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+export function generateGoldenFile(
+  entrypoint: string,
+  outFile: string,
+  options: SerializationOptions = {}
+): void {
+  const output = publicApi(entrypoint, options);
+  ensureDirectory(path.dirname(outFile));
+  fs.writeFileSync(outFile, output);
+}
+\end{minted}

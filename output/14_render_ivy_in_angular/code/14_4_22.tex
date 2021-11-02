@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+export function fn(
+  params: FnParam[],
+  body: Statement[],
+  type?: Type | null,
+  sourceSpan?: ParseSourceSpan | null,
+  name?: string | null
+): FunctionExpr {
+  return new FunctionExpr(params, body, type, sourceSpan, name);
+}
+\end{minted}

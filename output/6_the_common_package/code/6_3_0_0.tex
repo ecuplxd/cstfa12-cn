@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+// Note: This does not contain the location providers,
+// as they need some platform specific implementations to work.
+/**
+ * The module that includes all the basic Angular directives
+ * like {@link NgIf}, {@link NgForOf}, ...
+ */
+@NgModule({
+  declarations: [COMMON_DIRECTIVES, COMMON_PIPES],
+  exports: [COMMON_DIRECTIVES, COMMON_PIPES],
+  providers: [{ provide: NgLocalization, useClass: NgLocaleLocalization }],
+})
+export class CommonModule {}
+\end{minted}

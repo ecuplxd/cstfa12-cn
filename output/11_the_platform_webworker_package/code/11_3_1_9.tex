@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+  constructor(eventTarget?: EventTarget) {
+    if (eventTarget) {
+      eventTarget.addEventListener('message', (ev: MessageEvent) =>
+        this._handleMessages(ev)
+      );
+    } else {
+      // if no eventTarget is given we assume we're in a
+      // WebWorker and listen on the global scope
+      const workerScope = <EventTarget>self;
+      workerScope.addEventListener('message', (ev: MessageEvent) =>
+        this._handleMessages(ev)
+      );
+    }
+  }
+\end{minted}

@@ -1,0 +1,38 @@
+\begin{minted}{ts}
+   constructor(
+      private _zone: NgZone,
+private _console: Console,
+private _injector: Injector,
+      private _exceptionHandler: ErrorHandler,
+      private _componentFactoryResolver: ComponentFactoryResolver,
+      private _initStatus: ApplicationInitStatus) {
+
+
+this._enforceNoNewChanges = isDevMode();
+
+    this._zone.onMicrotaskEmpty.subscribe(
+        {next: () => { this._zone.run(() => { this.tick(); }); }});
+
+    const isCurrentlyStable =
+new Observable<boolean>((observer: Observer<boolean>) => {
+    });
+
+    const isStable = new Observable<boolean>((observer: Observer<boolean>)=>{
+      // Create the subscription to onStable outside the Angular Zone so that
+      // the callback is run outside the Angular Zone.
+      let stableSub: Subscription;
+      this._zone.runOutsideAngular(()
+      });
+
+      const unstableSub: Subscription = this._zone.onUnstable.subscribe();
+    });
+
+      return () => {
+        stableSub.unsubscribe();
+        unstableSub.unsubscribe();
+      };
+    });
+
+    (this as{isStable: Observable<boolean>}).isStable =
+        merge(isCurrentlyStable, share.call(isStable));
+\end{minted}

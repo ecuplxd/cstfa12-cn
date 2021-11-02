@@ -1,0 +1,15 @@
+\begin{minted}{typescript}
+  private _handleMessage(data: any): void {
+    const channel = data.channel;
+    if (this._channels.hasOwnProperty(channel)) {
+      const channelInfo = this._channels[channel];
+      if (channelInfo.runInZone) {
+        this._zone.run(() => {
+          channelInfo.emitter.emit(data.message);
+        });
+      } else {
+        channelInfo.emitter.emit(data.message);
+      }
+    }
+  }
+\end{minted}

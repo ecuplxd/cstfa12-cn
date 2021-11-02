@@ -1,0 +1,22 @@
+\begin{minted}{typescript}
+export abstract class LocationStrategy {
+  abstract path(includeHash?: boolean): string;
+  abstract prepareExternalUrl(internal: string): string;
+  abstract pushState(
+    state: any,
+    title: string,
+    url: string,
+    queryParams: string
+  ): void;
+  abstract replaceState(
+    state: any,
+    title: string,
+    url: string,
+    queryParams: string
+  ): void;
+  abstract forward(): void;
+  abstract back(): void;
+  abstract onPopState(fn: LocationChangeListener): void;
+  abstract getBaseHref(): string;
+}
+\end{minted}

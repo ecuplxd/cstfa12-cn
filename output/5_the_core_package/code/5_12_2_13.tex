@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+export abstract class ComponentRef<C> {
+  abstract get location(): ElementRef;
+  abstract get injector(): Injector;
+  abstract get instance(): C;
+  abstract get hostView(): ViewRef;
+  abstract get changeDetectorRef(): ChangeDetectorRef;
+  abstract get componentType(): Type<any>;
+  abstract destroy(): void;
+  abstract onDestroy(callback: Function): void;
+}
+\end{minted}

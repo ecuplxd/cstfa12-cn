@@ -1,0 +1,20 @@
+\begin{minted}{ts}
+  // Process the lazy routes discovered, adding then to _lazyRoutes.
+  // TODO: find a way to remove lazy routes that don't exist anymore.
+  // This will require a registry of known references to a lazy route,
+removing it when no
+  // module references it anymore.
+  private _processLazyRoutes(discoveredLazyRoutes: LazyRouteMap) {
+    Object.keys(discoveredLazyRoutes)
+      .forEach(lazyRouteKey => {
+        ..
+        if (this._JitMode ||
+  // When using Ivy and not using allowEmptyCodegenFiles,
+          // factories are not generated.
+          (this._compilerOptions.enableIvy &&
+            !this._compilerOptions.allowEmptyCodegenFiles)
+  ) {
+      modulePath = lazyRouteTSFile;
+      moduleKey = `${lazyRouteModule}${moduleName ? '#' + moduleName : ''}`;
+    } else { ..
+\end{minted}

@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+  constructor(
+    public controls: { [key: string]: AbstractControl },
+    validator: ValidatorFn = null,
+    asyncValidator: AsyncValidatorFn = null
+  ) {
+    super(validator, asyncValidator);
+    this._initObservables();
+    this._setParentForControls();
+    this.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+  }
+\end{minted}

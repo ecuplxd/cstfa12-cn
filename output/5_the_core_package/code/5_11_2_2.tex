@@ -1,0 +1,33 @@
+\begin{minted}{typescript}
+@Injectable()
+export class TestabilityRegistry {
+  _applications = new Map<any, Testability>();
+  constructor() {
+    _testabilityGetter.addToWindow(this);
+  }
+  registerApplication(token: any, testability: Testability) {
+    this._applications.set(token, testability);
+  }
+  unregisterApplication(token: any) {
+    this._applications.delete(token);
+  }
+  unregisterAllApplications() {
+    this._applications.clear();
+  }
+  getTestability(elem: any): Testability | null {
+    return this._applications.get(elem) || null;
+  }
+  getAllTestabilities(): Testability[] {
+    return Array.from(this._applications.values());
+  }
+  getAllRootElements(): any[] {
+    return Array.from(this._applications.keys());
+  }
+  findTestabilityInTree(
+    elem: Node,
+    findInAncestors: boolean = true
+  ): Testability | null {
+    ..
+  }
+}
+\end{minted}

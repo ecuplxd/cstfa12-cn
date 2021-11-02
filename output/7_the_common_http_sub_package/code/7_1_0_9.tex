@@ -1,0 +1,27 @@
+\begin{minted}{ts}
+// `HttpXsrfTokenExtractor` which retrieves the token from a cookie.
+@Injectable()
+export class HttpXsrfCookieExtractor implements HttpXsrfTokenExtractor {
+  private lastCookieString: string = '';
+  private lastToken: string|null = null;
+
+  constructor(
+      @Inject(DOCUMENT) private doc: any,
+@Inject(PLATFORM_ID) private platform: string,
+      @Inject(XSRF_COOKIE_NAME) private cookieName: string) {}
+
+  getToken(): string|null ..
+  }
+}
+
+// `HttpInterceptor` which adds an XSRF token to eligible outgoing requests.
+@Injectable()
+export class HttpXsrfInterceptor implements HttpInterceptor {
+  constructor(
+      private tokenService: HttpXsrfTokenExtractor,
+      @Inject(XSRF_HEADER_NAME) private headerName: string) {}
+  intercept(req: HttpRequest<any>, next: HttpHandler):
+Observable<HttpEvent<any>> {..
+  }
+}
+\end{minted}

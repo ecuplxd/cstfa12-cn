@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+export class FunctionExpr extends Expression {
+  constructor(
+    public params: FnParam[],
+    public statements: Statement[],
+    type?: Type | null,
+    sourceSpan?: ParseSourceSpan | null,
+    public name?: string | null
+  ) {
+    super(type, sourceSpan);
+  }
+  ...
+}
+\end{minted}

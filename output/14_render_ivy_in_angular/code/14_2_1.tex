@@ -1,0 +1,19 @@
+\begin{minted}{typescript}
+const project = {
+  root: normalize(projectRoot),
+  sourceRoot,
+  projectType: ProjectType.Application,
+  prefix: options.prefix || 'app',
+  schematics,
+  targets: {
+    build: {
+      builder: Builders.Browser,
+      options: {
+        ..
+        aot: !!options.enableIvy,
+        ..
+      }, ..
+    }, ..
+  }, ..
+};
+\end{minted}

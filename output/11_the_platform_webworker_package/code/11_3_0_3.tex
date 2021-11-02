@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+// The ng module for the worker app side.
+@NgModule({
+  providers: [
+    BROWSER_SANITIZATION_PROVIDERS,
+    Serializer,
+    { provide: DOCUMENT, useValue: null },
+    ClientMessageBrokerFactory,
+    ServiceMessageBrokerFactory,
+    WebWorkerRendererFactory2,
+    { provide: RendererFactory2, useExisting: WebWorkerRendererFactory2 },
+    { provide: ON_WEB_WORKER, useValue: true },
+    RenderStore,
+    { provide: ErrorHandler, useFactory: errorHandler, deps: [] },
+    { provide: MessageBus, useFactory: createMessageBus, deps: [NgZone] },
+    { provide: APP_INITIALIZER, useValue: setupWebWorker, multi: true },
+  ],
+  exports: [CommonModule, ApplicationModule],
+})
+export class WorkerAppModule {}
+\end{minted}

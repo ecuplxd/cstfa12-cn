@@ -1,0 +1,50 @@
+\begin{minted}{typescript}
+class ViewContainerRef_ implements ViewContainerData {
+  _embeddedViews: ViewData[] = [];
+  constructor(
+    private _view: ViewData,
+    private _elDef: NodeDef,
+    private _data: ElementData
+  ) {}
+  get element(): ElementRef {
+    return new ElementRef(this._data.renderElement);
+  }
+  get injector(): Injector {
+    return new Injector_(this._view, this._elDef);
+  }
+  get parentInjector(): Injector {
+    ..
+  }
+  get(index: number): ViewRef | null {
+    ..
+  }
+  get length(): number {
+    return this._embeddedViews.length;
+  }
+  createEmbeddedView<C>(
+    templateRef: TemplateRef<C>,
+    context?: C,
+    index?: number
+  ): EmbeddedViewRef<C> {
+    ..
+  }
+  createComponent<C>(
+    componentFactory: ComponentFactory<C>,
+    index?: number,
+    injector?: Injector,
+    projectableNodes?: any[][],
+    ngModuleRef?: NgModuleRef<any>
+  ): ComponentRef<C> {
+    ..
+  }
+  insert(viewRef: ViewRef, index?: number): ViewRef {
+    ..
+  }
+  move(viewRef: ViewRef_, currentIndex: number): ViewRef {
+    ..
+  }
+  clear(): void {
+    ..
+  }
+}
+\end{minted}

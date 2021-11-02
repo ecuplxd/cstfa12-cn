@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+  // Insert a new {@link AbstractControl} at the end of the array.
+  push(control: AbstractControl): void {
+    this.controls.push(control);
+    control.setParent(this);
+    this.updateValueAndValidity();
+  }
+
+  // Insert a new {@link AbstractControl} at the given `index` in the array.
+  insert(index: number, control: AbstractControl): void {
+    ListWrapper.insert(this.controls, index, control);
+    control.setParent(this);
+    this.updateValueAndValidity();
+  }
+
+  // Remove the control at the given `index` in the array.
+  removeAt(index: number): void {
+    ListWrapper.removeAt(this.controls, index);
+    this.updateValueAndValidity();
+  }
+\end{minted}

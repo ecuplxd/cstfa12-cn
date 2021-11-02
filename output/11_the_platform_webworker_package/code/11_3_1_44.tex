@@ -1,0 +1,39 @@
+\begin{minted}{typescript}
+export class EventDispatcher {
+  constructor(
+    private _sink: EventEmitter<any>,
+    private _serializer: Serializer
+  ) {}
+  dispatchRenderEvent(
+    element: any,
+    eventTarget: string,
+    eventName: string,
+    event: any
+  ): boolean {
+    let serializedEvent: any;
+
+    switch (event.type) {
+      ..
+      case 'keydown':
+      case 'keypress':
+      case 'keyup':
+        serializedEvent = serializeKeyboardEvent(event);
+        break;
+      ..
+      default:
+        throw new Error(eventName + ' not supported on WebWorkers');
+    }
+    this._sink.emit({
+      element: this._serializer.serialize(
+        element,
+        SerializerTypes.RENDER_STORE_OBJECT
+      ),
+      eventName: eventName,
+      eventTarget: eventTarget,
+      event: serializedEvent,
+    });
+    return false;
+  }
+  ..
+}
+\end{minted}

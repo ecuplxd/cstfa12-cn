@@ -1,0 +1,6 @@
+\begin{minted}{typescript}
+export type Transformer = (sourceFile: ts.SourceFile) => ts.SourceFile;
+export type TransformerFactory = (
+  context: ts.TransformationContext
+) => Transformer;
+\end{minted}

@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+/**
+ * LNode is an internal data structure which is used for the incremental DOM
+ * algorithm. The "L" stands for "Logical" to differentiate between `RNodes`
+ * (actual rendered DOM node) and our logical representation of DOM nodes,
+ * `Lnodes`. The data structure is optimized for speed and size.
+ *
+ * In order to be fast, all subtypes of `LNode` should have the same shape.
+ * Because size of the `LNode` matters, many fields have multiple roles
+ * depending on the `LNode` subtype.
+ */
+export interface LNode {
+  flags: LNodeFlags;
+  readonly native: RElement | RText | null | undefined;
+  readonly parent: LNode | null;
+  child: LNode | null;
+  next: LNode | null;
+  readonly data: LView | LContainer | LProjection | null;
+  readonly view: LView;
+  nodeInjector: LInjector | null;
+  queries: LQueries | null;
+  pNextOrParent: LNode | null;
+  tNode: TNode | null;
+}
+\end{minted}

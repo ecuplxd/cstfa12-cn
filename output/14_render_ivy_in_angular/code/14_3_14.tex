@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+  private calculateTransforms(
+    genFiles: Map<string, GeneratedFile> | undefined,
+    partialModules: PartialModule[] | undefined,
+    stripDecorators: Set<StaticSymbol> | undefined,
+    customTransformers?: CustomTransformers
+  ): ts.CustomTransformers {
+    ...
+    %\step{1}% if (partialModules) {
+      beforeTs.push(getAngularClassTransformerFactory(partialModules));
+      ..
+    } ..
+  }
+\end{minted}

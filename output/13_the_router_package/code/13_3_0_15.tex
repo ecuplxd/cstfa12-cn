@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+// RouterState is a tree of activated routes.
+// Every node in this tree knows about the "consumed" URL
+// segments, the extracted parameters, and the resolved data.
+export class RouterState extends Tree<ActivatedRoute> {
+  constructor(
+    root: TreeNode<ActivatedRoute>,
+    public snapshot: RouterStateSnapshot
+  ) {
+    super(root);
+    setRouterState(<RouterState>this, root);
+  }
+}
+\end{minted}

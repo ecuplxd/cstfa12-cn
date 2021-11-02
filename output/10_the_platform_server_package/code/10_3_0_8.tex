@@ -1,0 +1,20 @@
+\begin{minted}{typescript}
+@Injectable()
+export class PlatformState {
+  constructor(@Inject(DOCUMENT) private _doc: any) {}
+
+  /**
+   * Renders the current state of the platform to string.
+   */
+  renderToString(): string {
+    return serializeDocument(this._doc);
+  }
+
+  /**
+   * Returns the current DOM state.
+   */
+  getDocument(): any {
+    return this._doc;
+  }
+}
+\end{minted}

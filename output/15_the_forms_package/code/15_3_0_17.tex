@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+  markAsDirty({ onlySelf }: { onlySelf?: boolean } = {}): void {
+    onlySelf = normalizeBool(onlySelf);
+    this._pristine = false;
+    if (isPresent(this._parent) && !onlySelf) {
+      this._parent.markAsDirty({ onlySelf: onlySelf });
+    }
+  }
+\end{minted}

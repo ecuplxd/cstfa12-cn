@@ -1,0 +1,51 @@
+\begin{minted}{typescript}
+  visitEmbeddedTemplate(ast: EmbeddedTemplateAst) {
+    ...
+    // e.g. C(1, C1Template)
+    this.instruction(
+      this._creationMode,
+      ast.sourceSpan,
+      R3.containerCreate,
+      o.literal(templateIndex),
+      directivesArray,
+      o.variable(templateName)
+    );
+
+    // e.g. Cr(1)
+    this.instruction(
+      this._refreshMode,
+      ast.sourceSpan,
+      R3.containerRefreshStart,
+      o.literal(templateIndex)
+    );
+
+    // Generate directives
+    this._visitDirectives(
+      ast.directives,
+      o.variable(this.contextParameter),
+      templateIndex,
+      directiveIndexMap
+    );
+
+    // e.g. cr();
+    this.instruction(this._refreshMode, ast.sourceSpan, R3.containerRefreshEnd);
+
+    // Create the template function
+    const templateVisitor = new TemplateDefinitionBuilder(
+      this.outputCtx,
+      this.constantPool,
+      this.reflector,
+      templateContext,
+      this.bindingScope.nestedScope(),
+      this.level + 1,
+      this.ngContentSelectors,
+      contextName,
+      templateName
+    );
+    const templateFunctionExpr = templateVisitor.buildTemplateFunction(
+      ast.children,
+      ast.variables
+    );
+    this._postfix.push(templateFunctionExpr.toDeclStmt(templateName, null));
+  }
+\end{minted}

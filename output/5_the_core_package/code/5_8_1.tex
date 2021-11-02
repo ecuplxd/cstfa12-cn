@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+/**
+ * Used by `RendererFactory2` to associate custom rendering data and styles
+ * with a rendering implementation.
+ */
+export interface RendererType2 {
+  id: string;
+  encapsulation: ViewEncapsulation;
+  styles: (string | any[])[];
+  data: { [kind: string]: any };
+}
+\end{minted}

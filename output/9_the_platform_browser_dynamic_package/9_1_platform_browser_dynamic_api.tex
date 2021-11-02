@@ -1,0 +1,45 @@
+\section{Platform-Browser-Dynamic API}
+
+The exported Public API of the Platform-Browser-Dynamic package can be represented
+as:
+
+It’s index.ts has just one line:
+
+\input{9_the_platform_browser_dynamic_package/code/9_1_0.tex}
+
+and the public\_api.ts file has these lines:
+
+\input{9_the_platform_browser_dynamic_package/code/9_1_1.tex}
+
+The ./src/platform-browser-dynamic.ts file is where the exports are actually defined:
+RESOURCE\_CACHE\_PROVIDER
+Platform-Browser-Dynamic Public API
+
+\input{9_the_platform_browser_dynamic_package/code/9_1_2.tex}
+
+The
+\texttt{platformBrowserDynamic}
+const is is how applications that use the runtime
+template compiler bootstrap a platform. We will need to see how
+\texttt{INTERNAL\_BROWSER\_DYNAMIC\_PLATFORM\_PROVIDERS}
+registers the compiler with
+dependency injection (it is defined in src/platform\_providers.ts).
+
+The
+\texttt{RESOURCE\_CACHE\_PROVIDER}
+const manages a cache of downloaded resources.
+
+The
+\texttt{JitCompilerFactory}
+class creates a factory to access a just-in-time compiler.
+
+The src directory for Platform-Browser-Dynamic also contains this private export file:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser-dynamic/src/private_export.ts}
+        {<ANGULAR-MASTER>/packages/platform-browser-dynamic/src/private\_export.ts}
+\end{itemize}
+
+and it contains the following:
+
+\input{9_the_platform_browser_dynamic_package/code/9_1_3.tex}

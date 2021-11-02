@@ -1,0 +1,32 @@
+\begin{minted}{typescript}
+import * as o from '../output/output_ast';
+const CORE = '@angular/core';
+export class Identifiers {
+  /* Methods */
+  static NEW_METHOD = 'n';
+  static HOST_BINDING_METHOD = 'h';
+
+  /* Instructions */
+  static createElement: o.ExternalReference = { name: 'ɵE', moduleName: CORE };
+  static elementEnd: o.ExternalReference = { name: 'ɵe', moduleName: CORE };
+  static text: o.ExternalReference = { name: 'ɵT', moduleName: CORE };
+  static bind: o.ExternalReference = { name: 'ɵb', moduleName: CORE };
+  static bind1: o.ExternalReference = { name: 'ɵb1', moduleName: CORE };
+  static bind2: o.ExternalReference = { name: 'ɵb2', moduleName: CORE };
+  static projection: o.ExternalReference = { name: 'ɵP', moduleName: CORE };
+  static projectionDef: o.ExternalReference = { name: 'ɵpD', moduleName: CORE };
+  static injectElementRef: o.ExternalReference = {
+    name: 'ɵinjectElementRef',
+    moduleName: CORE,
+  };
+  static injectTemplateRef: o.ExternalReference = {
+    name: 'ɵinjectTemplateRef',
+    moduleName: CORE,
+  };
+  static defineComponent: o.ExternalReference = {
+    name: 'ɵdefineComponent',
+    moduleName: CORE,
+  };
+  ..
+}
+\end{minted}

@@ -1,0 +1,31 @@
+\section{Usage}
+
+It is used in the Angular build to check for changes to the Angular public API and to
+ensure that inadvertent changes to the public API are detected. Specifically, it you
+examine gulpfile.ts in the main Angular project:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/gulpfile.js}
+        {<ANGULAR-MASTER>/gulpfile.js}
+\end{itemize}
+
+you will see it has these two lines:
+
+\input{3_ts_api_guardian/code/3_1_0.tex}
+
+and when we look at:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/tools/gulp-tasks/public-api.js}
+        {<ANGULAR-MASTER>/tools/gulp-tasks/public-api.js}
+\end{itemize}
+
+we see two tasks named 'public-api:enforce' and 'public-api:update' and In here we
+see how ts-api-guardian is used, to
+1
+ensure it has not been unexpectedly changed
+and to
+2
+generate a “golden file” representing the API:
+
+\input{3_ts_api_guardian/code/3_1_1.tex}

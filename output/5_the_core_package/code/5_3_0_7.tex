@@ -1,0 +1,6 @@
+\begin{minted}{typescript}
+// A function that will be executed when a platform is initialized.
+export const PLATFORM_INITIALIZER = new InjectionToken<Array<() => void>>(
+  'Platform Initializer'
+);
+\end{minted}

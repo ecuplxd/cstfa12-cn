@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+export function enableProdMode(): void {
+  if (_runModeLocked) {
+    throw new Error('Cannot enable prod mode after platform setup.');
+  }
+  _devMode = false;
+}
+\end{minted}

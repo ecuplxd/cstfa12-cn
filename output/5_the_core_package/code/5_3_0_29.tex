@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+  static _tickScope: WtfScopeFn = wtfCreateScope('ApplicationRef#tick()');
+  private _bootstrapListeners: ((compRef: ComponentRef<any>) => void)[] = [];
+  private _views: InternalViewRef[] = [];
+  private _runningTick: boolean = false;
+  private _enforceNoNewChanges: boolean = false;
+  private _stable = true;
+\end{minted}

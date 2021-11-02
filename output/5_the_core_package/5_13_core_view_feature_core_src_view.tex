@@ -1,0 +1,30 @@
+\section{Core/View Feature (core/src/view)}
+
+The Core/View feature provides view management functionality. In Angular
+terminology, a view is an area of screen that can display content and where user
+events can be detected. A view is a bundle of elements. Views can be arranged
+hierarchically via the use of View Containers.
+
+This comment from:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/linker/view_ref.ts}
+        {<ANGULAR-MASTER>/packages/core/src/linker/view\_ref.ts}
+\end{itemize}
+
+explains the relationship between elements and views:
+
+\emph{“A View is a fundamental building block of the application UI. It is the}
+\emph{smallest grouping of elements which are created and destroyed together.}
+
+\emph{Properties of elements in a View can change, but the structure (number and}
+\emph{order) of elements in a View cannot. Changing the structure of Elements can}
+\emph{only be done by inserting, moving or removing nested Views via a}
+\emph{ViewContainerRef. Each View can contain many View Containers.”}
+
+One could say views are the heart of an Angular application. Core/View is a
+substantial feature that represents over a third of the entire Core package source
+tree.
+
+\input{5_the_core_package/5_13_0_private_exports_api.tex}
+\input{5_the_core_package/5_13_1_core_view_implementation.tex}

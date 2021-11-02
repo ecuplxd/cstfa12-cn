@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+export interface NgModule {
+  providers?: Provider[];
+  declarations?: Array<Type<any> | any[]>;
+  imports?: Array<Type<any> | ModuleWithProviders | any[]>;
+  exports?: Array<Type<any> | any[]>;
+  entryComponents?: Array<Type<any> | any[]>;
+  bootstrap?: Array<Type<any> | any[]>;
+  schemas?: Array<SchemaMetadata | any[]>;
+  id?: string;
+}
+\end{minted}

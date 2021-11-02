@@ -1,0 +1,15 @@
+\begin{minted}{typescript}
+export class DomRendererFactory2 implements RendererFactory2 {
+  private rendererByCompId = new Map<string, Renderer2>();
+  private defaultRenderer: Renderer2;
+
+  constructor(
+    private eventManager: EventManager,
+    private sharedStylesHost: DomSharedStylesHost,
+    @Inject(APP_ID) private appId: string
+  ) {
+    this.defaultRenderer = new DefaultDomRenderer2(eventManager);
+  }
+  ..
+}
+\end{minted}

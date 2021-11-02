@@ -1,0 +1,73 @@
+\usepackage{fontspec}
+\setmainfont{Linux Libertine O}
+\setsansfont{Droid Sans}
+\setmonofont{CMU Typewriter Text}
+\usepackage[showframe]{geometry}
+% \geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=3.18cm}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\titleformat{\chapter}{\color{red}\LARGE\bfseries\centering}{\thechapter :}{.5em}{}[\vspace*{1em}\titlerule]
+\titleformat{\section}{\color{red}\Large\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\color{red}\large\bfseries}{}{0pt}{}
+\usepackage{titletoc}
+\titlecontents{section}[2em]{\addvspace{2pt}\filright}{}{}{\titlerule*[8pt]{.}\contentspage}
+\titlecontents{subsection}[4em]{\addvspace{2pt}\filright}{}{}{\titlerule*[8pt]{.}\contentspage}
+% 应在 geometry 之后引入 不然页眉线不撑满整个宽度
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LO]{\color{red}\nouppercase\rightmark}
+\fancyhead[LE,RO]{\color{red}\thepage}
+\fancyhead[RE]{\color{red}\nouppercase\leftmark}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter:#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+\usepackage{xpatch}
+\xpretocmd\headrule{\color{red}}{}{\PatchFailed}
+\usepackage{xurl}
+% make te text hyphenat
+\usepackage[htt]{hyphenat}
+\usepackage{xcolor}
+\definecolor{lightgray}{rgb}{.9, .9, .9}
+\usepackage{enumitem}
+\setlist[itemize]{font=\ttfamily, itemsep=0pt, parsep=0pt}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{font={large, bf}, labelformat=empty, justification=centering}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage[all,pdf,color]{xy}
+\usepackage{rotating}
+\usepackage{float}
+\usepackage{makeidx}
+\makeindex
+
+\usepackage{hyperref}
+\hypersetup{
+  bookmarksnumbered,
+  colorlinks
+}
+\usepackage[cachedir=../_minted-main]{minted}
+% xleftmargin=20pt
+\setminted[typescript]{fontsize=\small, breaklines, linenos, bgcolor=lightgray}
+\renewcommand{\theFancyVerbLine}{\ttfamily
+  \textcolor[rgb]{0.5,0.5,1.0}{\scriptsize
+    \oldstylenums{\arabic{FancyVerbLine}}}}
+\usepackage{listings}
+\lstset{
+  backgroundcolor=\color{lightgray},
+  extendedchars=true,
+  basicstyle=\small\ttfamily,
+  showstringspaces=false,
+  showspaces=false,
+  numbers=left,
+  numberstyle=\small,
+  numbersep=9pt,
+  tabsize=2,
+  breaklines=true,
+  showtabs=false,
+  captionpos=b,
+  escapechar=\%
+}
+\newcommand\step[1]{\setlength\fboxsep{1.5pt}\colorbox{black}{\textcolor{white}{#1}}}

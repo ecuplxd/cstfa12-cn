@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+/**
+ * This module includes the providers of @angular/core that are needed
+ * to bootstrap components via `ApplicationRef`.
+ */
+@NgModule({
+  providers: [
+    ApplicationRef,
+    ApplicationInitStatus,
+    Compiler,
+    APP_ID_RANDOM_PROVIDER,
+    { provide: IterableDiffers, useFactory: _iterableDiffersFactory },
+    { provide: KeyValueDiffers, useFactory: _keyValueDiffersFactory },
+    {
+      provide: LOCALE_ID,
+      useFactory: _localeFactory,
+      deps: [[new Inject(LOCALE_ID), new Optional(), new SkipSelf()]],
+    },
+  ],
+})
+export class ApplicationModule {
+  // Inject ApplicationRef to make it eager...
+  constructor(appRef: ApplicationRef) {}
+}
+\end{minted}

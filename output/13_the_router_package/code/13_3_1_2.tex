@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+  @HostListener('click')
+  onClick(): boolean {
+    const extras = {
+      skipLocationChange: attrBoolValue(this.skipLocationChange),
+      replaceUrl: attrBoolValue(this.replaceUrl),
+    };
+    this.router.navigateByUrl(this.urlTree, extras);
+    return true;
+  }
+\end{minted}

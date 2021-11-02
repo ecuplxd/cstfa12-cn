@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+  private _dispatchEvent(message: { [key: string]: any }): void {
+    const element: WebWorkerRenderNode = this._serializer.deserialize(
+      message['element'],
+      SerializerTypes.RENDER_STORE_OBJECT
+    );
+
+    const eventName = message['eventName'];
+    const target = message['eventTarget'];
+    const event = message['event'];
+
+    if (target) {
+      this.globalEvents.dispatchEvent(
+        eventNameWithTarget(target, eventName),
+        event
+      );
+    } else {
+      element.events.dispatchEvent(eventName, event);
+    }
+  }
+\end{minted}

@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+export function detectWTF(): boolean {
+  const wtf: WTF = (global as any) /** TODO #9100 */['wtf'];
+  if (wtf) {
+    trace = wtf['trace'];
+    if (trace) {
+      events = trace['events'];
+      return true;
+    }
+  }
+  return false;
+}
+\end{minted}

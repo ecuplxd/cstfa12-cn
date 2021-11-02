@@ -1,0 +1,44 @@
+\subsection{Private Exports API}
+
+The Core/View feature is not intended to be used directly by Angular applications.
+Core/View does not export anything as part of the public API to the Core Package. As
+we have already discussed,
+\url{core/index.ts}
+describes the public API for Core, and its
+one line content exports
+\url{core/public_api.ts}
+, which in turn exports
+\url{core/src/core.ts}
+and
+this exports nothing from the view sub-directory (searching for “view” results in no
+matches).
+
+Some Core/Linker public exports are of classes which are used as base classes for
+types implemented in Core/View. In the file:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/linker.ts}
+        {<ANGULAR-MASTER>/packages/core/src/linker.ts}
+\end{itemize}
+
+Your attention is drawn to these lines:
+
+\input{5_the_core_package/code/5_13_0_0.tex}
+
+Core/View is intended to be used internally by other Angular packages. Hence we see
+its exports being defined as part of these two private export files:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/codegen_private_exports.ts}
+        {<ANGULAR-MASTER>/packages/core/src/codegen\_private\_exports.ts}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/core_private_export.ts}
+        {<ANGULAR-MASTER>/packages/core/src/core\_private\_export.ts}
+\end{itemize}
+
+The first of these has these view-related exports:
+
+\input{5_the_core_package/code/5_13_0_1.tex}
+
+The second has these:
+
+\input{5_the_core_package/code/5_13_0_2.tex}

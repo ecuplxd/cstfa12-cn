@@ -1,0 +1,50 @@
+\begin{minted}{typescript}
+  sanitize(
+    ctx: SecurityContext,
+    value: SafeValue | string | null
+  ): string | null {
+    if (value == null) return null;
+    switch (ctx) {
+      case SecurityContext.NONE:
+        return value as string;
+      case SecurityContext.HTML:
+        if (value instanceof SafeHtmlImpl)
+          return value.changingThisBreaksApplicationSecurity;
+        this.checkNotSafeValue(value, 'HTML');
+        return _sanitizeHtml(this._doc, String(value));
+      case SecurityContext.STYLE:
+        if (value instanceof SafeStyleImpl)
+          return value.changingThisBreaksApplicationSecurity;
+        this.checkNotSafeValue(value, 'Style');
+        return _sanitizeStyle(value as string);
+      case SecurityContext.SCRIPT:
+        if (value instanceof SafeScriptImpl)
+          return value.changingThisBreaksApplicationSecurity;
+        this.checkNotSafeValue(value, 'Script');
+        throw new Error('unsafe value used in a script context');
+      case SecurityContext.URL:
+        if (
+          value instanceof SafeResourceUrlImpl ||
+          value instanceof SafeUrlImpl
+        ) {
+          // Allow resource URLs in URL contexts,
+          // they are strictly more trusted.
+          return value.changingThisBreaksApplicationSecurity;
+        }
+        this.checkNotSafeValue(value, 'URL');
+        return _sanitizeUrl(String(value));
+      case SecurityContext.RESOURCE_URL:
+        if (value instanceof SafeResourceUrlImpl) {
+          return value.changingThisBreaksApplicationSecurity;
+        }
+        this.checkNotSafeValue(value, 'ResourceURL');
+        throw new Error(
+          'unsafe value used in a resource URL context (see http://g.co/ng/security#xss)'
+        );
+      default:
+        throw new Error(
+          `Unexpected SecurityContext ${ctx} (see http://g.co/ng/security#xss)`
+        );
+    }
+  }
+\end{minted}

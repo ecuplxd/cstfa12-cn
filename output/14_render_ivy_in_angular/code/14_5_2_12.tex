@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+/** The state associated with an LContainer */
+export interface LContainer {
+  nextIndex: number;
+  next: LView | LContainer | null;
+  parent: LView | null;
+  readonly views: LViewNode[];
+  renderParent: LElementNode | null;
+  readonly template: ComponentTemplate<any> | null;
+  dynamicViewCount: number;
+  queries: LQueries | null;
+}
+\end{minted}

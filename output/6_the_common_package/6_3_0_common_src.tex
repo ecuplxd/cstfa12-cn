@@ -1,0 +1,39 @@
+\subsection{common/src}
+
+The common/src directory has these sub-directories:
+
+\begin{itemize}
+  \item directives
+  \item i18n
+  \item location
+  \item pipes
+\end{itemize}
+
+and these source files:
+
+\begin{itemize}
+  \item common\_module.ts
+  \item common.ts
+  \item cookie.ts
+  \item dom\_tokens.ts
+  \item platform\_id.ts
+  \item version.ts
+\end{itemize}
+
+The common\_module.ts file defines the
+\texttt{CommonModule}
+type, which contains common
+declarations, exports and providers:
+
+\input{6_the_common_package/code/6_3_0_0.tex}
+
+dom\_tokens.ts defines the
+\texttt{DOCUMENT}
+const (note the important comment):
+
+\input{6_the_common_package/code/6_3_0_1.tex}
+
+The platform\_id.ts file contains these simple functions to determine which platform is
+in use:
+
+\input{6_the_common_package/code/6_3_0_2.tex}

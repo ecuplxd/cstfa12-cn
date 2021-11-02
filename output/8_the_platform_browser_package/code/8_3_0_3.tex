@@ -1,0 +1,32 @@
+\begin{minted}{typescript}
+/**
+ * Exports required infrastructure for all Angular apps.
+ * Included by default in all Angular apps created with the CLI
+ * `new` command.
+ * Re-exports `CommonModule` and `ApplicationModule`, making their
+ * exports and providers available to all apps.
+ *
+ * @publicApi
+ */
+@NgModule({
+  providers: BROWSER_MODULE_PROVIDERS,
+  exports: [CommonModule, ApplicationModule],
+})
+export class BrowserModule {
+  constructor(
+    @Optional()
+    @SkipSelf()
+    @Inject(BrowserModule)
+    parentModule: BrowserModule | null
+  ) {
+    if (parentModule) {
+      throw new Error(
+        `BrowserModule has already been loaded. If you need access to
+common directives such as NgIf and NgFor from a lazy loaded module, import
+CommonModule instead.`
+      );
+    }
+  }
+  ..
+}
+\end{minted}

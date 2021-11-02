@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+  public zone: Zone;
+
+  private _taskCounts: {
+    microTask: number;
+    macroTask: number;
+    eventTask: number;
+  } = { microTask: 0, macroTask: 0, eventTask: 0 };
+
+  private _parentDelegate: ZoneDelegate | null;
+\end{minted}

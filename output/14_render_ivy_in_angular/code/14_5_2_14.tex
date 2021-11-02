@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+/** Used for tracking queries (e.g. ViewChild, ContentChild). */
+export interface LQueries {
+  child(): LQueries | null;
+  addNode(node: LNode): void;
+  container(): LQueries | null;
+  enterView(newViewIndex: number): LQueries | null;
+  removeView(removeIndex: number): void;
+  track<T>(
+    queryList: QueryList<T>,
+    predicate: Type<any> | string[],
+    descend?: boolean,
+    read?: QueryReadType<T> | Type<T>
+  ): void;
+}
+\end{minted}

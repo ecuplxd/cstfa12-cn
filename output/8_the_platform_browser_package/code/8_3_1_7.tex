@@ -1,0 +1,22 @@
+\begin{minted}{typescript}
+// Predicates for use with {@link DebugElement}'s query functions.
+export class By {
+  // Match all elements.
+  static all(): Predicate<DebugElement> {
+    return (debugElement) => true;
+  }
+  // Match elements by the given CSS selector.
+  static css(selector: string): Predicate<DebugElement> {
+    return (debugElement) => {
+      return debugElement.nativeElement != null
+        ? getDOM().elementMatches(debugElement.nativeElement, selector)
+        : false;
+    };
+  }
+
+  // Match elements that have the given directive present.
+  static directive(type: Type<any>): Predicate<DebugElement> {
+    return (debugElement) => debugElement.providerTokens!.indexOf(type) !== -1;
+  }
+}
+\end{minted}

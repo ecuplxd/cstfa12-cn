@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+/**
+ * Parses a document string to a Document object.
+ */
+export function parseDocument(html: string, url = '/') {
+  let window = domino.createWindow(html, url);
+  let doc = window.document;
+  return doc;
+}
+
+/**
+ * Serializes a document to string.
+ */
+export function serializeDocument(doc: Document): string {
+  return (doc as any).serialize();
+}
+\end{minted}

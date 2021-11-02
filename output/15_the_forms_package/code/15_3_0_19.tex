@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+  get root(): AbstractControl {
+    let x: AbstractControl = this;
+    while (isPresent(x._parent)) {
+      x = x._parent;
+    }
+    return x;
+  }
+\end{minted}

@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+  reset(
+    formState: any = null,
+    { onlySelf }: { onlySelf?: boolean } = {}
+  ): void {
+    this._applyFormState(formState);
+    this.markAsPristine({ onlySelf });
+    this.markAsUntouched({ onlySelf });
+    this.setValue(this._value, { onlySelf });
+  }
+\end{minted}

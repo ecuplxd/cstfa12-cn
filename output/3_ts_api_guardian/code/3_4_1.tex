@@ -1,0 +1,14 @@
+\begin{minted}{ts}
+--help                          Show this usage message
+        --out <file>            Write golden output to file
+        --outDir <dir>          Write golden file structure to directory
+        --verify <file>         Read golden input from file
+        --verifyDir <dir>       Read golden file structure from directory
+        --rootDir <dir>         Specify the root directory of input files
+        --stripExportPattern <regexp>
+                                 Do not output exports matching the pattern
+        --allowModuleIdentifiers <identifier>
+                                 Whitelist identifier for "* as foo" imports
+        --onStabilityMissing <warn|error|none>
+                    Warn or error if an export has no stability annotation`);
+\end{minted}

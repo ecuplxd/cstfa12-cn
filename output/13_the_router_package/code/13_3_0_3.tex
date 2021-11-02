@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+export const ROUTER_PROVIDERS: Provider[] = [
+  Location,
+  { provide: UrlSerializer, useClass: DefaultUrlSerializer },
+  {
+    provide: Router,
+    useFactory: setupRouter, ..
+  },
+  ChildrenOutletContexts,
+  { provide: ActivatedRoute, useFactory: rootRoute, deps: [Router] },
+  { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
+  RouterPreloader,
+  NoPreloading,
+  PreloadAllModules,
+  { provide: ROUTER_CONFIGURATION, useValue: { enableTracing: false } },
+];
+\end{minted}

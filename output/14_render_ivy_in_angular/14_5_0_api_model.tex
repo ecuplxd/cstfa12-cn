@@ -1,0 +1,86 @@
+\subsection{API Model}
+
+There is no public API to Render3. The
+\url{Corepackage}
+contains the Render3 (and
+Render2) code. Its
+\url{index.ts}
+file just exports the contents of
+\url{public_api.ts}
+, which in
+turn exports the contents of
+\url{./src/core.ts}
+.
+
+Regarding the public API, this has one render-related line, an export of:
+
+\input{14_render_ivy_in_angular/code/14_5_0_0.tex}
+
+The
+\url{./src/render.ts}
+file exports no Render3 API. It does export the Render2 API, like
+so:
+
+\input{14_render_ivy_in_angular/code/14_5_0_1.tex}
+
+Note that Render2 is just the
+\url{./src/render/api.ts}
+file with less than 200 lines of code
+(the
+\url{core/src/render}
+sub-directory only contains that one file)- it defines the above
+types but does not contain an implementation. You can read it in full here:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render/api.ts}
+        {<ANGULAR-MASTER>/packages/core/src/render/api.ts}
+\end{itemize}
+
+Render3 does have a private API. The ./src/core.ts file contain this line:
+
+\input{14_render_ivy_in_angular/code/14_5_0_2.tex}
+
+file has this:
+
+\input{14_render_ivy_in_angular/code/14_5_0_3.tex}
+
+Private APIs are intended for use by other Angular packages and not by regular
+Angular applications. Hence the Greek theta character (‘ ’) is added as a prefix to
+ɵ
+private APIs, as in common with other such private APIs within Angular.
+
+The reason for the many very short type names is that the Angular Compiler will be
+generating lots of source code based on Render3 for your application’s Angular
+template files and it is desirable to have this as compact as possible, without the need
+to run a minifier. Typically no human reads this generated code, so compactness is
+desired rather than readability.
+
+If we examine:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render3/index.ts}
+        {<ANGULAR-MASTER>/packages/core/src/Render3/index.ts}
+\end{itemize}
+
+we see it starts by explaining the naming scheme:
+
+\input{14_render_ivy_in_angular/code/14_5_0_4.tex}
+
+Then it has a long list of exports of instructions, many with abbreviations:
+
+\input{14_render_ivy_in_angular/code/14_5_0_5.tex}
+
+Each of the one- or two-letter exports corresponds to an instruction in
+\url{.src/Render3/instructions.ts}
+. In the following diagram we give the short export name
+and the full name, which more clearly explains the intent of the instruction. We have
+seen how Core’s Render3 is being used by the compiler and compiler-cli packages:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/tree/master/packages/compiler/src/render3}
+        {<ANGULAR-MASTER>/packages/compiler/src/render3}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/transformers/r3_transform.ts}
+        {<ANGULAR-MASTER>/packages/compiler-cli/src/transformers/r3\_transform.ts}
+\end{itemize}
+
+It is not used by the Router or the platform- packages (which do use  Render2).

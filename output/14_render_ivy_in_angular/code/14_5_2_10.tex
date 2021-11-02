@@ -1,0 +1,31 @@
+\begin{minted}{typescript}
+/**
+ * `LView` stores all of the information needed to process the instructions
+ * as they are invoked from the template. Each embedded view and component
+ * view has its own `LView`. When processing a particular view, we set the
+ * `currentView` to that `LView`. When that view is done processing, the
+ * `currentView` is set back to whatever the original `currentView` was
+ * before (the parent `LView`).
+ * Keeping separate state for each view facilities view insertion / deletion,
+ * so we don't have to edit the data array based on which views are present.
+ */
+export interface LView {
+  creationMode: boolean;
+  readonly parent: LView | null;
+  readonly node: LViewNode | LElementNode;
+  readonly id: number;
+  readonly renderer: Renderer3;
+  bindingStartIndex: number | null;
+  cleanup: any[] | null;
+  lifecycleStage: LifecycleStage;
+  child: LView | LContainer | null;
+  tail: LView | LContainer | null;
+  next: LView | LContainer | null;
+  readonly data: any[];
+  tView: TView;
+  template: ComponentTemplate<{}> | null;
+  context: {} | null;
+  dynamicViewCount: number;
+  queries: LQueries | null;
+}
+\end{minted}

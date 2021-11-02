@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+  private async _createOrUpdateProgram() {
+    ..
+    if (!this.entryModule && !this._compilerOptions.enableIvy) {
+      this._warnings.push(
+        'Lazy routes discovery is not enabled. ' +
+          'Because there is neither an entryModule nor a ' +
+          'statically analyzable bootstrap code in the main file.'
+      );
+    }
+    ..
+  }
+\end{minted}

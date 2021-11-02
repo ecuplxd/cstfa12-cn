@@ -1,0 +1,18 @@
+\begin{minted}{typescript}
+export const ROUTES = new InjectionToken<Route[][]>('ROUTES');
+
+export class RouterConfigLoader {
+  constructor(
+    private loader: NgModuleFactoryLoader,
+    private compiler: Compiler,
+    private onLoadStartListener?: (r: Route) => void,
+    private onLoadEndListener?: (r: Route) => void
+  ) {}
+
+  load(parentInjector: Injector, route: Route): Observable<LoadedRouterConfig> {
+    ..
+    return new LoadedRouterConfig(flatten(module.injector.get(ROUTES)), module);
+  }
+  ..
+}
+\end{minted}

@@ -1,0 +1,18 @@
+\begin{minted}{typescript}
+@Injectable()
+export class ApplicationRef {
+  public readonly componentTypes: Type<any>[] = [];
+  public readonly components: ComponentRef<any>[] = [];
+  public readonly isStable: Observable<boolean>;
+  bootstrap<C>(
+    componentOrFactory: ComponentFactory<C> | Type<C>,
+    rootSelectorOrNode?: string | any
+  ): {};
+  tick(): void {}
+  attachView(viewRef: ViewRef): void {}
+  detachView(viewRef: ViewRef): void {}
+  get viewCount() {
+    return this._views.length;
+  }
+}
+\end{minted}

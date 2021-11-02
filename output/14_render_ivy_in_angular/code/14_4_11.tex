@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+// e.g. `template: function MyComponent_Template(_ctx, _cm) {...}`
+const templateTypeName = component.type.reference.name;
+const templateName = templateTypeName ? `${templateTypeName}_Template` : null;
+
+const templateFunctionExpression = %\step{1}% new TemplateDefinitionBuilder(
+  outputCtx,
+  outputCtx.constantPool,
+  reflector,
+  CONTEXT_NAME,
+  ROOT_SCOPE.nestedScope(),
+  0,
+  component.template!.ngContentSelectors,
+  templateTypeName,
+  templateName
+)
+  %\step{2}%
+  .buildTemplateFunction(template, []);
+definitionMapValues.push({
+  key: 'template',
+  value: templateFunctionExpression,
+  quoted: false,
+});
+\end{minted}

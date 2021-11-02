@@ -1,0 +1,23 @@
+\begin{minted}{typescript}
+// A class that reflects the state of running {@link APP_INITIALIZER}s.
+@Injectable()
+export class ApplicationInitStatus {
+  private resolve: Function;
+  private reject: Function;
+  private initialized = false;
+  public readonly donePromise: Promise<any>;
+  public readonly done = false;
+
+  constructor(
+    @Inject(APP_INITIALIZER)
+    @Optional()
+    private appInits: (() => any)[]
+  ) {
+    this.donePromise = new Promise((res, rej) => {
+      this.resolve = res;
+      this.reject = rej;
+    });
+  }
+  ..
+}
+\end{minted}

@@ -1,0 +1,20 @@
+\begin{minted}{typescript}
+  constructor({ enableLongStackTrace = false }) {
+    if (typeof Zone == 'undefined') {
+      throw new Error(`In this configuration Angular requires Zone.js`);
+    }
+
+    Zone.assertZonePatched();
+    const self = this as any as NgZonePrivate;
+    self._nesting = 0;
+
+    self._outer = self._inner = Zone.current;
+    if ((Zone as any)['wtfZoneSpec']) {
+      self._inner = self._inner.fork((Zone as any)['wtfZoneSpec']);
+    }
+    if (enableLongStackTrace && (Zone as any)['longStackTraceZoneSpec']) {
+      self._inner = self._inner.fork((Zone as any)['longStackTraceZoneSpec']);
+    }
+    forkInnerZoneWithAngularBehavior(self);
+  }
+\end{minted}

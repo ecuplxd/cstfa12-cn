@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+export abstract class DebugContext {
+  abstract get view(): ViewData;
+  abstract get nodeIndex(): number | null;
+  abstract get injector(): Injector;
+  abstract get component(): any;
+  abstract get providerTokens(): any[];
+  abstract get references(): { [key: string]: any };
+  abstract get context(): any;
+  abstract get componentRenderElement(): any;
+  abstract get renderNode(): any;
+  abstract logError(console: Console, ...values: any[]): void;
+}
+\end{minted}

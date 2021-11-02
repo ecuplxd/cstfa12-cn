@@ -1,0 +1,401 @@
+\subsection{core/src}
+
+The core/src directory directly contains many files, which we will group into three
+categories. Firstly, a number of files just export types from equivalently named sub-
+directories. Files that fall into this category include:
+
+\begin{itemize}
+  \item change\_detection.ts
+  \item core.ts
+  \item di.ts
+  \item metadata.ts
+  \item linker.ts
+  \item render.ts
+  \item zone.ts
+\end{itemize}
+
+For example, the renderer.ts file is a one-liner that just exports from renderer/api.ts:
+
+\input{5_the_core_package/code/5_3_0_0.tex}
+
+and zone.ts file is a one-liner that just exports from zone/ng\_zone.ts:
+
+\input{5_the_core_package/code/5_3_0_1.tex}
+
+Secondly, are files containing what we might call utility functionality:
+
+\begin{itemize}
+  \item console.ts
+  \item error\_handler.ts
+  \item platform\_core\_providers.ts
+  \item security.ts
+  \item types.ts
+  \item util.ts
+  \item version.ts
+\end{itemize}
+
+console.ts contains an injectable service used to write to the console:
+
+\input{5_the_core_package/code/5_3_0_2.tex}
+
+It is listed as an entry in
+\texttt{\_CORE\_PLATFORM\_PROVIDERS}
+in platform\_core\_providers.ts,
+which is used to create platforms.
+
+error\_handler.ts defines he default error handler and also, in comments, describes
+how you could implement your own.
+
+platform\_core\_providers.ts defines
+\texttt{\_CORE\_PLATFORM\_PROVIDERS}
+which lists the core
+providers for dependency injection:
+
+\input{5_the_core_package/code/5_3_0_3.tex}
+
+It also defines the
+\texttt{platformCore}
+const, used when creating platforms:
+
+\input{5_the_core_package/code/5_3_0_4.tex}
+
+security.ts defines the
+\texttt{SecurityContext}
+enum:
+
+\input{5_the_core_package/code/5_3_0_5.tex}
+
+and the
+\texttt{Sanitizer}
+abstract class:
+
+\input{5_the_core_package/code/5_3_0_6.tex}
+
+The third category of source files directly in the src directory are files related to
+platform- and application-initialization. These include:
+
+\begin{itemize}
+  \item application\_init.ts
+  \item application\_module.ts
+  \item application\_tokens.ts
+  \item application\_ref.ts
+\end{itemize}
+
+The first three of these are small (50-70 lines of code), whereas application\_ref.ts is
+larger at over 500 lines.
+
+Let’s start with application\_tokens.ts. It contains one provider definition and a set of
+opaque tokens for various uses.
+\texttt{PLATFORM\_INITIALIZER}
+is an opaque token that
+Angular itself and application code can use to register supplied functions that will be
+executed when a platform is initialized:
+
+\input{5_the_core_package/code/5_3_0_7.tex}
+
+An example usage within Angular is in platform-browser:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser/src/browser.ts}
+        {<ANGULAR-MASTER>/packages/platform-browser/src/browser.ts}
+\end{itemize}
+
+where it is used to have
+\texttt{initDomAdapter}
+function called upon platform initialization
+(note use of
+\texttt{multi}
+– which means multiple such initializer functions can be
+registered):
+
+\input{5_the_core_package/code/5_3_0_8.tex}
+
+\texttt{INTERNAL\_BROWSER\_PLATFORM\_PROVIDERS}
+is used a few lines later in browser.ts to
+create the browser platform (and so is used by most Angular applications):
+
+\input{5_the_core_package/code/5_3_0_9.tex}
+
+Another opaque token in application\_tokens.ts is
+\texttt{PACKAGE\_ROOT\_URL}
+- used to
+discover the application’s root directory.
+
+The provider definition identified by
+\texttt{APP\_ID}
+supplies a function that generates a
+unique string that can be used as an application identifier.
+
+\input{5_the_core_package/code/5_3_0_10.tex}
+
+A default implementation is supplied, that uses
+\texttt{Math.random}
+and this is then used to
+create an
+\texttt{APP\_ID\_RANDOM\_PROVIDER}
+:
+
+\input{5_the_core_package/code/5_3_0_11.tex}
+
+application\_init.ts defines one opaque token and one injectable service. The opaque
+token is:
+
+\input{5_the_core_package/code/5_3_0_12.tex}
+
+\texttt{APP\_INITIALIZER}
+Its role is similar to
+\texttt{PLATFORM\_INITIALIZER}
+, except it is called
+when an application is initialized. The injectable service is
+\texttt{ApplicationInitStatus}
+,
+which returns the status of executing app initializers:
+
+\input{5_the_core_package/code/5_3_0_13.tex}
+
+We will soon see how it is used in application\_ref.ts.
+
+application\_module.ts defines the
+\texttt{ApplicationModule}
+class:
+
+\input{5_the_core_package/code/5_3_0_14.tex}
+
+Providers are supplied to Angular’s dependency injection system. The
+\texttt{IterableDiffers}
+and
+\texttt{KeyValueDiffers}
+provides related to change detection.
+\texttt{ViewUtils}
+is defined in the src/linker sub-directory and contains utility-style code
+related to rendering.
+
+The types in application\_ref.ts plays a pivotal role in how the entire Angular
+infrastructure works. Application developers wishing to learn how Angular really works
+are strongly encouraged to carefully study the code in application\_ref.ts. Let’s start
+our examination by looking at the
+\texttt{createPlatformFactory()}
+function:
+
+\input{5_the_core_package/code/5_3_0_15.tex}
+
+It takes three parameters –
+1
+\texttt{parentPlatformFactory}
+,
+2
+\texttt{name}
+and an
+3
+array of
+providers. It returns
+4
+a factory function, that when called, will return a
+\texttt{PlatformRef}
+.
+
+This factory function first creates an opaque token
+5
+to use for DI lookup based on the
+supplied name; then it calls
+\texttt{getPlatform()}
+to see if a platform already exists (only
+one is permitted at any one time), and if false is returned, it calls
+6
+\texttt{createPlatform()}
+, passing in the result of a call to
+\texttt{ReflectiveInjector}
+’s
+\texttt{resolveAndCreate}
+(supplied with the providers parameter). Then
+7
+\texttt{assertPlatform}
+is called with the marker and the result of that call becomes the result of the factory
+function.
+
+\texttt{PlatformRef}
+is defined as:
+
+\input{5_the_core_package/code/5_3_0_16.tex}
+
+A platform represents the hosting environment within which one or more applications
+execute. Different platforms are supported (e.g. browser UI, web worker, server and
+you can create your own). For a web page, it is how application code interacts with
+the page (e.g. sets URL).
+\texttt{PlatformRef}
+represents the platform, and we see its two
+main features are supplying the root injector and module bootstrapping. The other
+members are to do with destroying resources when no longer needed.
+
+The supplied implementation of PlatformRef manages the root injector passed in to
+the constructor, an array of
+\texttt{NgModuleRef}
+s and an array of destroy listeners. In the
+constructor,  it takes in an injector. Note that calling the platform’s
+\texttt{destroy()}
+method
+will result in all applications that use that platform having their
+\texttt{destroy()}
+methods
+called.
+
+The two bootstrapping methods are
+\texttt{bootstrapModule}
+and
+\texttt{bootstrapModuleFactory}
+.
+An important decision for any Angular application team is to decide when to use the
+runtime compilation and when to use offline compilation. Runtime compilation is
+simpler to use and is demonstrated in the
+\url{QuickstartonAngular.io}
+. Runtime
+compilation makes the application bigger (the template compiler needs to run in the
+browser) and is slower (template compilation is required before the template can be
+used). Applications that use runtime compilation need to call
+\texttt{bootstrapModule}
+.
+Offline compilation involves extra build time configuration and so is a little more
+complex to set up, but due to its performance advantages is likely to be used for large
+production applications. Applications that use offline compilation need to call
+\texttt{bootstrapModuleFactory()}
+.
+
+\input{5_the_core_package/code/5_3_0_17.tex}
+
+\texttt{bootstrapModule}
+first calls
+1
+the template compiler and then
+2
+calls
+\texttt{bootstrapModuleFactory}
+, so after the extra runtime compilation step, both
+bootstrapping approaches follow the same code path.
+
+When examining zones we already looked at the use of zones within
+\texttt{bootstrapModuleFactory}
+d- other important code there includes the construction of
+\texttt{moduleRef}
+1
+and the call to
+2
+\texttt{\_moduleDoBootstrap(moduleRef)}
+:
+
+\input{5_the_core_package/code/5_3_0_18.tex}
+
+It is in
+\texttt{\_moduleDoBootstrap}
+that we see the actual bootstrapping taking place:
+
+\input{5_the_core_package/code/5_3_0_19.tex}
+
+In addition to bootstrapping functionality, there are a few simple platform-related
+functions in core/src/application\_ref.ts.
+\texttt{createPlatform()}
+creates a platform ref
+instance, or more accurately, as highlighted in the code, asks the injector for a
+platform ref and then calls the initializers:
+
+\input{5_the_core_package/code/5_3_0_20.tex}
+
+Only a single platform may be active at any one time.
+\texttt{\_platform}
+is defined as:
+
+\input{5_the_core_package/code/5_3_0_21.tex}
+
+The
+\texttt{getPlatform()}
+function is simply defined as:
+
+\input{5_the_core_package/code/5_3_0_22.tex}
+
+The
+\texttt{assertPlatform()}
+function ensures two things, and if either false, throws an
+error. Firstly it ensures that a platform exists, and secondly that its injector has a
+provider for the token specified as a parameter.
+
+\input{5_the_core_package/code/5_3_0_23.tex}
+
+The
+\texttt{destroyPlatform()}
+function calls the
+\texttt{destroy}
+method for the platform:
+
+\input{5_the_core_package/code/5_3_0_24.tex}
+
+The run mode specifies whether the platform is is production mode or developer
+mode. By default, it is in developer mode:
+
+\input{5_the_core_package/code/5_3_0_25.tex}
+
+This can be set by calling
+\texttt{enableProdMode()}
+:
+
+\input{5_the_core_package/code/5_3_0_26.tex}
+
+To determine which mode is active, call
+\texttt{isDevMode()}
+. This always returns the same
+value. In other words, whatever mode is active when this is first call, that is the mode
+that is always active.
+
+\input{5_the_core_package/code/5_3_0_27.tex}
+
+\texttt{ApplicationRef}
+is defined as:
+
+\input{5_the_core_package/code/5_3_0_28.tex}
+
+It main method is
+\texttt{bootstrap()}
+, which is a generic method with a type parameter -
+which attaches the component to DOM elements and sets up the application for
+execution. Note that bootstrap’s parameter is a union type, it represents either a
+\texttt{ComponentFactory}
+or a
+\texttt{Type}
+, both of which take C as a type parameter.
+
+One implementation of
+\texttt{ApplicationRef}
+is supplied, called
+\texttt{ApplicationRef\_}
+. This is
+marked as
+\texttt{Injectable()}
+. It maintains the following fields:
+
+\input{5_the_core_package/code/5_3_0_29.tex}
+
+Its constructor shows what it needs from an injector and sets up the observables
+(code here is abbreviated):
+
+\input{5_the_core_package/code/5_3_0_30.tex}
+
+Its
+\texttt{bootstrap()}
+implementation passes some code to the run function (to run in the
+zone) and this code calls
+\texttt{componentFactory.create()}
+to create the component and
+then
+\texttt{\_loadComponent()}
+.
+
+\input{5_the_core_package/code/5_3_0_31.tex}
+
+\texttt{\_loadComponent()}
+is defined as:
+
+\input{5_the_core_package/code/5_3_0_32.tex}
+
+Attached views are those that can be attached to a view container and are subject to
+dirty checking. Such views can be attached and detached, and an array of attached
+views is recorded.
+
+\input{5_the_core_package/code/5_3_0_33.tex}

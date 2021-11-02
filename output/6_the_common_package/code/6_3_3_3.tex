@@ -1,0 +1,19 @@
+\begin{minted}{ts}
+export abstract class PlatformLocation { }
+  abstract getBaseHrefFromDOM(): string;
+  abstract onPopState(fn: LocationChangeListener): void;
+  abstract onHashChange(fn: LocationChangeListener): void;
+
+  abstract get pathname(): string;
+  abstract get search(): string;
+  abstract get hash(): string;
+
+  abstract replaceState(state: any, title: string, url: string): void;
+
+  abstract pushState(state: any, title: string, url: string): void;
+
+  abstract forward(): void;
+
+  abstract back(): void;
+}
+\end{minted}

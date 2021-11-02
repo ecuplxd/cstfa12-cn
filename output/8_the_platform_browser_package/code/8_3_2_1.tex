@@ -1,0 +1,5 @@
+\begin{minted}{typescript}
+  supportsNativeShadowDOM(): boolean {
+    return typeof (<any>document.body).createShadowRoot === 'function';
+  }
+\end{minted}

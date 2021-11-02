@@ -1,0 +1,23 @@
+\begin{minted}{typescript}
+export function compileComponent(
+  outputCtx: OutputContext,
+  component: CompileDirectiveMetadata,
+  template: TemplateAst[],
+  reflector: CompileReflector
+) {
+  const definitionMapValues: {
+    key: string;
+    quoted: boolean;
+    value: o.Expression;
+  }[] = [];
+  // e.g. `type: MyApp`
+  definitionMapValues.push({
+    key: 'type',
+    value: outputCtx.importExpr(component.type.reference),
+    quoted: false,
+  });
+  ...
+  // some code regarding selectors (omitted)
+  ..
+}
+\end{minted}

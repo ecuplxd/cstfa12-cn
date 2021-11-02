@@ -1,0 +1,15 @@
+\begin{minted}{typescript}
+/**
+ * Creates and initializes a custom renderer that implements
+ * the `Renderer2` base class.
+ */
+export abstract class RendererFactory2 {
+  abstract createRenderer(
+    hostElement: any,
+    type: RendererType2 | null
+  ): Renderer2;
+  abstract begin?(): void;
+  abstract end?(): void;
+  abstract whenRenderingDone?(): Promise<any>;
+}
+\end{minted}

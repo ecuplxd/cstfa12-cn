@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+export const keyValDiff: KeyValueDifferFactory[] = [
+  new DefaultKeyValueDifferFactory(),
+];
+export const iterableDiff: IterableDifferFactory[] = [
+  new DefaultIterableDifferFactory(),
+];
+export const defaultIterableDiffers = new IterableDiffers(iterableDiff);
+export const defaultKeyValueDiffers = new KeyValueDiffers(keyValDiff);
+\end{minted}

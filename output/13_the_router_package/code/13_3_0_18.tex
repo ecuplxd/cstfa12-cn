@@ -1,0 +1,48 @@
+\begin{minted}{typescript}
+// Contains the information about a route associated with a component loaded
+// in an outlet. An `ActivatedRoute` can also be used to traverse the
+// router state tree
+export class ActivatedRoute {
+  ..
+  constructor() { ..
+    this._futureSnapshot = futureSnapshot;
+  }
+
+  /** The configuration used to match this route */
+  get routeConfig(): Route | null {
+    return this._futureSnapshot.routeConfig;
+  }
+
+  /** The root of the router state */
+  get root(): ActivatedRoute {
+    return this._routerState.root;
+  }
+
+  /** The parent of this route in the router state tree */
+  get parent(): ActivatedRoute | null {
+    return this._routerState.parent(this);
+  }
+
+  /** The first child of this route in the router state tree */
+  get firstChild(): ActivatedRoute | null {
+    return this._routerState.firstChild(this);
+  }
+
+  /** The children of this route in the router state tree */
+  get children(): ActivatedRoute[] {
+    return this._routerState.children(this);
+  }
+
+  /** The path from the root of the router state tree to this route */
+  get pathFromRoot(): ActivatedRoute[] {
+    return this._routerState.pathFromRoot(this);
+  }
+
+  get paramMap(): Observable<ParamMap> {
+    ..
+  }
+  get queryParamMap(): Observable<ParamMap> {
+    ..
+  }
+}
+\end{minted}

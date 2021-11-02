@@ -1,0 +1,60 @@
+\section{Common Public API}
+
+The public API of the Common package can be represented as:
+
+The export API is defined by:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/common/index.ts}
+        {<ANGULAR-MASTER>/packages/common/index.ts}
+\end{itemize}
+
+simply as:
+
+\input{6_the_common_package/code/6_1_0.tex}
+
+which is turn is defined as:
+
+\input{6_the_common_package/code/6_1_1.tex}
+
+The
+\url{src/common.ts}
+file contains:
+
+\input{6_the_common_package/code/6_1_2.tex}
+
+This exports the contents of the pipes/directives/location files in src.
+
+The exported location types are listed in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/common/src/location/index.ts}
+        {<ANGULAR-MASTER>/packages/common/src/location/index.ts}
+\end{itemize}
+
+as follows:
+
+\input{6_the_common_package/code/6_1_3.tex}
+
+platform\_location.ts exports the
+\texttt{PlatformLocation}
+class and the
+\texttt{LocationChangeEvent}
+and
+\texttt{LocationChangeListener}
+intefaces. location\_strategy.ts
+exports the
+\texttt{LocationStrategy}
+class and the
+\texttt{APP\_BASE\_HREF}
+const – this is important
+for routing, for more details refer to the discussion of “
+\emph{Set the <base href>}
+” on this
+page:
+
+\begin{itemize}
+  \item \url{https://angular.io/guide/router}
+\end{itemize}
+
+The other location files just export a class with the same name as the file.

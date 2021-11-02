@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+  private _handleMessage(message: ReceivedMessage): void {
+    if (this._methods.has(message.method)) {
+      this._methods.get(message.method)!(message);
+    }
+  }
+\end{minted}

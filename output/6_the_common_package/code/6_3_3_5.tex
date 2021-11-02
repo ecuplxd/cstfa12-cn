@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+@Injectable()
+export class Location {
+  _subject: EventEmitter<any> = new EventEmitter();
+  _baseHref: string;
+  _platformStrategy: LocationStrategy;
+
+  constructor(platformStrategy: LocationStrategy) {
+    this._platformStrategy = platformStrategy;
+    const browserBaseHref = this._platformStrategy.getBaseHref();
+    this._baseHref = Location.stripTrailingSlash(
+      _stripIndexHtml(browserBaseHref)
+    );
+    this._platformStrategy.onPopState((ev) => {
+      this._subject.emit({
+        url: this.path(true),
+        pop: true,
+        type: ev.type,
+      });
+    });
+  }
+  ..
+}
+\end{minted}

@@ -1,0 +1,37 @@
+\begin{minted}{typescript}
+@Injectable()
+export class PlatformRef {
+  private _modules: NgModuleRef<any>[] = [];
+  private _destroyListeners: Function[] = [];
+  private _destroyed: boolean = false;
+
+  /** @internal */
+  constructor(private _injector: Injector) {}
+
+  bootstrapModuleFactory<M>(
+    moduleFactory: NgModuleFactory<M>,
+    options?: BootstrapOptions
+  ): Promise<NgModuleRef<M>> {}
+
+  bootstrapModule<M>(
+    moduleType: Type<M>,
+    compilerOptions:
+      | (CompilerOptions & BootstrapOptions)
+      | Array<CompilerOptions & BootstrapOptions> = []
+  ): Promise<NgModuleRef<M>> {}
+
+  private _moduleDoBootstrap(moduleRef: InternalNgModuleRef<any>): void {}
+
+  onDestroy(callback: () => void): void {}
+
+  get injector(): Injector {
+    return this._injector;
+  }
+
+  destroy() {}
+
+  get destroyed() {
+    return this._destroyed;
+  }
+}
+\end{minted}

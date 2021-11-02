@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+class TemplateDefinitionBuilder implements TemplateAstVisitor, LocalResolver {
+  constructor(
+    private outputCtx: OutputContext,
+    private constantPool: ConstantPool,
+    private reflector: CompileReflector,
+    private contextParameter: string,
+    private bindingScope: BindingScope,
+    private level = 0,
+    private ngContentSelectors: string[],
+    private contextName: string | null,
+    private templateName: string | null
+  ) {}
+  ..
+}
+\end{minted}

@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+@Injectable()
+export class HashLocationStrategy extends LocationStrategy {
+  private _baseHref: string = '';
+  constructor(
+    private _platformLocation: PlatformLocation,
+    @Optional() @Inject(APP_BASE_HREF) _baseHref?: string
+  ) {
+    super();
+    if (_baseHref != null) {
+      this._baseHref = _baseHref;
+    }
+  }
+  ..
+}
+\end{minted}

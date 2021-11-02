@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+  private _loadComponent(componentRef: ComponentRef<any>): void {
+    this.attachView(componentRef.hostView);
+    this.tick();
+    this.components.push(componentRef);
+    // Get the listeners lazily to prevent DI cycles.
+    const listeners = this._injector
+      .get(APP_BOOTSTRAP_LISTENER, [])
+      .concat(this._bootstrapListeners);
+    listeners.forEach((listener) => listener(componentRef));
+  }
+\end{minted}

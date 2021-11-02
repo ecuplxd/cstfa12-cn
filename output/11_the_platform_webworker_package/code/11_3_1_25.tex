@@ -1,0 +1,26 @@
+\begin{minted}{typescript}
+interface PromiseCompleter {
+  resolve: (result: any) => void;
+  reject: (err: any) => void;
+}
+interface RequestMessageData {
+  method: string;
+  args?: any[];
+  id?: string;
+}
+
+interface ResponseMessageData {
+  type: 'result' | 'error';
+  value?: any;
+  id?: string;
+}
+export class FnArg {
+  constructor(
+    public value: any,
+    public type: Type<any> | SerializerTypes = SerializerTypes.PRIMITIVE
+  ) {}
+}
+export class UiArguments {
+  constructor(public method: string, public args?: FnArg[]) {}
+}
+\end{minted}

@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+/**
+ * Sanitizer is used by the views to sanitize potentially dangerous values.
+ *
+ * @stable
+ */
+export abstract class Sanitizer {
+  abstract sanitize(
+    context: SecurityContext,
+    value: {} | string | null
+  ): string | null;
+}
+\end{minted}

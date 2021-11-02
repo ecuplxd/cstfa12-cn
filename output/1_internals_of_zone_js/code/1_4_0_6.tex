@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+  public toString() {
+    if (this.data && typeof this.data.handleId !== 'undefined') {
+      return this.data.handleId.toString();
+    } else {
+      return Object.prototype.toString.call(this);
+    }
+  }
+\end{minted}

@@ -1,0 +1,27 @@
+\begin{minted}{typescript}
+  static forRoot(routes: Routes, config?: ExtraOptions): ModuleWithProviders {
+    return {
+      ngModule: RouterModule,
+      providers: [
+        ROUTER_PROVIDERS,
+        provideRoutes(routes),
+        {
+          provide: ROUTER_FORROOT_GUARD, ..
+        },
+        {
+          provide: ROUTER_CONFIGURATION, ..
+        },
+        {
+          provide: LocationStrategy, ..
+        },
+        {
+          provide: PreloadingStrategy, ..
+        },
+        {
+          provide: NgProbeToken, ..
+        },
+        provideRouterInitializer(),
+      ],
+    };
+  }
+\end{minted}

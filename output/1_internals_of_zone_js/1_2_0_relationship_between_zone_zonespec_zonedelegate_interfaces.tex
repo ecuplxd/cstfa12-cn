@@ -1,0 +1,36 @@
+\subsection{Relationship between Zone/ZoneSpec/ZoneDelegate interfaces}
+
+Think of
+\texttt{ZoneSpec}
+as the processing engine that controls how a zone works. It is a
+required parameter to the
+\texttt{Zone.fork()}
+method:
+
+\input{1_internals_of_zone_js/code/1_2_0_0.tex}
+
+Often when a zone needs to perform an action, it uses the supplied
+\texttt{ZoneSpec}
+. Do you
+want to record a long stack trace, keep track of tasks, work with WTF (discussed
+later) or run async test well? For each a these a different
+\texttt{ZoneSpec}
+is supplied, and
+each offers different features and comes with different processing costs. Zone.js
+supplies one implementation of the
+\texttt{Zone}
+interface, and multiple implementations of
+the
+\texttt{ZoneSpec}
+interface (in
+\href{https://github.com/angular/zone.js/tree/master/lib/zone-spec}
+{<ZONE-MASTER>/lib/zone-spec}
+). Application code with
+specialist needs could create a custom
+\texttt{ZoneSpec}
+.
+
+An application can build up a hierarchy of zones and sometimes a zone needs to make
+a call into another zone further up the hierarchy, and for this a
+\texttt{ZoneDelegate}
+is used.

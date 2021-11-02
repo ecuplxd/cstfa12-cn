@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+export function initServicesIfNeeded() {
+  if (initialized) {
+    return;
+  }
+  initialized = true;
+  const services = isDevMode() ? createDebugServices() : createProdServices();
+  ..
+}
+\end{minted}

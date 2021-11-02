@@ -1,0 +1,77 @@
+\subsection{common/src/location}
+
+This sub-directory contains these source files:
+
+\begin{itemize}
+  \item hash\_location\_strategy.ts
+  \item location.ts
+  \item location\_strategy.ts
+  \item path\_location\_strategy.ts
+  \item platform\_location.ts
+\end{itemize}
+
+The location\_strategy.ts file defines the
+\texttt{LocationStrategy}
+class and the
+\texttt{APP\_BASE\_HREF}
+opaque token.
+
+\input{6_the_common_package/code/6_3_3_0.tex}
+
+The opaque token is defined as:
+
+\input{6_the_common_package/code/6_3_3_1.tex}
+
+The two implementations of
+\texttt{LocationStrategy}
+are provided in
+hash\_location\_strategy.ts and path\_location\_strategy.ts. Both share the same
+constructor signature:
+
+\input{6_the_common_package/code/6_3_3_2.tex}
+
+The
+\texttt{PlatformLocation}
+parameter is how they access actual location information.
+
+\texttt{PlatformLocation}
+is an abstract class used to access location (URL) information.
+Note
+\texttt{PlatformLocation}
+does not extend
+\texttt{Location}
+- which is a service class used to
+manage the browser’s URL. They have quite distinct purposes.
+
+\input{6_the_common_package/code/6_3_3_3.tex}
+
+An important part of the various (browser, server) platform representations is to
+provide a custom implementation of
+\texttt{PlatformLocation}
+.
+
+The final file in common/src/location is location.ts, which is where Location is defined.
+The
+\texttt{Location}
+class is a service (perhaps it would be better to actually call it
+\texttt{LocationService}
+) used to interact with URLs. A note in the source is important:
+
+\input{6_the_common_package/code/6_3_3_4.tex}
+
+The
+\texttt{Location}
+class does not extend any other class, and its constructor only takes a
+\texttt{LocationStrategy}
+as as parameter:
+
+\input{6_the_common_package/code/6_3_3_5.tex}
+
+One useful method is
+\texttt{subscribe()}
+, which allows your application code to be informed
+of
+\texttt{popState}
+events:
+
+\input{6_the_common_package/code/6_3_3_6.tex}

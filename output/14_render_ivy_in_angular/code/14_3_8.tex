@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+// Compute the AotCompiler options
+function getAotCompilerOptions(options: CompilerOptions): AotCompilerOptions {
+  ..
+  return {
+    ..
+    enableIvy: options.enableIvy,
+  };
+}
+\end{minted}

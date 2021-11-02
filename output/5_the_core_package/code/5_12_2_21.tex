@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+  private loadAndCompile(path: string): Promise<NgModuleFactory<any>> {
+    let [module, exportName] = path.split(_SEPARATOR);
+    if (exportName === undefined) {
+      exportName = 'default';
+    }
+    return System.import(module)
+      .then((module: any) => module[exportName])
+      .then((type: any) => checkNotEmpty(type, module, exportName))
+      .then((type: any) => this._compiler.compileModuleAsync(type));
+  }
+\end{minted}

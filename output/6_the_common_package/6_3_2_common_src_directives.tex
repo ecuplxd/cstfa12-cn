@@ -1,0 +1,116 @@
+\subsection{common/src/directives}
+
+This directory has the following source files:
+
+\begin{itemize}
+  \item index.ts
+  \item ng\_class.ts
+  \item ng\_component\_outlet.ts
+  \item ng\_for\_of.ts
+  \item ng\_if.ts
+  \item ng\_plural.ts
+  \item ng\_style.ts
+  \item ng\_switch.ts
+  \item ng\_template\_outlet.ts
+\end{itemize}
+
+The indexs.ts file exports the directive types:
+
+\input{6_the_common_package/code/6_3_2_0.tex}
+
+along with a definition for
+\texttt{COMMON\_DIRECTIVES}
+, which is:
+
+\input{6_the_common_package/code/6_3_2_1.tex}
+
+The various ng\_ files implement the directives. Lets take a peek at one example,
+ng\_if.ts. It uses a view container to create an embedded view based on a template
+ref, if the supplied condition is true. We first see in its constructor it records the view
+container and template ref passed in as parameter:
+
+\input{6_the_common_package/code/6_3_2_2.tex}
+
+We observe that the
+\texttt{NgIf}
+class does not derive from any other class. It is made into a
+directive by using the
+\texttt{Directive}
+decorator.
+
+Then we see it has some setters defined as input properties, for the variations of if:
+
+\input{6_the_common_package/code/6_3_2_3.tex}
+
+Finally it has an internal method,
+\texttt{\_updateView}
+, where the view is changed as needed:
+
+\input{6_the_common_package/code/6_3_2_4.tex}
+
+The important calls here are (
+1
+\&
+2
+) to
+\texttt{this.\_viewContainer.createEmbeddedView}
+,
+where the embedded view is created if the
+\texttt{NgIf}
+condition is true.
+
+If
+\texttt{NgIf}
+creates an embedded view zero or once, then we expect
+\texttt{NgFor}
+to create
+embedded view zero or more times, depends on the count supplied to
+\texttt{NgFor}
+. We see
+this is exactly the case, when we look at
+\url{ng_for_of.ts}
+, which implements the
+\texttt{NgFor}
+class (and a helper class -
+\texttt{NgForOfContext}
+). The helper class is implemented as:
+
+\input{6_the_common_package/code/6_3_2_5.tex}
+
+\texttt{NgFor}
+is defined as:
+
+\input{6_the_common_package/code/6_3_2_6.tex}
+
+The first thing to note about
+\texttt{NgFor}
+’s implementation is the class implements
+\texttt{DoCheck}
+and
+\texttt{OnChanges}
+lifecycle. The
+\texttt{DoCheck}
+class is a lifecycle hook defined in
+@angular/core/src/metadata/lifecycle\_hooks.ts as:
+
+\input{6_the_common_package/code/6_3_2_7.tex}
+
+\texttt{OnChanges}
+is defined in the same file as:
+
+\input{6_the_common_package/code/6_3_2_8.tex}
+
+Hence we would expect
+\texttt{NgFor}
+to provide
+\texttt{ngDoCheck}
+and
+\texttt{ngOnChanges}
+methods and it
+does.
+\texttt{ngDoCheck()}
+calls
+\texttt{\_applyChanges}
+, where for each change operation a call to
+\texttt{viewContainer.createEmbeddedView()}
+is made.

@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+  private generateFilesForEmit(emitFlags: EmitFlags): {
+    genFiles: GeneratedFile[];
+    genDiags: ts.Diagnostic[];
+  } {
+    ..
+    let genFiles = this.compiler
+      .emitAllImpls(this.analyzedModules)
+      .filter((genFile) => isInRootDir(genFile.genFileUrl, this.options));
+
+    return { genFiles, genDiags: [] };
+  }
+\end{minted}

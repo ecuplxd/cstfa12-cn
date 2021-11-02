@@ -1,0 +1,23 @@
+\begin{minted}{typescript}
+export function provideRouterInitializer() {
+  return [
+    RouterInitializer,
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: getAppInitializer,
+      deps: [RouterInitializer],
+    },
+    {
+      provide: ROUTER_INITIALIZER,
+      useFactory: getBootstrapListener,
+      deps: [RouterInitializer],
+    },
+    {
+      provide: APP_BOOTSTRAP_LISTENER,
+      multi: true,
+      useExisting: ROUTER_INITIALIZER,
+    },
+  ];
+}
+\end{minted}

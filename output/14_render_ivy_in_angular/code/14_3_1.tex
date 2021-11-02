@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+function createEmitCallback(
+  options: api.CompilerOptions
+): api.TsEmitCallback | undefined {
+  const transformDecorators =
+    !options.enableIvy && options.annotationsAs !== 'decorators';
+  ..
+}
+\end{minted}

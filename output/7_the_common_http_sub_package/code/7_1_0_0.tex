@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+@NgModule({
+  imports: [
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN',
+    }),
+  ],
+  providers: [
+    HttpClient,
+    // HttpHandler is the backend + interceptors and is constructed
+    // using the interceptingHandler factory function.
+    {
+      provide: HttpHandler,
+      useFactory: interceptingHandler,
+      deps: [HttpBackend, [new Optional(), new Inject(HTTP_INTERCEPTORS)]],
+    },
+    HttpXhrBackend,
+    { provide: HttpBackend, useExisting: HttpXhrBackend },
+    BrowserXhr,
+    { provide: XhrFactory, useExisting: BrowserXhr },
+  ],
+})
+export class HttpClientModule {}
+\end{minted}

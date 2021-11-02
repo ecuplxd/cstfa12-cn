@@ -1,0 +1,6 @@
+\begin{minted}{typescript}
+export abstract class TemplateRef<C> {
+  abstract get elementRef(): ElementRef;
+  abstract createEmbeddedView(context: C): EmbeddedViewRef<C>;
+}
+\end{minted}

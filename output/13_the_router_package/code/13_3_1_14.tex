@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+export abstract class ViewContainerRef {
+  // Returns the number of Views currently attached to this container.
+  abstract get length(): number;
+
+  // Instantiates a single Component and inserts its Host View into this
+  // container at the specified `index`.
+  // The component is instantiated using its ComponentFactory which can be
+  // obtained via ComponentFactoryResolver.resolveComponentFactory
+  // If `index` is not specified, the new View will be inserted as the last
+  // View in the container. Returns the {@link ComponentRef} of the Host
+  // View created for the newly instantiated Component.
+  abstract createComponent<C>(
+    componentFactory: ComponentFactory<C>,
+    index?: number,
+    injector?: Injector,
+    projectableNodes?: any[][],
+    ngModule?: NgModuleRef<any>
+  ): ComponentRef<C>;
+}
+\end{minted}

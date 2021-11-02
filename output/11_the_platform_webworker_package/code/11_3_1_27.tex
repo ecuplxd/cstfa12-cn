@@ -1,0 +1,22 @@
+\begin{minted}{typescript}
+export class ClientMessageBroker {
+  private _pending = new Map<string, PromiseCompleter>();
+  private _sink: EventEmitter<any>;
+  public _serializer: Serializer;
+
+  constructor(
+    messageBus: MessageBus,
+    _serializer: Serializer,
+    private channel: any
+  ) {
+    this._sink = messageBus.to(channel);
+    this._serializer = _serializer;
+    const source = messageBus.from(channel);
+
+    source.subscribe({
+      next: (message: ResponseMessageData) => this._handleMessage(message),
+    });
+  }
+  ..
+}
+\end{minted}

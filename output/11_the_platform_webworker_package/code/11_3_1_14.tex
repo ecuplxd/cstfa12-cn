@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+  private _handleOnEventDone() {
+    if (this._messageBuffer.length > 0) {
+      this._sendMessages(this._messageBuffer);
+      this._messageBuffer = [];
+    }
+  }
+\end{minted}

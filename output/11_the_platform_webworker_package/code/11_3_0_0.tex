@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+export const platformWorkerApp = createPlatformFactory(
+  platformCore,
+  'workerApp',
+  [{ provide: PLATFORM_ID, useValue: PLATFORM_WORKER_APP_ID }]
+);
+\end{minted}

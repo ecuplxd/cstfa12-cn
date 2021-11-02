@@ -1,0 +1,15 @@
+\begin{minted}{typescript}
+  addChild(child: DebugNode) {
+    if (child) {
+      this.childNodes.push(child);
+      child.parent = this;
+    }
+  }
+  removeChild(child: DebugNode) {
+    const childIndex = this.childNodes.indexOf(child);
+    if (childIndex !== -1) {
+      child.parent = null;
+      this.childNodes.splice(childIndex, 1);
+    }
+  }
+\end{minted}

@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+export const platformCoreDynamic = createPlatformFactory(
+  platformCore,
+  'coreDynamic',
+  [
+    { provide: COMPILER_OPTIONS, useValue: {}, multi: true },
+    {
+      provide: CompilerFactory,
+      useClass: JitCompilerFactory,
+      deps: [COMPILER_OPTIONS],
+    },
+  ]
+);
+\end{minted}

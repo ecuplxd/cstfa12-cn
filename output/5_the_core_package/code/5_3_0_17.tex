@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+  bootstrapModule<M>(
+    moduleType: Type<M>,
+    compilerOptions:
+      | (CompilerOptions & BootstrapOptions)
+      | Array<CompilerOptions & BootstrapOptions> = []
+  ): Promise<NgModuleRef<M>> {
+    const compilerFactory: CompilerFactory = this.injector.get(CompilerFactory);
+    const options = optionsReducer({}, compilerOptions);
+    const compiler = compilerFactory.createCompiler([options]);
+    %\step{1}% return compiler
+      .compileModuleAsync(moduleType)
+      %\step{2}% .then((moduleFactory) =>
+        this.bootstrapModuleFactory(moduleFactory, options)
+      );
+  }
+\end{minted}

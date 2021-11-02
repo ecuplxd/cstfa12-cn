@@ -1,0 +1,27 @@
+\begin{minted}{typescript}
+export abstract class ViewContainerRef {
+  abstract get element(): ElementRef;
+  abstract get injector(): Injector;
+  abstract get parentInjector(): Injector;
+  abstract clear(): void;
+  abstract get(index: number): ViewRef | null;
+  abstract get length(): number;
+  abstract createEmbeddedView<C>(
+    templateRef: TemplateRef<C>,
+    context?: C,
+    index?: number
+  ): EmbeddedViewRef<C>;
+  abstract createComponent<C>(
+    componentFactory: ComponentFactory<C>,
+    index?: number,
+    injector?: Injector,
+    projectableNodes?: any[][],
+    ngModule?: NgModuleRef<any>
+  ): ComponentRef<C>;
+  abstract insert(viewRef: ViewRef, index?: number): ViewRef;
+  abstract move(viewRef: ViewRef, currentIndex: number): ViewRef;
+  abstract indexOf(viewRef: ViewRef): number;
+  abstract remove(index?: number): void;
+  abstract detach(index?: number): ViewRef | null;
+}
+\end{minted}

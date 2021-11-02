@@ -1,0 +1,23 @@
+\begin{minted}{ts}
+scheduleTask(targetZone: Zone, task: Task): Task {
+      let returnTask: ZoneTask<any> = task as ZoneTask<any>;
+      if (this._scheduleTaskZS) {
+ 1    if (this._hasTaskZS) {
+          returnTask._zoneDelegates!.push(this._hasTaskDlgtOwner!);
+        }
+        returnTask = this._scheduleTaskZS.onScheduleTask!
+                     (this._scheduleTaskDlgt!,
+                      this._scheduleTaskCurrZone!, targetZone, task)
+                      as ZoneTask<any>;
+        if (!returnTask) returnTask = task as ZoneTask<any>;
+      } else {
+ 2    if (task.scheduleFn) {
+          task.scheduleFn(task);
+ 3    } else if (task.type == microTask) {
+          scheduleMicroTask(<MicroTask>task);
+ 4    } else {
+          throw new Error('Task is missing scheduleFn.');  }
+      }
+      return returnTask;
+    }
+\end{minted}

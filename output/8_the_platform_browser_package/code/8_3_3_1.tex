@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+export enum SecurityContext {
+  NONE = 0,
+  HTML = 1,
+  STYLE = 2,
+  SCRIPT = 3,
+  URL = 4,
+  RESOURCE_URL = 5,
+}
+export abstract class Sanitizer {
+  abstract sanitize(
+    context: SecurityContext,
+    value: {} | string | null
+  ): string | null;
+}
+\end{minted}

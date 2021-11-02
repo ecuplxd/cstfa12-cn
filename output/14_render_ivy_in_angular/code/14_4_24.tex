@@ -1,0 +1,42 @@
+\begin{minted}{typescript}
+  buildTemplateFunction(
+    asts: TemplateAst[],
+    variables: VariableAst[]
+  ): o.FunctionExpr {
+    // Create variable bindings
+    ...
+    // Collect content projections
+    ...
+    %\step{1}% templateVisitAll(this, asts);
+    ..
+    %\step{2}% return o.fn(
+      [
+        new o.FnParam(this.contextParameter, null),
+        %\step{3}%
+        new o.FnParam(CREATION_MODE_FLAG, o.BOOL_TYPE),
+      ],
+      [
+        %\step{4}% // Temporary variable declarations (i.e. let _t: any;)
+        ...this._prefix,
+
+        // Creating mode (i.e. if (cm) { ... })
+        ...creationMode,
+
+        // Binding mode (i.e. ɵp(...))
+        ...this._bindingMode,
+
+        // Host mode (i.e. Comp.h(...))
+        ...this._hostMode,
+
+        // Refresh mode (i.e. Comp.r(...))
+        ...this._refreshMode,
+
+        // Nested templates (i.e. function CompTemplate() {})
+        ...this._postfix,
+      ],
+      %\step{5}% o.INFERRED_TYPE,
+      null,
+      this.templateName
+    );
+  }
+\end{minted}

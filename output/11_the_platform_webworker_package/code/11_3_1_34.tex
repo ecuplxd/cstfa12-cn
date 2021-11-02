@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+// The ng module for the worker app side.
+@NgModule({
+  providers: [
+    ..
+    { provide: ON_WEB_WORKER, useValue: true },
+    RenderStore,
+    ..
+  ],
+  exports: [CommonModule, ApplicationModule],
+})
+export class WorkerAppModule {}
+\end{minted}

@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+export const domRendererFactory3: RendererFactory3 = {
+  createRenderer: (
+    hostElement: RElement | null,
+    rendererType: RendererType2 | null
+  ): Renderer3 => {
+    return document;
+  } %\step{1}%,
+};
+\end{minted}

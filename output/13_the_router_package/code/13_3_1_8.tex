@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+  constructor(
+    private router: Router,
+    private element: ElementRef,
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.subscription = router.events.subscribe((s) => {
+      if (s instanceof NavigationEnd) {
+        this.update();
+      }
+    });
+  }
+\end{minted}

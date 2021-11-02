@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+const defaultEmitCallback: TsEmitCallback = ({
+  program,
+  targetSourceFile,
+  writeFile,
+  cancellationToken,
+  emitOnlyDtsFiles,
+  customTransformers,
+}) =>
+  %\step{1}% program.emit(
+    targetSourceFile,
+    writeFile,
+    cancellationToken,
+    emitOnlyDtsFiles,
+    customTransformers
+  );
+\end{minted}

@@ -1,0 +1,36 @@
+\begin{minted}{typescript}
+  runOnService(
+    args: UiArguments,
+    returnType: Type<any> | SerializerTypes | null
+  ): Promise<any> | null {
+    const fnArgs: any[] = [];
+    if (args.args) {
+      args.args.forEach((argument) => {
+        if (argument.type != null) {
+          %\step{1}% fnArgs.push(
+            this._serializer.serialize(argument.value, argument.type)
+          );
+        } else {
+          fnArgs.push(argument.value);
+        }
+      });
+    }
+
+    let promise: Promise<any> | null;
+    let id: string | null = null;
+
+    if (returnType != null) {
+      ..
+    }
+    %\step{2}% const message: RequestMessageData = {
+      method: args.method,
+      args: fnArgs,
+    };
+    if (id != null) {
+      message['id'] = id;
+    }
+    %\step{3}% this._sink.emit(message);
+
+    return promise;
+  }
+\end{minted}

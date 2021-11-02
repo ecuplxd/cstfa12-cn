@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+export interface LInjector {
+  readonly parent: LInjector | null;
+  readonly node: LElementNode | LContainerNode;
+  bf0: number;
+  bf1: number;
+  bf2: number;
+  bf3: number;
+  cbf0: number;
+  cbf1: number;
+  cbf2: number;
+  cbf3: number;
+  injector: Injector | null;
+  /** Stores the TemplateRef so subsequent injections of the TemplateRef get
+the same instance. */
+  templateRef: TemplateRef<any> | null;
+  /** Stores the ViewContainerRef so subsequent injections of the
+ViewContainerRef get the same
+   * instance. */
+  viewContainerRef: ViewContainerRef | null;
+  /** Stores the ElementRef so subsequent injections of the ElementRef get
+the same instance. */
+  elementRef: ElementRef | null;
+}
+\end{minted}

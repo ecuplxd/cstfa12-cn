@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+export function getPluralCategory(
+  value: number,
+  cases: string[],
+  ngLocalization: NgLocalization,
+  locale?: string
+): string {
+  let key = `=${value}`;
+
+  if (cases.indexOf(key) > -1) {
+    return key;
+  }
+  key = ngLocalization.getPluralCategory(value, locale);
+
+  if (cases.indexOf(key) > -1) {
+    return key;
+  }
+
+  if (cases.indexOf('other') > -1) {
+    return 'other';
+  }
+
+  throw new Error(`No plural message found for value "${value}"`);
+}
+\end{minted}

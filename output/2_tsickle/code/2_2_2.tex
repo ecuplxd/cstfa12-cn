@@ -1,0 +1,19 @@
+\begin{minted}{typescript}
+export function annotate(
+  typeChecker: ts.TypeChecker,
+  file: ts.SourceFile,
+  host: AnnotatorHost,
+  tsHost?: ts.ModuleResolutionHost,
+  tsOpts?: ts.CompilerOptions,
+  sourceMapper?: SourceMapper
+): { output: string; diagnostics: ts.Diagnostic[] } {
+  return new Annotator(
+    typeChecker,
+    file,
+    host,
+    tsHost,
+    tsOpts,
+    sourceMapper
+  ).annotate();
+}
+\end{minted}

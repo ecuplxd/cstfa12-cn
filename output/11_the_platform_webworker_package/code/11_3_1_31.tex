@@ -1,0 +1,15 @@
+\begin{minted}{typescript}
+  private _handleMessage(message: ResponseMessageData): void {
+    if (message.type === 'result' || message.type === 'error') {
+      %\step{1}% const id = message.id!;
+      %\step{2}% if (this._pending.has(id)) {
+        if (message.type === 'result') {
+          %\step{3}% this._pending.get(id)!.resolve(message.value);
+        } else {
+          %\step{4}% this._pending.get(id)!.reject(message.value);
+        }
+        this._pending.delete(id);
+      }
+    }
+  }
+\end{minted}

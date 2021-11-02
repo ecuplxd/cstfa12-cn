@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+  private _creationMode: o.Statement[] = [];
+
+  visitText(ast: TextAst) {
+    // Text is defined in creation mode only.
+    this.instruction(
+      this._creationMode,
+      ast.sourceSpan,
+      R3.text,
+      o.literal(this.allocateDataSlot()),
+      o.literal(ast.value)
+    );
+  }
+\end{minted}

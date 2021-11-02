@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+export abstract class HttpResponseBase {
+  // All response headers.
+  readonly headers: HttpHeaders;
+  // Response status code.
+  readonly status: number;
+  // Textual description of response status code.
+  readonly statusText: string;
+  //URL of the resource retrieved, or null if not available.
+  readonly url: string | null;
+  // Whether the status code falls in the 2xx range.
+  readonly ok: boolean;
+  // Type of the response, narrowed to either the full response
+  // or the header.
+  readonly type: HttpEventType.Response | HttpEventType.ResponseHeader;
+}
+\end{minted}

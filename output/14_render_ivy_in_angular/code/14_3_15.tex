@@ -1,0 +1,27 @@
+\begin{minted}{typescript}
+/**
+ * Returns a transformer that adds the requested static methods
+ * specified by modules.
+ */
+export function getAngularClassTransformerFactory(
+  modules: PartialModule[]
+): TransformerFactory {
+  if (modules.length === 0) {
+    // If no modules are specified, just return an identity transform.
+    return () => (sf) => sf;
+  }
+  const moduleMap = new Map(
+    modules.map<[string, PartialModule]>((m) => [m.fileName, m])
+  );
+  return function (context: ts.TransformationContext) {
+    return function (sourceFile: ts.SourceFile): ts.SourceFile {
+      const module = moduleMap.get(sourceFile.fileName);
+      if (module) {
+        const [newSourceFile] = updateSourceFile(sourceFile, module, context);
+        return newSourceFile;
+      }
+      return sourceFile;
+    };
+  };
+}
+\end{minted}

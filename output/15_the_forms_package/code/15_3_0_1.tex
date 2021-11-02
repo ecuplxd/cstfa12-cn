@@ -1,0 +1,44 @@
+\begin{minted}{typescript}
+export const SHARED_FORM_DIRECTIVES: Type<any>[] = [
+  NgSelectOption,
+  NgSelectMultipleOption,
+  DefaultValueAccessor,
+  NumberValueAccessor,
+  CheckboxControlValueAccessor,
+  SelectControlValueAccessor,
+  SelectMultipleControlValueAccessor,
+  RadioControlValueAccessor,
+  NgControlStatus,
+  NgControlStatusGroup,
+  RequiredValidator,
+  MinLengthValidator,
+  MaxLengthValidator,
+  PatternValidator,
+];
+export const TEMPLATE_DRIVEN_DIRECTIVES: Type<any>[] = [
+  NgModel,
+  NgModelGroup,
+  NgForm,
+];
+export const REACTIVE_DRIVEN_DIRECTIVES: Type<any>[] = [
+  FormControlDirective,
+  FormGroupDirective,
+  FormControlName,
+  FormGroupName,
+  FormArrayName,
+];
+export const FORM_DIRECTIVES: Type<any>[][] = [
+  TEMPLATE_DRIVEN_DIRECTIVES,
+  SHARED_FORM_DIRECTIVES,
+];
+export const REACTIVE_FORM_DIRECTIVES: Type<any>[][] = [
+  REACTIVE_DRIVEN_DIRECTIVES,
+  SHARED_FORM_DIRECTIVES,
+];
+
+@NgModule({
+  declarations: SHARED_FORM_DIRECTIVES,
+  exports: SHARED_FORM_DIRECTIVES,
+})
+export class InternalFormsSharedModule {}
+\end{minted}

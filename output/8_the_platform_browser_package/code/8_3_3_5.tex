@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+  private checkNotSafeValue(value: any, expectedType: string) {
+    if (value instanceof SafeValueImpl) {
+      throw new Error(
+        `Required a safe ${expectedType}, got a ${value.getTypeName()} ` +
+          `(see http://g.co/ng/security#xss)`
+      );
+    }
+  }
+\end{minted}

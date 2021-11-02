@@ -1,0 +1,32 @@
+\begin{minted}{typescript}
+export function createPlatformFactory(
+  %\step{1}% parentPlatformFactory:
+    | ((extraProviders?: StaticProvider[]) => PlatformRef)
+    | null,
+  %\step{2}% name: string,
+  %\step{3}% providers: StaticProvider[] = []
+): %\step{4}% (extraProviders?: StaticProvider[]) => PlatformRef {
+  const marker = new InjectionToken(`Platform: ${name}`);
+  %\step{5}% return (extraProviders: StaticProvider[] = []) => {
+    let platform = getPlatform();
+    if (!platform || platform.injector.get(ALLOW_MULTIPLE_PLATFORMS, false)) {
+      if (parentPlatformFactory) {
+        parentPlatformFactory(
+          providers
+            .concat(extraProviders)
+            .concat({ provide: marker, useValue: true })
+        );
+      } else {
+        %\step{6}% createPlatform(
+          Injector.create(
+            providers
+              .concat(extraProviders)
+              .concat({ provide: marker, useValue: true })
+          )
+        );
+      }
+    }
+    %\step{7}% return assertPlatform(marker);
+  };
+}
+\end{minted}

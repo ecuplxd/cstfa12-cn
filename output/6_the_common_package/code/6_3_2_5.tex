@@ -1,0 +1,26 @@
+\begin{minted}{typescript}
+export class NgForOfContext<T> {
+  constructor(
+    public $implicit: T,
+    public ngForOf: NgIterable<T>,
+    public index: number,
+    public count: number
+  ) {}
+
+  get first(): boolean {
+    return this.index === 0;
+  }
+
+  get last(): boolean {
+    return this.index === this.count - 1;
+  }
+
+  get even(): boolean {
+    return this.index %\%% %\step{2}% === 0;
+  }
+
+  get odd(): boolean {
+    return !this.even;
+  }
+}
+\end{minted}

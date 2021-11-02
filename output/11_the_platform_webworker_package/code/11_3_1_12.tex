@@ -1,0 +1,19 @@
+\begin{minted}{typescript}
+  initChannel(channel: string, runInZone: boolean = true): void {
+    if (this._channels.hasOwnProperty(channel)) {
+      throw new Error(`${channel} has already been initialized`);
+    }
+
+    const emitter = new EventEmitter(false);
+    const channelInfo = new _Channel(emitter, runInZone);
+    this._channels[channel] = channelInfo;
+    emitter.subscribe((data: Object) => {
+      const message = { channel: channel, message: data };
+      if (runInZone) {
+        this._messageBuffer.push(message);
+      } else {
+        this._sendMessages([message]);
+      }
+    });
+  }
+\end{minted}

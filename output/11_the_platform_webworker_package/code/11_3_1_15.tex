@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+  /**
+   * Notifies when the last `onMicrotaskEmpty` has run and there are no
+   * more microtasks, which implies we are about to relinquish VM turn.
+   * This event gets called just once.
+   */
+  readonly onStable: EventEmitter<any> = new EventEmitter(false);
+\end{minted}

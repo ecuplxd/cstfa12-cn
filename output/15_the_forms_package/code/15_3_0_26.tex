@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+  setValue(
+    value: { [key: string]: any },
+    { onlySelf }: { onlySelf?: boolean } = {}
+  ): void {
+    this._checkAllValuesPresent(value);
+    StringMapWrapper.forEach(value, (newValue: any, name: string) => {
+      this._throwIfControlMissing(name); %\step{1}%
+      this.controls[name].setValue(newValue, { onlySelf: true });
+    });
+    this.updateValueAndValidity({ onlySelf: onlySelf });
+  }
+\end{minted}

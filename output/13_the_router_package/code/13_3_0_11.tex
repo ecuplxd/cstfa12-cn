@@ -1,0 +1,18 @@
+\begin{minted}{typescript}
+/**
+ * To initialize the router properly we need to do in two steps:
+ *
+ * We need to start the navigation in a APP_INITIALIZER to block the
+ * bootstrap if a resolver or a guards executes asynchronously. Second, we
+ * need to actually run activation in a BOOTSTRAP_LISTENER. We utilize the
+ * afterPreactivation hook provided by the router to do that.
+ *
+ * The router navigation starts, reaches the point when preactivation is
+ * done, and then pauses. It waits for the hook to be resolved. We then
+ * resolve it only in a bootstrap listener.
+ */
+@Injectable()
+export class RouterInitializer {
+  ..
+}
+\end{minted}

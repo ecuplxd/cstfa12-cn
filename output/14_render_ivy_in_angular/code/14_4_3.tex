@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+  private _emitPartialModule(
+    fileName: string,
+    ngModuleByPipeOrDirective: Map<StaticSymbol, CompileNgModuleMetadata>,
+    directives: StaticSymbol[],
+    pipes: StaticSymbol[],
+    ngModules: CompileNgModuleMetadata[],
+    injectables: StaticSymbol[]
+  ): PartialModule[] {
+    const classes: o.ClassStmt[] = [];
+    const context = this._createOutputContext(fileName);
+    ..
+  }
+\end{minted}

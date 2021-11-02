@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+if (
+  (emitFlags &
+    (EmitFlags.JS | EmitFlags.DTS | EmitFlags.Metadata | EmitFlags.Codegen)) ===
+  0
+) {
+  return { emitSkipped: true, diagnostics: [], emittedFiles: [] };
+}
+\end{minted}

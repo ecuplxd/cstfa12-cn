@@ -1,0 +1,36 @@
+\begin{minted}{ts}
+ for (let dependency of type.diDeps) {
+    if (dependency.isValue) {
+      unsupported('value dependencies');
+    }
+    if (dependency.isHost) {
+      unsupported('host dependencies');
+    }
+    const token = dependency.token;
+    if (token) {
+      const tokenRef = tokenReference(token);
+      if (tokenRef === elementRef) {
+        args.push(o.importExpr(R3.injectElementRef).callFn([]));
+      } else if (tokenRef === templateRef) {
+        args.push(o.importExpr(R3.injectTemplateRef).callFn([]));
+      } else if (tokenRef === viewContainerRef) {
+        args.push(o.importExpr(R3.injectViewContainerRef).callFn([]));
+      } else {
+        const value =
+            token.identifier != null ?
+outputCtx.importExpr(tokenRef) : o.literal(tokenRef);
+        args.push(o.importExpr(R3.inject).callFn([value]));
+      }
+    } else {
+      unsupported('dependency without a token');
+    }
+  }
+
+  return o.fn(
+      [],
+      [new o.ReturnStatement(
+new o.InstantiateExpr(outputCtx.importExpr(type.reference), args))],
+      o.INFERRED_TYPE, null, type.reference.name ?
+`${type.reference.name}_Factory` : null);
+}
+\end{minted}

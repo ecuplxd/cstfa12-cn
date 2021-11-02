@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+// Combination of NgModuleFactory and ComponentFactory.
+export class ModuleWithComponentFactories<T> {
+  constructor(
+    public ngModuleFactory: NgModuleFactory<T>,
+    public componentFactories: ComponentFactory<any>[]
+  ) {}
+}
+\end{minted}

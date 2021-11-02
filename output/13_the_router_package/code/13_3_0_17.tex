@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+function setRouterState<U, T extends { _routerState: U }>(
+  state: U,
+  node: TreeNode<T>
+): void {
+  node.value._routerState = state;
+  node.children.forEach((c) => setRouterState(state, c));
+}
+\end{minted}

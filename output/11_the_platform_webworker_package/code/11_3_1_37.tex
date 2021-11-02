@@ -1,0 +1,40 @@
+\begin{minted}{typescript}
+export class WebWorkerRenderer2 implements Renderer2 {
+  data: { [key: string]: any } = Object.create(null);
+
+  constructor(private _rendererFactory: WebWorkerRendererFactory2) {}
+
+  private asFnArg = new FnArg(this, SerializerTypes.RENDER_STORE_OBJECT);
+
+  destroy(): void {
+    this.callUIWithRenderer('destroy');
+  }
+
+  createElement(name: string, namespace?: string): any {
+    const node = this._rendererFactory.allocateNode();
+    this.callUIWithRenderer('createElement', [
+      new FnArg(name),
+      new FnArg(namespace),
+      new FnArg(node, SerializerTypes.RENDER_STORE_OBJECT),
+    ]);
+    return node;
+  }
+
+  createComment(value: string): any {
+    const node = this._rendererFactory.allocateNode();
+    this.callUIWithRenderer('createComment', [
+      new FnArg(value),
+      new FnArg(node, SerializerTypes.RENDER_STORE_OBJECT),
+    ]);
+    return node;
+  }
+
+  appendChild(parent: any, newChild: any): void {
+    this.callUIWithRenderer('appendChild', [
+      new FnArg(parent, SerializerTypes.RENDER_STORE_OBJECT),
+      new FnArg(newChild, SerializerTypes.RENDER_STORE_OBJECT),
+    ]);
+  }
+  ..
+}
+\end{minted}

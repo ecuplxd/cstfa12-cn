@@ -1,0 +1,37 @@
+\begin{minted}{typescript}
+  createEmbeddedView<C>(
+    templateRef: TemplateRef<C>,
+    context?: C,
+    index?: number
+  ): EmbeddedViewRef<C> {
+    %\step{1}% const viewRef = templateRef.createEmbeddedView(
+      context || <any>{}
+    );
+    %\step{2}% this.insert(viewRef, index);
+    return viewRef;
+  }
+
+  createComponent<C>(
+    componentFactory: ComponentFactory<C>,
+    index?: number,
+    injector?: Injector,
+    projectableNodes?: any[][],
+    ngModuleRef?: NgModuleRef<any>
+  ): ComponentRef<C> {
+    const contextInjector = injector || this.parentInjector;
+    if (
+      !ngModuleRef &&
+      !(componentFactory instanceof ComponentFactoryBoundToModule)
+    ) {
+      ngModuleRef = contextInjector.get(NgModuleRef);
+    }
+    const componentRef = %\step{3}% componentFactory.create(
+      contextInjector,
+      projectableNodes,
+      undefined,
+      ngModuleRef
+    );
+    %\step{4}% this.insert(componentRef.hostView, index);
+    return componentRef;
+  }
+\end{minted}

@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+  _anyControlsHaveStatus(status: string): boolean {
+    return this._anyControls(
+      (control: AbstractControl) => control.status == status
+    );
+  }
+\end{minted}

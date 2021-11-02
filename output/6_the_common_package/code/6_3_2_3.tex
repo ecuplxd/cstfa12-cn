@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+  @Input()
+  set ngIf(condition: any) {
+    this._context.$implicit = this._context.ngIf = condition;
+    this._updateView();
+  }
+
+  @Input()
+  set ngIfThen(templateRef: TemplateRef<NgIfContext>) {
+    this._thenTemplateRef = templateRef;
+    this._thenViewRef = null; // clear previous view if any.
+    this._updateView();
+  }
+
+  @Input()
+  set ngIfElse(templateRef: TemplateRef<NgIfContext>) {
+    this._elseTemplateRef = templateRef;
+    this._elseViewRef = null; // clear previous view if any.
+    this._updateView();
+  }
+\end{minted}

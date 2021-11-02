@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+/**
+ * Represents an instance of an NgModule created via a NgModuleFactory.
+ * `NgModuleRef` provides access to the NgModule Instance as well other
+ *  objects related to this NgModule Instance.
+ */
+export abstract class NgModuleRef<T> {
+  abstract get injector(): Injector;
+  abstract get componentFactoryResolver(): ComponentFactoryResolver;
+  abstract get instance(): T;
+  abstract destroy(): void;
+  abstract onDestroy(callback: () => void): void;
+}
+\end{minted}

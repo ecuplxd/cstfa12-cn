@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+@Injectable()
+export class ResourceLoaderImpl extends ResourceLoader {
+  get(url: string): Promise<string> {
+    let resolve: (result: any) => void;
+    let reject: (error: any) => void;
+    const promise = new Promise<string>((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'text';
+    xhr.onload = function () {
+      ..
+    };
+    xhr.onerror = function () {
+      reject(`Failed to load ${url}`);
+    };
+    xhr.send();
+    return promise;
+  }
+}
+\end{minted}

@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+  private _moduleDoBootstrap(moduleRef: InternalNgModuleRef<any>): void {
+    const appRef = moduleRef.injector.get(ApplicationRef) as ApplicationRef;
+    if (moduleRef._bootstrapComponents.length > 0) {
+      moduleRef._bootstrapComponents.forEach((f) => appRef.bootstrap(f));
+    } else if (moduleRef.instance.ngDoBootstrap) {
+      moduleRef.instance.ngDoBootstrap(appRef);
+    } else {
+      throw new Error(
+        `The module ${stringify(moduleRef.instance.constructor)} was
+ bootstrapped, but it does not declare "@NgModule.bootstrap"
+ components nor a "ngDoBootstrap" method. ` + `Please define one of these.`
+      );
+    }
+    this._modules.push(moduleRef);
+  }
+\end{minted}

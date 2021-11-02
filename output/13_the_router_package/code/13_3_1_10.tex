@@ -1,0 +1,27 @@
+\begin{minted}{typescript}
+// Acts as a placeholder that Angular dynamically fills based on the
+// current router * state.
+@Directive({ selector: 'router-outlet', exportAs: 'outlet' })
+export class RouterOutlet implements OnDestroy, OnInit {
+  private activated: ComponentRef<any> | null = null;
+  private _activatedRoute: ActivatedRoute | null = null;
+  private name: string;
+
+  @Output('activate') activateEvents = new EventEmitter<any>();
+  @Output('deactivate') deactivateEvents = new EventEmitter<any>();
+
+  constructor(
+    private parentContexts: ChildrenOutletContexts,
+    %\step{1}%
+    private location: ViewContainerRef,
+
+    %\step{2}% private resolver: ComponentFactoryResolver,
+    @Attribute('name') name: string,
+    private changeDetector: ChangeDetectorRef
+  ) {
+    this.name = name || PRIMARY_OUTLET;
+    parentContexts.onChildOutletCreated(this.name, this);
+  }
+  ..
+}
+\end{minted}

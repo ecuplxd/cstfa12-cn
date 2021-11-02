@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+class TemplateRef_ extends TemplateRef<any> implements TemplateData {
+  _projectedViews: ViewData[];
+  constructor(private _parentView: ViewData, private _def: NodeDef) {
+    super();
+  }
+
+  createEmbeddedView(context: any): EmbeddedViewRef<any> {
+    return new ViewRef_(
+      Services.createEmbeddedView(
+        this._parentView,
+        this._def,
+        this._def.element!.template!,
+        context
+      )
+    );
+  }
+
+  get elementRef(): ElementRef {
+    return new ElementRef(
+      asElementData(this._parentView, this._def.nodeIndex).renderElement
+    );
+  }
+}
+\end{minted}

@@ -1,0 +1,15 @@
+\begin{minted}{typescript}
+  // Subscribe to the platform's `popState` events.
+  subscribe(
+    onNext: (value: PopStateEvent) => void,
+    onThrow?: ((exception: any) => void) | null,
+
+    onReturn?: (() => void) | null
+  ): ISubscription {
+    return this._subject.subscribe({
+      next: onNext,
+      error: onThrow,
+      complete: onReturn,
+    });
+  }
+\end{minted}

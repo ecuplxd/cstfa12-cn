@@ -1,0 +1,62 @@
+\section{Overview}
+
+Rendering in Angular is undergoing further evolution. It seems it was not too long ago
+that Angular 2’s original Render architecture evolved to Render2, and now along
+comes the very new Render3, quite a different approach to a view engine.
+
+The main change can be summed up with just this one function
+(from
+\href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/renderer.ts}
+{<ANGULAR-MASTER>/packages/core/src/render3/interfaces/renderer.ts}
+):
+
+\input{14_render_ivy_in_angular/code/14_1_0.tex}
+
+By default, the new renderer is compatible with the
+\texttt{document}
+object from the
+standard DOM. Actually, it is better not just to say “compatible with” but to say “is”.
+When running in the browser UI thread, where the DOM is available, then the
+browser’s native
+\texttt{document}
+object (provided by the web browser itself, not Angular)
+really IS the renderer – it is directly used to render content. An app literally cannot
+perform quicker than that. Regardless of which framework you use and how it
+structures its rendering pipeline, ultimately this
+\texttt{document}
+object in the real DOM will
+have to be called. So why not call it directly in scenarios where it is supported (that
+means inside the browser UI thread)? That is exaclty what Ivy does when possible.
+For other rendering scenarios (web worker, server, or more specialized, such as
+WebRTC) then something that looks like the
+\texttt{document}
+object will need to be provided.
+
+For readers coming from a C++, C\#, Java or similar background, it is very important
+to understand that TypeScript (and JavaScript) uses
+\url{structuralsubtyping}
+(also
+affectionately called “duck typing”) and not nominal typing (named types) as used by
+those other languages. In TypeScript, a type that implements the fields of another
+type can be used in its place – there is no neccessity for implementing common
+interfaces or to have a common parent class. So the fact that the
+\texttt{document}
+object
+from the standard DOM does not implement Angular’s
+\texttt{Render3}
+but yet is being used
+in a function to return such a type (see
+1
+above), is not a problem, so long as it
+implements all the fields that
+\texttt{Render3}
+needs (which it does, as we shall soon
+discover).
+
+Now we will explore in more depth what is happening when we use
+\texttt{enableIvy}
+with
+Angular CLI and how the main Angular project delivers Render3 functionality. We will
+see three of its packages are involved – Compiler-CLI, Compiler and Core.
+
+\input{14_render_ivy_in_angular/14_1_0_public_documentation.tex}

@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+// A validator is a function that processes a FormControl or
+// collection of controls and returns a map of errors.
+//
+// A null map means that validation has passed.
+
+export class Validators {
+  static required(control: AbstractControl): { [key: string]: boolean } {}
+  static minLength(minLength: number): ValidatorFn {}
+  static maxLength(maxLength: number): ValidatorFn {}
+  static pattern(pattern: string): ValidatorFn {}
+}
+\end{minted}

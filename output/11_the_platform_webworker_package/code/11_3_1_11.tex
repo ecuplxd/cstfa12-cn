@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+export class PostMessageBusSink implements MessageBusSink {
+  private _zone: NgZone;
+  private _channels: { [key: string]: _Channel } = {};
+  private _messageBuffer: Array<Object> = [];
+
+  constructor(private _postMessageTarget: PostMessageTarget) {}
+  ..
+}
+\end{minted}

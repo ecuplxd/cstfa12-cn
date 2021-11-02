@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+export const platformBrowser: (
+  extraProviders?: StaticProvider[]
+) => PlatformRef = createPlatformFactory(
+  platformCore,
+  'browser',
+  INTERNAL_BROWSER_PLATFORM_PROVIDERS
+);
+\end{minted}

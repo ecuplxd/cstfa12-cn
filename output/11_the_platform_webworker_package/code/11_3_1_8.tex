@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+  from(channel: string): EventEmitter<any> {
+    if (this._channels.hasOwnProperty(channel)) {
+      return this._channels[channel].emitter;
+    } else {
+      throw new Error(`${channel} is not set up. Did you forget to call
+initChannel?`);
+    }
+  }
+\end{minted}

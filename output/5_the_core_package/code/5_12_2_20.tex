@@ -1,0 +1,6 @@
+\begin{minted}{typescript}
+  load(path: string): Promise<NgModuleFactory<any>> {
+    const offlineMode = this._compiler instanceof Compiler;
+    return offlineMode ? this.loadFactory(path) : this.loadAndCompile(path);
+  }
+\end{minted}

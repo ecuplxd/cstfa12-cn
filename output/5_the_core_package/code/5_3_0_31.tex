@@ -1,0 +1,35 @@
+\begin{minted}{typescript}
+  bootstrap<C>(
+    componentOrFactory: ComponentFactory<C> | Type<C>,
+    rootSelectorOrNode?: string | any
+  ): ComponentRef<C> {
+    let componentFactory: ComponentFactory<C>;
+    if (componentOrFactory instanceof ComponentFactory) {
+      componentFactory = componentOrFactory;
+    } else {
+      componentFactory =
+        this._componentFactoryResolver.resolveComponentFactory(
+          componentOrFactory
+        )!;
+    }
+    this.componentTypes.push(componentFactory.componentType);
+
+    // Create a factory associated with the current module if
+    // it's not bound to some other
+    const ngModule =
+      componentFactory instanceof ComponentFactoryBoundToModule
+        ? Null
+        : this._injector.get(NgModuleRef);
+    const selectorOrNode = rootSelectorOrNode || componentFactory.selector;
+    const compRef = componentFactory.create(
+      Injector.NULL,
+      [],
+      selectorOrNode,
+      ngModule
+    );
+    ..
+    this._loadComponent(compRef);
+    ..
+    return compRef;
+  }
+\end{minted}

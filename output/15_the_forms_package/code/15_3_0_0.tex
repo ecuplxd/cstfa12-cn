@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+@NgModule({
+  declarations: TEMPLATE_DRIVEN_DIRECTIVES,
+  providers: [RadioControlRegistry],
+  exports: [InternalFormsSharedModule, TEMPLATE_DRIVEN_DIRECTIVES],
+})
+export class FormsModule {}
+@NgModule({
+  declarations: [REACTIVE_DRIVEN_DIRECTIVES],
+  providers: [FormBuilder, RadioControlRegistry],
+  exports: [InternalFormsSharedModule, REACTIVE_DRIVEN_DIRECTIVES],
+})
+export class ReactiveFormsModule {}
+\end{minted}

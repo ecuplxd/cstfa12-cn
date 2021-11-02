@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+// The static data for an LView (shared between all templates of a
+// given type). Stored on the template function as ngPrivateData.
+export interface TView {
+  data: TData;
+  firstTemplatePass: boolean;
+  initHooks: HookData | null;
+  checkHooks: HookData | null;
+  contentHooks: HookData | null;
+  contentCheckHooks: HookData | null;
+  viewHooks: HookData | null;
+  viewCheckHooks: HookData | null;
+  destroyHooks: HookData | null;
+  objectLiterals: any[] | null;
+}
+\end{minted}

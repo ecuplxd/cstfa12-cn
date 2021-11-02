@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+/**
+ * Helper class for UIComponents that allows components to register methods.
+ * If a registered method message is received from the broker on the worker,
+ * the UIMessageBroker deserializes its arguments and calls the
+ * registered method. If that method returns a promise, the UIMessageBroker
+ * returns the result to the worker.
+ */
+export class ServiceMessageBroker {
+  private _sink: EventEmitter<any>;
+  private _methods = new Map<string, Function>();
+
+  /** @internal */
+  constructor(
+    messageBus: MessageBus,
+    private _serializer: Serializer,
+    private channel: string
+  ) {
+    this._sink = messageBus.to(channel);
+    const source = messageBus.from(channel);
+    source.subscribe({ next: (message: any) => this._handleMessage(message) });
+  }
+  ..
+}
+\end{minted}

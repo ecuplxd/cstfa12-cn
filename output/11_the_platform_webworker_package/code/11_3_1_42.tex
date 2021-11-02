@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+  private createElement(
+    r: Renderer2,
+    name: string,
+    namespace: string,
+    id: number
+  ) {
+    this._renderStore.store(r.createElement(name, namespace), id);
+  }
+\end{minted}

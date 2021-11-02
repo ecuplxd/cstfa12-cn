@@ -1,0 +1,31 @@
+\begin{minted}{typescript}
+  setValue(
+    value: any,
+    {
+      onlySelf,
+      emitEvent,
+      emitModelToViewChange,
+      emitViewToModelChange,
+    }: {
+      onlySelf?: boolean;
+      emitEvent?: boolean;
+      emitModelToViewChange?: boolean;
+      emitViewToModelChange?: boolean;
+    } = {}
+  ): void {
+    emitModelToViewChange = isPresent(emitModelToViewChange)
+      ? emitModelToViewChange
+      : true;
+    emitViewToModelChange = isPresent(emitViewToModelChange)
+      ? emitViewToModelChange
+      : true;
+
+    this._value = value;
+    if (this._onChange.length && emitModelToViewChange) {
+      this._onChange.forEach((changeFn) =>
+        changeFn(this._value, emitViewToModelChange)
+      );
+    }
+    this.updateValueAndValidity({ onlySelf: onlySelf, emitEvent: emitEvent });
+  }
+\end{minted}

@@ -1,0 +1,90 @@
+\subsection{Platform-browser/src/security}
+
+This directory contains this file:
+
+\begin{itemize}
+  \item dom\_sanitization\_service.ts
+\end{itemize}
+
+Security sanitizers help prevent the use of dangerous constructs in HTML, CSS styles
+and URLs. Sanitizers are configured in the BrowserModule class via an
+\texttt{NgModule}
+setting. This is the relevant extract from platform-browser/src/browser.ts:
+
+\input{8_the_platform_browser_package/code/8_3_3_0.tex}
+
+The dom\_sanitization\_service.ts file declares a range of
+\texttt{safeXYZ}
+interfaces,
+implementation classes for them, the
+\texttt{DomSanitizer}
+class and the
+\texttt{DomSanitizerImpl}
+class. It starts by importing the
+\texttt{SecurityContext}
+enum and
+\texttt{Sanitizer}
+abstract class
+from Core:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/sanitization/security.ts}
+        {<ANGULAR\_MASTER>/packages/core/src/sanitization/security.ts}
+\end{itemize}
+
+Let’s recall they are defined as:
+
+\input{8_the_platform_browser_package/code/8_3_3_1.tex}
+
+In dom\_sanitization\_service.ts the safe marker interfaces are declared as:
+
+\input{8_the_platform_browser_package/code/8_3_3_2.tex}
+
+The
+\texttt{DomSanitizer}
+abstract class implements Core’s
+\texttt{Sanitizer}
+class. Do read the
+large comment at the beginning – you really do not want to be bypassing security if at
+all possible.
+
+\input{8_the_platform_browser_package/code/8_3_3_3.tex}
+
+The
+\texttt{DomSanitizerImpl}
+injectable class is what is supplied to NgModule:
+
+\input{8_the_platform_browser_package/code/8_3_3_4.tex}
+
+It can be divided into three sections, the
+\texttt{checkNotSafeValue}
+method, the sanitize
+method and the
+\texttt{bypassSecurityTrustXYZ}
+methods. The
+\texttt{checkNotSafeValue}
+method
+throws an error is the value parameter is an instance of
+\texttt{SafeValueImpl}
+:
+
+\input{8_the_platform_browser_package/code/8_3_3_5.tex}
+
+The
+\texttt{sanitize}
+method switches on the
+\texttt{securityContext}
+enum parameter, if it is
+\texttt{NONE}
+, then value is simply returned, otherwise additional checking is carried out,
+which varies depending on the security context:
+
+\input{8_the_platform_browser_package/code/8_3_3_6.tex}
+
+The
+\texttt{bypassSecurityTrust}
+methods returns an appropriate
+\texttt{SafeImpl}
+instance:
+
+\input{8_the_platform_browser_package/code/8_3_3_7.tex}

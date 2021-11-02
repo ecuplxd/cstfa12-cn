@@ -1,0 +1,26 @@
+\begin{minted}{typescript}
+export interface MessageBusSource {
+  /**
+   * Sets up a new channel on the MessageBusSource.
+   * MUST be called before calling from on the channel.
+   * If runInZone is true then the source will emit events inside the
+   * angular zone. if runInZone is false then the source will emit
+   * events inside the global zone.
+   */
+  initChannel(channel: string, runInZone: boolean): void;
+
+  /**
+   * Assigns this source to the given zone.
+   * Any channels which are initialized with runInZone set to true will
+   * emit events that will be
+   * executed within the given zone.
+   */
+  attachToZone(zone: NgZone): void;
+
+  /**
+   * Returns an {@link EventEmitter} that emits every time a message
+   * is received on the given channel.
+   */
+  from(channel: string): EventEmitter<any>;
+}
+\end{minted}

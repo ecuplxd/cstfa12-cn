@@ -1,0 +1,20 @@
+\begin{minted}{typescript}
+// other imports
+import {
+  ɵResourceLoaderImpl as ResourceLoaderImpl,
+  ɵplatformCoreDynamic as platformCoreDynamic,
+} from '@angular/platform-browser-dynamic';
+
+createPlatformFactory(platformCoreDynamic, 'workerAppDynamic', [
+  {
+    provide: COMPILER_OPTIONS,
+    useValue: {
+      providers: [
+        { provide: ResourceLoader, useClass: ResourceLoaderImpl, deps: [] },
+      ],
+    },
+    multi: true,
+  },
+  { provide: PLATFORM_ID, useValue: PLATFORM_WORKER_UI_ID },
+]);
+\end{minted}

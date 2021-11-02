@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+/** Interface necessary to work with view tree traversal */
+export interface LViewOrLContainer {
+  next: LView | LContainer | null;
+  child?: LView | LContainer | null;
+  views?: LViewNode[];
+  parent: LView | null;
+}
+\end{minted}

@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+  emit(
+    parameters: {
+      emitFlags?: EmitFlags;
+      cancellationToken?: ts.CancellationToken;
+      customTransformers?: CustomTransformers;
+      emitCallback?: TsEmitCallback;
+      mergeEmitResultsCallback?: TsMergeEmitResultsCallback;
+    } = {}
+  ): ts.EmitResult {
+    if (this.options.enableIvy) {
+      throw new Error('Cannot run legacy compiler in ngtsc mode');
+    }
+    return this._emitRender2(parameters);
+  }
+\end{minted}

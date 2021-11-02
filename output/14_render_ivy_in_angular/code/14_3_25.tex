@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+const emitResult = emitCallback({
+  program: this.tsProgram,
+  host: this.host,
+  options: this.options,
+  writeFile: writeTsFile,
+  emitOnlyDtsFiles,
+  customTransformers: tsCustomTansformers,
+});
+
+return emitResult;
+\end{minted}

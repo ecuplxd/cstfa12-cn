@@ -1,0 +1,36 @@
+\begin{minted}{typescript}
+if (returnType != null) {
+  %\step{1}% let completer: PromiseCompleter = undefined!;
+  promise = new Promise((resolve, reject) => {
+    completer = { resolve, reject };
+  });
+  %\step{2}% id = this._generateMessageId(args.method);
+  %\step{3}% this._pending.set(id, completer);
+
+  promise.catch((err) => {
+    if (console && console.error) {
+      // tslint:disable-next-line:no-console
+      console.error(err);
+    }
+
+    completer.reject(err);
+  });
+
+  %\step{4}% promise = promise.then(
+    %\step{5a}% (v: any) =>
+      this._serializer
+        ? %\step{5b}% this._serializer.deserialize(v, returnType)
+        : v
+  );
+} else {
+  promise = null;
+}
+const message: RequestMessageData = {
+  method: args.method,
+  args: fnArgs,
+};
+if (id != null) {
+  %\step{6}% message['id'] = id;
+}
+this._sink.emit(message);
+\end{minted}

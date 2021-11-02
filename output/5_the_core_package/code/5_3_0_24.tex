@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+export function destroyPlatform(): void {
+  if (_platform && !_platform.destroyed) {
+    _platform.destroy();
+  }
+}
+\end{minted}

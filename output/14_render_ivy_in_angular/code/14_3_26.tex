@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+  private _emitRender2({
+    emitFlags = EmitFlags.Default,
+    cancellationToken,
+    customTransformers,
+    emitCallback = defaultEmitCallback,
+  }: {
+    emitFlags?: EmitFlags;
+    cancellationToken?: ts.CancellationToken;
+    customTransformers?: CustomTransformers;
+    emitCallback?: TsEmitCallback;
+  } = {}): ts.EmitResult {
+    ..
+    let { genFiles, genDiags } = this.generateFilesForEmit(emitFlags);
+    ..
+  }
+\end{minted}

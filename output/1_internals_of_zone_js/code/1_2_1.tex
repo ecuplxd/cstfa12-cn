@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+  constructor({ enableLongStackTrace = false }) {
+    if (typeof Zone == 'undefined') {
+      throw new Error(`In this configuration Angular requires Zone.js`);
+    }
+    ..
+  }
+\end{minted}

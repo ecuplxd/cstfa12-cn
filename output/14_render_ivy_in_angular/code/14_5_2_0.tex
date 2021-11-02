@@ -1,0 +1,18 @@
+\begin{minted}{typescript}
+/** Subset of API needed for appending elements and text nodes. */
+export interface RNode {
+  removeChild(oldChild: RNode): void;
+
+  // Insert a child node.
+  // Used exclusively for adding View root nodes into ViewAnchor location.
+  insertBefore(
+    newChild: RNode,
+    refChild: RNode | null,
+    isViewRoot: boolean
+  ): void;
+
+  //Append a child node.
+  //Used exclusively for building up DOM which are static (ie not View roots)
+  appendChild(newChild: RNode): RNode;
+}
+\end{minted}

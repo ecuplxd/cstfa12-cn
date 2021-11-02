@@ -1,0 +1,30 @@
+\begin{minted}{ts}
+interface _ZonePrivate {
+  currentZoneFrame: () => _ZoneFrame;
+  symbol: (name: string) => string;
+  scheduleMicroTask: (task?: MicroTask) => void;
+  onUnhandledError: (error: Error) => void;
+  microtaskDrainDone: () => void;
+  showUncaughtError: () => boolean;
+  patchEventTarget: (global: any, apis: any[], options?: any) => boolean[];
+  patchOnProperties: (obj: any, properties: string[]|null,
+          prototype?: any) => void;
+  patchThen: (ctro: Function) => void;
+  setNativePromise: (nativePromise: any) => void;
+  patchMethod: ..
+  bindArguments: (args: any[], source: string) => any[];
+  patchMacroTask:
+      (obj: any, funcName: string,
+       metaCreator: (self: any, args: any[]) => any) => void;
+  patchEventPrototype: (_global: any, api: _ZonePrivate) => void;
+  isIEOrEdge: () => boolean;
+  ObjectDefineProperty:
+      (o: any, p: PropertyKey,
+       attributes: PropertyDescriptor&ThisType<any>) => any;
+  ObjectGetOwnPropertyDescriptor:
+      (o: any, p: PropertyKey) => PropertyDescriptor | undefined;
+  ObjectCreate(o: object|null, properties?
+      : PropertyDescriptorMap&ThisType<any>): any;
+ ..
+}
+\end{minted}

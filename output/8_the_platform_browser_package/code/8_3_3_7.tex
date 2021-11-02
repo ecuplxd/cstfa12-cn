@@ -1,0 +1,19 @@
+\begin{minted}{typescript}
+  bypassSecurityTrustHtml(value: string): SafeHtml {
+    return new SafeHtmlImpl(value);
+  }
+  bypassSecurityTrustStyle(value: string): SafeStyle {
+    return new SafeStyleImpl(value);
+  }
+  bypassSecurityTrustScript(value: string): SafeScript {
+    return new SafeScriptImpl(value);
+  }
+  bypassSecurityTrustUrl(value: string): SafeUrl {
+    return new SafeUrlImpl(value);
+  }
+  bypassSecurityTrustResourceUrl(value: string): SafeResourceUrl {
+    return new SafeResourceUrlImpl(value);
+
+    ..
+  }
+\end{minted}

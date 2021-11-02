@@ -1,0 +1,18 @@
+\begin{minted}{typescript}
+// A visitor for {@link TemplateAst} trees that will process each node.
+export interface TemplateAstVisitor {
+  visit?(ast: TemplateAst, context: any): any;
+  visitNgContent(ast: NgContentAst, context: any): any;
+  visitEmbeddedTemplate(ast: EmbeddedTemplateAst, context: any): any;
+  visitElement(ast: ElementAst, context: any): any;
+  visitReference(ast: ReferenceAst, context: any): any;
+  visitVariable(ast: VariableAst, context: any): any;
+  visitEvent(ast: BoundEventAst, context: any): any;
+  visitElementProperty(ast: BoundElementPropertyAst, context: any): any;
+  visitAttr(ast: AttrAst, context: any): any;
+  visitBoundText(ast: BoundTextAst, context: any): any;
+  visitText(ast: TextAst, context: any): any;
+  visitDirective(ast: DirectiveAst, context: any): any;
+  visitDirectiveProperty(ast: BoundDirectivePropertyAst, context: any): any;
+}
+\end{minted}

@@ -1,0 +1,53 @@
+\section{Overview}
+
+A platform module is how an application interacts with its hosting environment. Duties
+of a platform include rendering (deciding what is displayed and how), multitasking
+(web workers), security sanitization of URLs/html/style (to detect dangerous
+constructs) and location management (the URL displayed in the browser).
+
+We have seen how the Core module provides a rendering API, but it includes no
+implementations of renderers and no mention of the DOM. All other parts of Angular
+that need to have content rendered talk to this rendering API and rely on an
+implementation to actually deal with the content to be “displayed” (and what
+“displayed” means varies depending on the platform). You will find an implementation
+of renderer in the various platform packages – the main ones are defined
+\url{hereinthePlatform-Browser}
+package. Note that these render to a DOM adapter (and multiple of
+those exist), but Core and all the features sitting on top of Core only know about the
+rendering API, not the DOM.
+
+Angular supplies five platform packages:
+
+\begin{itemize}
+  \item platform-browser (runs in the browser’s main UI thread and uses the offline template compiler),
+  \item platform-browser-dynamic (runs in the browser’s main UI thread and uses the runtime template compiler),
+  \item platform-webworker (runs in a web worker and uses the offline compiler),
+  \item platform-webworker-dynamic (runs in a web worker and uses the runtime template compiler) and
+  \item platform-server (runs in the server and can uses either the offline or runtime template compiler)
+\end{itemize}
+
+Shared functionality relating to platforms is in Platform-Browser and imported by the
+other platform packages. So Platform-Browser is a much bigger packages compared
+to the other platform packages. In this chapter we will explore Platform-Browser and
+we will cover the others in the subsequent chapters.
+
+Platform-Browser is how application code can interact with the browser when running
+in the main UI thread and assumes the offline template compiler has been used to
+pre-generate a module factory. For production use, platform-browser is likely to be
+the platform of choice, as it results in the fastest display (no in-browser template
+compilation needed) and smallest download size (the Angular template compiler does
+not have to be downloaded to the browser).
+
+The Platform-Browser package does not depend on the Compiler package since it
+assumes compilation has occurred Ahead-Of-Time (AOT) using Compiler-CLI, the
+command-line interface that wraps the Compiler package. In contrast, Platform-
+Browser-Dynamic does import directly from the Compiler package – for example, see:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/tree/master/packages/platform-browser-dynamic/src/compiler_factory.ts}
+        {<ANGULAR-MASTER>/packages/platform-browser-dynamic/src/compiler\_factory.ts}
+\end{itemize}
+
+There is exactly one platform instance per thread (main browser UI thread or web
+worker). Multiple applications may run in the same thread, and they interact with the
+same platform instance.

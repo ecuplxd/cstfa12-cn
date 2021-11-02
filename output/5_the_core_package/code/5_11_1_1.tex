@@ -1,0 +1,15 @@
+\begin{minted}{ts}
+@Injectable()constructor(
+export class ApplicationRef {
+  bootstrap<C>(..):ComponentRef<C> {
+    ..
+const compRef = componentFactory.create(..);
+    ..
+1   const testability = compRef.injector.get(Testability, null);
+2   if (testability) {
+ compRef.injector.get(TestabilityRegistry)
+3         .registerApplication(compRef.location.nativeElement, testability);
+    }
+  }
+}
+\end{minted}

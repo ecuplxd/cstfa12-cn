@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+  invoke(
+    targetZone: Zone,
+    callback: Function,
+    applyThis: any,
+    applyArgs?: any[],
+    source?: string
+  ): any {
+    return this._invokeZS
+      ? this._invokeZS.onInvoke!(
+          this._invokeDlgt!,
+          this._invokeCurrZone!,
+          targetZone,
+          callback,
+          applyThis,
+          applyArgs,
+          source
+        )
+      : callback.apply(applyThis, applyArgs);
+  }
+\end{minted}

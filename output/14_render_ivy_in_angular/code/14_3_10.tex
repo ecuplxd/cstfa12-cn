@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+  R3_REIFIED_DECORATORS = [
+    'Component',
+    'Directive',
+    'Injectable',
+    'NgModule',
+    'Pipe',
+  ];
+
+  private get reifiedDecorators(): Set<StaticSymbol> {
+    if (!this._reifiedDecorators) {
+      const reflector = this.compiler.reflector;
+      this._reifiedDecorators = new Set(
+        R3_REIFIED_DECORATORS.map((name) =>
+          reflector.findDeclaration('@angular/core', name)
+        )
+      );
+    }
+    return this._reifiedDecorators;
+  }
+\end{minted}

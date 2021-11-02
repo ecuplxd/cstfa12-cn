@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+function drainMicroTaskQueue() {
+  if (!_isDrainingMicrotaskQueue) {
+    _isDrainingMicrotaskQueue = true;
+    while (_microTaskQueue.length) {
+      const queue = _microTaskQueue;
+      _microTaskQueue = [];
+      for (let i = 0; i < queue.length; i++) {
+        const task = queue[i];
+        try {
+          task.zone.runTask(task, null, null);
+        } catch (error) {
+          _api.onUnhandledError(error);
+        }
+      }
+    }
+    _api.microtaskDrainDone();
+    _isDrainingMicrotaskQueue = false;
+  }
+}
+\end{minted}

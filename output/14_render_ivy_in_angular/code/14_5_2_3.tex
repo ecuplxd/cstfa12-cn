@@ -1,0 +1,18 @@
+\begin{minted}{typescript}
+export interface RendererFactory3 {
+  createRenderer(
+    hostElement: RElement | null,
+    rendererType: RendererType2 | null
+  ): Renderer3 %\step{1}%;
+  begin?(): void;
+  end?(): void;
+}
+export const domRendererFactory3: RendererFactory3 = {
+  createRenderer: (
+    hostElement: RElement | null,
+    rendererType: RendererType2 | null
+  ): Renderer3 => {
+    return document;
+  } %\step{2}%,
+};
+\end{minted}

@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+  private _generateMessageId(name: string): string {
+    const time: string = stringify(new Date().getTime());
+    let iteration: number = 0;
+    let id: string = name + time + stringify(iteration);
+    while (this._pending.has(id)) {
+      id = `${name}${time}${iteration}`;
+      iteration++;
+    }
+    return id;
+  }
+\end{minted}

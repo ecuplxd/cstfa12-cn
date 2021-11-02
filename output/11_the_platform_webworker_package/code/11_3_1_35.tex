@@ -1,0 +1,15 @@
+\begin{minted}{typescript}
+export const _WORKER_UI_PLATFORM_PROVIDERS: StaticProvider[] = [
+  ..
+  { provide: Serializer, deps: [RenderStore] },
+  { provide: ON_WEB_WORKER, useValue: false },
+  { provide: RenderStore, deps: [] },
+  ..
+];
+
+export const platformWorkerUi = createPlatformFactory(
+  platformCore,
+  'workerUi',
+  _WORKER_UI_PLATFORM_PROVIDERS
+);
+\end{minted}

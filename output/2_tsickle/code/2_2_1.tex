@@ -1,0 +1,51 @@
+\begin{minted}{typescript}
+export function toClosureJS(
+  options: ts.CompilerOptions,
+  fileNames: string[],
+  settings: Settings,
+  writeFile?: ts.WriteFileCallback
+): tsickle.EmitResult {
+  %\step{1}% const compilerHost = ts.createCompilerHost(options);
+  %\step{2}% const program = ts.createProgram(
+    fileNames,
+    options,
+    compilerHost
+  );
+
+  %\step{3}% const transformerHost: tsickle.TsickleHost = {
+    shouldSkipTsickleProcessing: (fileName: string) => {
+      return fileNames.indexOf(fileName) === -1;
+    },
+    shouldIgnoreWarningsForPath: (fileName: string) => false,
+    pathToModuleName: cliSupport.pathToModuleName,
+    fileNameToModuleId: (fileName) => fileName,
+    es5Mode: true,
+    googmodule: true,
+    prelude: '',
+    transformDecorators: true,
+    transformTypesToClosure: true,
+    typeBlackListPaths: new Set(),
+    untyped: false,
+    logWarning: (warning) =>
+      console.error(tsickle.formatDiagnostics([warning])),
+  };
+  const diagnostics = ts.getPreEmitDiagnostics(program);
+  if (diagnostics.length > 0) {
+    return {
+      diagnostics,
+      modulesManifest: new ModulesManifest(),
+      externs: {},
+      emitSkipped: true,
+      emittedFiles: [],
+    };
+  }
+  %\step{4}% return tsickle.emitWithTsickle(
+    program,
+    transformerHost,
+    compilerHost,
+    options,
+    undefined,
+    writeFile
+  );
+}
+\end{minted}

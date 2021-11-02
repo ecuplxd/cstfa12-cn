@@ -1,0 +1,21 @@
+\begin{minted}{typescript}
+  private listen(
+    r: Renderer2,
+    el: any,
+    elName: string,
+    eventName: string,
+    unlistenId: number
+  ) {
+    const listener = (event: any) => {
+      return this._eventDispatcher.dispatchRenderEvent(
+        el,
+        elName,
+        eventName,
+        event
+      );
+    };
+
+    const unlisten = r.listen(el || elName, eventName, listener);
+    this._renderStore.store(unlisten, unlistenId);
+  }
+\end{minted}

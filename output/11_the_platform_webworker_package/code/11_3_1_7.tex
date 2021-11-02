@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+export class PostMessageBusSource implements MessageBusSource {
+  private _zone: NgZone;
+  private _channels: { [key: string]: _Channel } = {};
+  ..
+}
+\end{minted}

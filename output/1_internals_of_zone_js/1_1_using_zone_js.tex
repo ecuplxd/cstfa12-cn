@@ -1,0 +1,66 @@
+\section{Using Zone.js}
+
+Before looking in detail at how Zone.js itself is implemented, we will first look at how
+it is used in production, using the example of the very popular Angular project.
+
+The use of Zone.js with Angular is optional, but used by default. Use of zones is
+mostly a good idea but there are some scenarios (e.g. using Angular Elements to build
+Web Compoenents) when this is not the case.
+
+To use Zone.js in your applications, you need to load it. Your package.json file will
+need (if creating a project using Angular CLI, this is added automatically for you):
+
+\input{1_internals_of_zone_js/code/1_1_0.tex}
+
+You should load Zone.js after loading core.js (if using that). For example, if using an
+Angular application generated via Angular CLI (as most production apps will be),
+Angular CLI will generate a file called <project-name>/src/polyfills.ts and it will
+contain:
+
+\input{1_internals_of_zone_js/code/1_1_1.tex}
+
+Angular CLI also generates an angular.json configuration file, with this line that sets
+up polyfills:
+
+\input{1_internals_of_zone_js/code/1_1_2.tex}
+
+If writing your application in TypeScript (recommended), you also need to get access
+to the ambient declarations. These define the Zone.js API and are supplied in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/zone.js/blob/master/dist/zone.js.d.ts}
+        {<ZONE-MASTER>/dist/zone.js.d.ts}
+\end{itemize}
+
+(IMPORTANT: This file is particularly well documented and well worth some careful
+study by those learning Zone.js). Unlike declarations for most other libraries,
+zone.js.d.ts does not use
+\texttt{import}
+or
+\texttt{export}
+at all (those constructs do not appear
+even once in that file). That means application code wishing to use zones cannot
+simply import its .d.ts file, as is normally the case. Instead, the
+\texttt{///reference}
+construct needs to be used. This includes the referenced file at the site of the
+\texttt{///reference}
+in the containing file. The benefit of this approach is that the containing
+file itself does not have to (but may) use
+\texttt{import}
+, and thus may be a script, rather
+than having to be a module. The use of zones is not forcing the application to use
+modules (however, most larger applications, including all Angular applications - will).
+How this works is best examined with an example, so lets look at how Angular
+includes zone.d.ts. Angular contains a file, types.d.ts under its packages directory
+(and a similar one under its modules directory and tools directory):
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/modules/types.d.ts}
+        {<ANGULAR-MASTER>/packages/types.d.ts}
+\end{itemize}
+
+and it has the following contents:
+
+\input{1_internals_of_zone_js/code/1_1_3.tex}
+
+\input{1_internals_of_zone_js/1_1_0_use_within_angular.tex}

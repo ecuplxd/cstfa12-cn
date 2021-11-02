@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+  constructor(
+    private _compiler: Compiler,
+    @Optional() config?: SystemJsNgModuleLoaderConfig
+  ) {
+    this._config = config || DEFAULT_CONFIG;
+  }
+\end{minted}

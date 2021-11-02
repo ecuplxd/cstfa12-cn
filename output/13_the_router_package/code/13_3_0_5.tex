@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+@NgModule({ declarations: ROUTER_DIRECTIVES, exports: ROUTER_DIRECTIVES })
+export class RouterModule {
+  // Note: We are injecting the Router so it gets created eagerly...
+  constructor(
+    @Optional() @Inject(ROUTER_FORROOT_GUARD) guard: any,
+    @Optional() router: Router
+  ) {}
+  static forRoot(routes: Routes, config?: ExtraOptions): ModuleWithProviders {
+    ..
+  }
+  static forChild(routes: Routes): ModuleWithProviders {
+    ..
+  }
+}
+\end{minted}

@@ -1,0 +1,34 @@
+\begin{minted}{typescript}
+export class CodegenComponentFactoryResolver
+  implements ComponentFactoryResolver
+{
+  %\step{1}% private _factories = new Map<any, ComponentFactory<any>>();
+
+  constructor(
+    %\step{2}% factories: ComponentFactory<any>[],
+    private _parent: ComponentFactoryResolver,
+    private _ngModule: NgModuleRef<any>
+  ) {
+    %\step{3}% for (let i = 0; i < factories.length; i++) {
+      const factory = factories[i];
+      this._factories.set(factory.componentType, factory);
+    }
+  }
+
+  %\step{4}% resolveComponentFactory<T>(component: {
+    new (...args: any[]): T;
+  }): ComponentFactory<T> {
+    %\step{5}% let factory = this._factories.get(component);
+    if (!factory && this._parent) {
+      %\step{6}% factory = this._parent.resolveComponentFactory(component);
+    }
+    if (!factory) {
+      throw noComponentFactoryError(component);
+    }
+    %\step{7}% return new ComponentFactoryBoundToModule(
+      factory,
+      this._ngModule
+    );
+  }
+}
+\end{minted}

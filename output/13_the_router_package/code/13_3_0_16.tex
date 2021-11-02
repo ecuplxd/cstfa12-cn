@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+/**
+ * @whatItDoes Represents the state of the router at a moment in time.
+ * RouterStateSnapshot is a tree of activated route snapshots. Every node in
+ * this tree knows about the "consumed" URL segments, the extracted
+ * parameters, and the resolved data.
+ */
+export class RouterStateSnapshot extends Tree<ActivatedRouteSnapshot> {
+  constructor(public url: string, root: TreeNode<ActivatedRouteSnapshot>) {
+    super(root);
+    setRouterState(<RouterStateSnapshot>this, root);
+  }
+}
+\end{minted}

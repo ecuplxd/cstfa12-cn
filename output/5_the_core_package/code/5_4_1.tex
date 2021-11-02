@@ -1,0 +1,34 @@
+\begin{minted}{typescript}
+export interface InjectDecorator {
+  (token: any): any;
+  new (token: any): Inject;
+}
+export interface Inject {
+  token: any;
+}
+export interface OptionalDecorator {
+  (): any;
+  new (): Optional;
+}
+export interface Optional {}
+export interface InjectableDecorator {
+  (): any;
+  new (): Injectable;
+}
+export interface Injectable {}
+export interface SelfDecorator {
+  (): any;
+  new (): Self;
+}
+export interface Self {}
+export interface SkipSelfDecorator {
+  (): any;
+  new (): SkipSelf;
+}
+export interface SkipSelf {}
+export interface HostDecorator {
+  (): any;
+  new (): Host;
+}
+export interface Host {}
+\end{minted}

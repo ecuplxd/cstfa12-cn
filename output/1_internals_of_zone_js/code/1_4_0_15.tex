@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+let _currentZoneFrame: _ZoneFrame = {
+  parent: null,
+  zone: new Zone(null, null),
+};
+let _currentTask: Task | null = null;
+let _numberOfNestedTaskFrames = 0;
+\end{minted}

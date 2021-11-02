@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+  getUserAgent(): string {
+    return window.navigator.userAgent;
+  }
+  getHistory(): History {
+    return window.history;
+  }
+  getTitle(doc: Document): string {
+    return doc.title;
+  }
+  setTitle(doc: Document, newTitle: string) {
+    doc.title = newTitle || '';
+  }
+\end{minted}

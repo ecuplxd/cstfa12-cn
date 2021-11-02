@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+const writeTsFile: ts.WriteFileCallback = (
+  outFileName,
+  outData,
+  writeByteOrderMark,
+  onError?,
+  sourceFiles?
+) => {
+  const sourceFile =
+    sourceFiles && sourceFiles.length == 1 ? sourceFiles[0] : null;
+  let genFile: GeneratedFile | undefined;
+  this.writeFile(
+    outFileName,
+    outData,
+    writeByteOrderMark,
+    onError,
+    undefined,
+    sourceFiles
+  );
+};
+
+const emitOnlyDtsFiles =
+  (emitFlags & (EmitFlags.DTS | EmitFlags.JS)) == EmitFlags.DTS;
+\end{minted}

@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+class MyErrorHandler implements ErrorHandler {
+  handleError(error) {
+    // do something with the exception
+  }
+}
+@NgModule({
+  providers: [{ provide: ErrorHandler, useClass: MyErrorHandler }],
+})
+class MyModule {}
+\end{minted}

@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+  fork(targetZone: Zone, zoneSpec: ZoneSpec): AmbientZone {
+    return this._forkZS
+      ? this._forkZS.onFork!(this._forkDlgt!, this.zone, targetZone, zoneSpec)
+      : new Zone(targetZone, zoneSpec);
+  }
+\end{minted}

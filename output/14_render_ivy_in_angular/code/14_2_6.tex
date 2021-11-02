@@ -1,0 +1,25 @@
+\begin{minted}{typescript}
+  private _makeTransformers() {
+    ..
+    if (this._platformTransformers !== null) {
+      this._transformers.push(...this._platformTransformers);
+    } else {
+      if (this._platform === PLATFORM.Browser) {
+        ..
+        if (!this._JitMode) {
+          // Replace bootstrap in browser AOT.
+          this._transformers.push(
+            replaceBootstrap(
+              isAppPath,
+              getEntryModule,
+              getTypeChecker,
+              !!this._compilerOptions.enableIvy
+            )
+          );
+        }
+      } else if (this._platform === PLATFORM.Server) {
+        ..
+      }
+    } ..
+  }
+\end{minted}

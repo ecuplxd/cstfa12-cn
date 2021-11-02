@@ -1,0 +1,28 @@
+\begin{minted}{typescript}
+/**
+ * Subset of API needed for writing attributes, properties, and setting up
+ * listeners on Element.
+ */
+export interface RElement extends RNode {
+  style: RCssStyleDeclaration;
+  classList: RDomTokenList;
+  setAttribute(name: string, value: string): void;
+  removeAttribute(name: string): void;
+  setAttributeNS(
+    namespaceURI: string,
+    qualifiedName: string,
+    value: string
+  ): void;
+  addEventListener(
+    type: string,
+    listener: EventListener,
+    useCapture?: boolean
+  ): void;
+  removeEventListener(
+    type: string,
+    listener?: EventListener,
+    options?: boolean
+  ): void;
+  setProperty?(name: string, value: any): void;
+}
+\end{minted}

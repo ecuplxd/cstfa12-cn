@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+// By default, a `FormControl` is created for every `<input>` or
+// other form component.
+export class FormControl extends AbstractControl {
+  _onChange: Function[] = [];
+
+  // Register a listener for change events.
+  registerOnChange(fn: Function): void {
+    this._onChange.push(fn);
+  }
+  ..
+}
+\end{minted}

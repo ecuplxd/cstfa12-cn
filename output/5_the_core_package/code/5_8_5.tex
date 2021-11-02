@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+function createProdRootView(
+  elInjector: Injector,
+  projectableNodes: any[][],
+  rootSelectorOrNode: string | any,
+  def: ViewDefinition,
+  ngModule: NgModuleRef<any>,
+  context?: any
+): ViewData {
+  const rendererFactory: RendererFactory2 =
+    ngModule.injector.get(RendererFactory2);
+  return createRootView(
+    createRootData(
+      elInjector,
+      ngModule,
+      rendererFactory,
+      projectableNodes,
+      rootSelectorOrNode
+    ),
+    def,
+    context
+  );
+}
+\end{minted}

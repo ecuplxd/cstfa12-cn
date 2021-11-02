@@ -1,0 +1,19 @@
+\begin{minted}{typescript}
+/**
+ * `PlatformLocation` encapsulates all of the direct calls to platform APIs.
+ * This class should not be used directly by an application developer.
+Instead, use
+ * {@link Location}.
+ */
+@Injectable()
+export class BrowserPlatformLocation extends PlatformLocation {
+  public readonly location: Location;
+  private _history: History;
+
+  constructor(@Inject(DOCUMENT) private _doc: any) {
+    super();
+    this._init();
+  }
+  ..
+}
+\end{minted}

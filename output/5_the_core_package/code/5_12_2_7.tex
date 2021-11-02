@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+export abstract class ViewRef extends ChangeDetectorRef {
+  abstract destroy(): void;
+  abstract get destroyed(): boolean;
+  abstract onDestroy(callback: Function): any;
+}
+\end{minted}

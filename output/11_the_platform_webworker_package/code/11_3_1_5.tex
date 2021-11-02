@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+/**
+ * Helper class that wraps a channel's {@link EventEmitter} and
+ * keeps track of if it should run in the zone.
+ */
+class _Channel {
+  constructor(public emitter: EventEmitter<any>, public runInZone: boolean) {}
+}
+\end{minted}

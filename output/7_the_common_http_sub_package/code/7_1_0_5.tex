@@ -1,0 +1,22 @@
+\begin{minted}{typescript}
+// Next, need to figure out which argument holds the HttpRequestInit
+// options, if any.
+let options: HttpRequestInit | undefined;
+
+// Check whether a body argument is expected. The only valid way to omit
+// the body argument is to use a known no-body method like GET.
+if (mightHaveBody(this.method) || !!fourth) {
+  // Body is the third argument, options are the fourth.
+  this.body = third !== undefined ? (third as T) : null;
+  options = fourth;
+} else {
+  // No body required, options are the third argument.
+  // The body stays null.
+  options = third as HttpRequestInit;
+}
+
+// If options have been passed, interpret them.
+if (options) {
+  ..
+}
+\end{minted}

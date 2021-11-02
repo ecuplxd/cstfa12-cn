@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+  static invokeTask(task: any, target: any, args: any): any {
+    if (!task) {
+      task = this;
+    }
+    _numberOfNestedTaskFrames++;
+    try {
+      task.runCount++;
+      return task.zone.runTask(task, target, args);
+    } finally {
+      if (_numberOfNestedTaskFrames == 1) {
+        drainMicroTaskQueue();
+      }
+      _numberOfNestedTaskFrames--;
+    }
+  }
+\end{minted}

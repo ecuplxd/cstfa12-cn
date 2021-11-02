@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+  ngOnInit(): void {
+    if (!this.activated) {
+      // If the outlet was not instantiated at the time the
+
+      // route got activated we need to populate
+      // the outlet when it is initialized (ie inside a NgIf)
+      const context = this.parentContexts.getContext(this.name);
+      if (context && context.route) {
+        if (context.attachRef) {
+          // `attachRef` is populated when there is an
+          // existing component to mount
+          %\step{1}% this.attach(context.attachRef, context.route);
+        } else {
+          // otherwise the component defined in the configuration is created
+          %\step{2}% this.activateWith(
+            context.route,
+            context.resolver || null
+          );
+        }
+      }
+    }
+  }
+\end{minted}

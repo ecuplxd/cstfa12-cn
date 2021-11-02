@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+export function isPlatformBrowser(platformId: Object): boolean {
+  return platformId === PLATFORM_BROWSER_ID;
+}
+export function isPlatformServer(platformId: Object): boolean {
+  return platformId === PLATFORM_SERVER_ID;
+}
+export function isPlatformWorkerApp(platformId: Object): boolean {
+  return platformId === PLATFORM_WORKER_APP_ID;
+}
+export function isPlatformWorkerUi(platformId: Object): boolean {
+  return platformId === PLATFORM_WORKER_UI_ID;
+}
+\end{minted}

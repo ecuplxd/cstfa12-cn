@@ -1,0 +1,37 @@
+\begin{minted}{typescript}
+  addEventListener(
+    element: HTMLElement,
+    eventName: string,
+    handler: Function
+  ): Function {
+    const zone = this.manager.getZone();
+    eventName = eventName.toLowerCase();
+    if (!(window as any).Hammer && this.loader) {
+      let cancelRegistration = false;
+      let deregister: Function = () => {
+        cancelRegistration = true;
+      };
+      this.loader(); ..
+      return () => {
+        deregister();
+      };
+    }
+    %\step{1}% return zone.runOutsideAngular(() => {
+      // Creating the manager bind events, must be done outside of angular
+      const mc = this._config.buildHammer(element);
+      const callback = function (eventObj: HammerInput) {
+        zone.runGuarded(function () {
+          handler(eventObj);
+        });
+      };
+      mc.on(eventName, callback);
+      return () => {
+        mc.off(eventName, callback);
+        // destroy mc to prevent memory leak
+        if (typeof mc.destroy === 'function') {
+          mc.destroy();
+        }
+      };
+    });
+  }
+\end{minted}

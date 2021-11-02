@@ -1,0 +1,128 @@
+\section{The Angular CLI And enableIvy}
+
+Application developers wishing to use Ivy will mostly do so via the
+\emph{enableIvy}
+command line option to Angular CLI:
+
+\begin{itemize}
+  \item \url{https://next.angular.io/guide/ivy}
+\end{itemize}
+
+We can see from the Angular CLI 8.2 source tree this option impacts the code base in
+a few places. The schema for Angular Application options is defined here:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/application/schema.json}
+        {<ANGULAR-CLI-MASTER>/packages/schematics/angular/application/schema.json}
+\end{itemize}
+
+and includes this for
+\texttt{enableIvy}
+:
+
+\input{14_render_ivy_in_angular/code/14_2_0.tex}
+
+The entry point for Angular Application schematics:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/application/index.ts}
+        {<ANGULAR-CLI-MASTER>/packages/schematics/angular/application/index.ts}
+\end{itemize}
+
+has this code :
+
+\input{14_render_ivy_in_angular/code/14_2_1.tex}
+
+The schema for Angular Ng New options is defined here:
+enableIvy option set
+in tsconfig.app.json
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/ng-new/schema.json}
+        {<ANGULAR-CLI-MASTER>/packages/schematics/angular/ng-new/schema.json}
+\end{itemize}
+
+and has these entries:
+
+\input{14_render_ivy_in_angular/code/14_2_2.tex}
+
+The description string from above ends up here in the generated documentation:
+
+\begin{itemize}
+  \item \url{https://next.angular.io/cli/new}
+\end{itemize}
+
+The
+\texttt{ng-new}
+entrypoint:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/ng-new/index.ts}
+        {<ANGULAR-CLI-MASTER>/packages/schematics/angular/ng-new/index.ts}
+\end{itemize}
+
+accepts the
+\texttt{enableIvy}
+parameter as follows:
+
+\input{14_render_ivy_in_angular/code/14_2_3.tex}
+
+The template for tsconfig.app.json reacts to
+\texttt{enableIvy}
+if present:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/application/files/tsconfig.app.json.template}
+        {<ANGULAR-CLI-MASTER>/packages/schematics/angular/application/files/tsconfig.app.json.template}
+\end{itemize}
+
+as it has this entry:
+
+\input{14_render_ivy_in_angular/code/14_2_4.tex}
+
+So that is how the entry gets into tsconfig.app.json. Now let’s see what impact it has.
+The ngtools functionality for webpack configures the bootstrap code slightly differently
+when
+\texttt{enableIvy}
+is enabled. In this file:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular-cli/blob/master/packages/ngtools/webpack/src/transformers/replace_bootstrap.ts}
+        {<ANGULAR-CLI-MASTER>/packages/ngtools/webpack/src/transformers/replace\_bootstrap.ts}
+\end{itemize}
+
+we see:
+
+\input{14_render_ivy_in_angular/code/14_2_5.tex}
+
+So when
+\texttt{enableIvy}
+is NOT present, the names for the factory artefacts are different.
+From where does
+\texttt{replaceBootstrap}
+get called? When we examine:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular-cli/blob/master/packages/ngtools/webpack/src/angular_compiler_plugin.ts}
+        {<ANGULAR-CLI-MASTER>/packages/ngtools/webpack/src/angular\_compiler\_plugin.ts}
+\end{itemize}
+
+we see the
+\texttt{\_makeTransformers}
+method is as follows:
+
+\input{14_render_ivy_in_angular/code/14_2_6.tex}
+
+We also see ivy used in
+\texttt{\_processLazyRoutes}
+:
+
+\input{14_render_ivy_in_angular/code/14_2_7.tex}
+
+We also see ivy impacting on how
+\texttt{\_createOrUpdateProgram}
+works:
+
+\input{14_render_ivy_in_angular/code/14_2_8.tex}
+
+\input{14_render_ivy_in_angular/14_2_0_impact_enableivy_has_on_angular_cli_s_code_generation.tex}

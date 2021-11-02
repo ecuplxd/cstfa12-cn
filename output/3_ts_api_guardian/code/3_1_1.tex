@@ -1,0 +1,40 @@
+\begin{minted}{ts}
+  // Enforce that the public API matches the golden files
+  // Note that these two commands work on built d.ts files
+  // instead of the source
+ 1 enforce: (gulp) => (done) => {
+    const platformScriptPath = require('./platform-script-path');
+    const childProcess = require('child_process');
+    const path = require('path');
+
+    childProcess
+        .spawn(path.join(__dirname,
+           platformScriptPath(`../../node_modules/.bin/ts-api-guardian`)),
+            ['--verifyDir', path.normalize(publicApiDir)]
+              .concat(publicApiArgs), {stdio: 'inherit'})
+        .on('close', (errorCode) => {
+          if (errorCode !== 0) {
+            done(new Error(
+              'Public API differs from golden file. ‘ +
+              ‘Please run `gulp public-api:update`.'));
+          } else {
+            done();
+          }
+        });
+  },
+
+  // Generate the public API golden files
+ 2 update: (gulp) => (done) => {
+    const platformScriptPath = require('./platform-script-path');
+    const childProcess = require('child_process');
+    const path = require('path');
+
+    childProcess
+        .spawn(
+            path.join(__dirname, platformScriptPath(
+               `../../node_modules/.bin/ts-api-guardian`)),
+            ['--outDir', path.normalize(publicApiDir)].concat(publicApiArgs),
+             {stdio: 'inherit'})
+        .on('close', done);
+  }
+\end{minted}

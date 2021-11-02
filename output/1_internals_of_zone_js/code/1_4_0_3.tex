@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+class ZoneTask<T extends TaskType> implements Task {
+  public type: T;
+  public source: string;
+  public invoke: Function;
+  public callback: Function;
+  public data: TaskData | undefined;
+  public scheduleFn: ((task: Task) => void) | undefined;
+  public cancelFn: ((task: Task) => void) | undefined;
+  _zone: Zone | null = null;
+  public runCount: number = 0;
+  _zoneDelegates: ZoneDelegate[] | null = null;
+  _state: TaskState = 'notScheduled';
+  ..
+}
+\end{minted}

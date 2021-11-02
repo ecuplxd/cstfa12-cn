@@ -1,0 +1,31 @@
+\begin{minted}{typescript}
+/**
+ * This adapter is required to log error messages.
+ *
+ * Note: other methods all throw as the DOM is not accessible
+ * directly in web worker context.
+ */
+export class WorkerDomAdapter extends DomAdapter {
+  static makeCurrent() {
+    setRootDomAdapter(new WorkerDomAdapter());
+  }
+
+  log(error: any) {
+    // tslint:disable-next-line:no-console
+    console.log(error);
+  }
+
+  // everything erlse throws an exception
+  insertAllBefore(parent: any, el: any, nodes: any) {
+    throw 'not implemented';
+  }
+  insertAfter(parent: any, el: any, node: any) {
+    throw 'not implemented';
+  }
+  setInnerHTML(el: any, value: any) {
+    throw 'not implemented';
+  }
+
+  ..
+}
+\end{minted}

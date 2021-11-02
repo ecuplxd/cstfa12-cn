@@ -1,0 +1,29 @@
+\begin{minted}{typescript}
+// Immutable set of Http headers, with lazy parsing.
+export class HttpHeaders {
+  /**
+   * Internal map of lowercase header names to values.
+   */
+  private headers: Map<string, string[]>;
+
+  /**
+   * Internal map of lowercased header names to the normalized
+   * form of the name (the form seen first).
+   */
+  private normalizedNames: Map<string, string> = new Map();
+
+  /**
+   * Complete the lazy initialization of this object (needed before reading).
+   */
+  private lazyInit: HttpHeaders | Function | null;
+
+  /**
+   * Queued updates to be materialized the next initialization.
+   */
+  private lazyUpdate: Update[] | null = null;
+
+  constructor(headers?: string | { [name: string]: string | string[] }) {
+    ..
+  }
+}
+\end{minted}

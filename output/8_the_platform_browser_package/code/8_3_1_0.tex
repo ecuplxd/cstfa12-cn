@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+export function camelCaseToDashCase(input: string): string {
+  return input.replace(
+    CAMEL_CASE_REGEXP,
+    (...m: string[]) => '-' + m[1].toLowerCase()
+  );
+}
+
+export function dashCaseToCamelCase(input: string): string {
+  return input.replace(DASH_CASE_REGEXP, (...m: string[]) =>
+    m[1].toUpperCase()
+  );
+}
+\end{minted}

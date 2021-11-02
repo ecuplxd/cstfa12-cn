@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+// e.g. `factory: function MyApp_Factory()
+// { return new MyApp(injectElementRef()); }`
+const templateFactory = %\step{1}% createFactory(
+  component.type,
+  outputCtx,
+  reflector
+);
+definitionMapValues.push({
+  key: 'factory',
+  value: templateFactory,
+  quoted: false,
+});
+\end{minted}

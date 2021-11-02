@@ -1,0 +1,6 @@
+\begin{minted}{typescript}
+export const BROWSER_SANITIZATION_PROVIDERS: StaticProvider[] = [
+  { provide: Sanitizer, useExisting: DomSanitizer },
+  { provide: DomSanitizer, useClass: DomSanitizerImpl, deps: [DOCUMENT] },
+];
+\end{minted}

@@ -1,0 +1,18 @@
+\begin{minted}{typescript}
+@NgModule({
+  providers: [
+    HttpXsrfInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useExisting: HttpXsrfInterceptor,
+      multi: true,
+    },
+    { provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor },
+    { provide: XSRF_COOKIE_NAME, useValue: 'XSRF-TOKEN' },
+    { provide: XSRF_HEADER_NAME, useValue: 'X-XSRF-TOKEN' },
+  ],
+})
+export class HttpClientXsrfModule {
+  ..
+}
+\end{minted}

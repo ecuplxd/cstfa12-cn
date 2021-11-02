@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+/**
+ * Wrapper class that exposes the Worker
+ * and underlying {@link MessageBus} for lower level message passing.
+ */
+@Injectable()
+export class WebWorkerInstance {
+  public worker: Worker;
+  public bus: MessageBus;
+
+  public init(worker: Worker, bus: MessageBus) {
+    this.worker = worker;
+    this.bus = bus;
+  }
+}
+\end{minted}

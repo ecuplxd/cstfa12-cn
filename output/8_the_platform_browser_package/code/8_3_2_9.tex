@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+  constructor(@Inject(DOCUMENT) private _doc: any) {
+    super();
+    this._init();
+  }
+  // This is moved to its own method so that
+  // `MockPlatformLocationStrategy` can overwrite it
+  _init() {
+    (this as { location: Location }).location = getDOM().getLocation();
+    this._history = getDOM().getHistory();
+  }
+\end{minted}

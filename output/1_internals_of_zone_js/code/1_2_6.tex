@@ -1,0 +1,11 @@
+\begin{minted}{ts}
+* - [MicroTask] queue represents a set of tasks which are executing right
+*   after the current stack frame becomes clean and before a VM yield. All
+*   [MicroTask]s execute in order of insertion before VM yield and the next
+*   [MacroTask] is executed.
+* - [MacroTask] queue represents a set of tasks which are executed one at a
+*   time after each VM yield. The queue is ordered by time, and insertions
+*   can happen in any location.
+* - [EventTask] is a set of tasks which can at any time be inserted to the
+*   end of the [MacroTask] queue. This happens when the event fires.
+\end{minted}

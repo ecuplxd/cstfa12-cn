@@ -1,0 +1,75 @@
+\begin{minted}{typescript}
+export const _WORKER_UI_PLATFORM_PROVIDERS: StaticProvider[] = [
+  { provide: NgZone, useFactory: createNgZone, deps: [] },
+  {
+    provide: MessageBasedRenderer2,
+    deps: [
+      ServiceMessageBrokerFactory,
+      MessageBus,
+      Serializer,
+      RenderStore,
+      RendererFactory2,
+    ],
+  },
+  {
+    provide: WORKER_UI_STARTABLE_MESSAGING_SERVICE,
+    useExisting: MessageBasedRenderer2,
+    multi: true,
+  },
+  BROWSER_SANITIZATION_PROVIDERS,
+  { provide: ErrorHandler, useFactory: _exceptionHandler, deps: [] },
+  { provide: DOCUMENT, useFactory: _document, deps: [] },
+  {
+    provide: EVENT_MANAGER_PLUGINS,
+    useClass: DomEventsPlugin,
+    deps: [DOCUMENT, NgZone],
+    multi: true,
+  },
+  {
+    provide: EVENT_MANAGER_PLUGINS,
+    useClass: KeyEventsPlugin,
+    deps: [DOCUMENT],
+    multi: true,
+  },
+  {
+    provide: EVENT_MANAGER_PLUGINS,
+    useClass: HammerGesturesPlugin,
+    deps: [DOCUMENT, HAMMER_GESTURE_CONFIG],
+    multi: true,
+  },
+  { provide: HAMMER_GESTURE_CONFIG, useClass: HammerGestureConfig, deps: [] },
+  APP_ID_RANDOM_PROVIDER,
+  { provide: DomRendererFactory2, deps: [EventManager, DomSharedStylesHost] },
+  { provide: RendererFactory2, useExisting: DomRendererFactory2 },
+  { provide: SharedStylesHost, useExisting: DomSharedStylesHost },
+  {
+    provide: ServiceMessageBrokerFactory,
+    useClass: ServiceMessageBrokerFactory,
+    deps: [MessageBus, Serializer],
+  },
+  {
+    provide: ClientMessageBrokerFactory,
+    useClass: ClientMessageBrokerFactory,
+    deps: [MessageBus, Serializer],
+  },
+  { provide: Serializer, deps: [RenderStore] },
+  { provide: ON_WEB_WORKER, useValue: false },
+  { provide: RenderStore, deps: [] },
+  { provide: DomSharedStylesHost, deps: [DOCUMENT] },
+  { provide: Testability, deps: [NgZone] },
+  { provide: EventManager, deps: [EVENT_MANAGER_PLUGINS, NgZone] },
+  { provide: WebWorkerInstance, deps: [] },
+  {
+    provide: PLATFORM_INITIALIZER,
+    useFactory: initWebWorkerRenderPlatform,
+    multi: true,
+    deps: [Injector],
+  },
+  { provide: PLATFORM_ID, useValue: PLATFORM_WORKER_UI_ID },
+  {
+    provide: MessageBus,
+    useFactory: messageBusFactory,
+    deps: [WebWorkerInstance],
+  },
+];
+\end{minted}

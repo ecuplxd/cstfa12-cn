@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+// wrapper around a module that also includes the providers.
+export interface ModuleWithProviders {
+  ngModule: Type<any>;
+  providers?: Provider[];
+}
+\end{minted}

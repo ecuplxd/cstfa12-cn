@@ -1,0 +1,17 @@
+\begin{minted}{typescript}
+class NgModuleFactory_ extends NgModuleFactory<any> {
+  ..
+  create(parentInjector: Injector | null): NgModuleRef<any> {
+    initServicesIfNeeded();
+    const def = cloneNgModuleDefinition(
+      resolveDefinition(this._ngModuleDefFactory)
+    );
+    return Services.createNgModuleRef(
+      this.moduleType,
+      parentInjector || Injector.NULL,
+      this._bootstrapComponents,
+      def
+    );
+  }
+}
+\end{minted}

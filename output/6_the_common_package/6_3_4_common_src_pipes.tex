@@ -1,0 +1,42 @@
+\subsection{common/src/pipes}
+
+This sub-directory contains these source files:
+
+\begin{itemize}
+  \item async\_pipe.ts
+  \item case\_conversion\_pipes.ts
+  \item date\_pipe.ts
+  \item i18n\_plural\_pipe.ts
+  \item i18n\_select\_pipe.ts
+  \item invalid\_pipe\_argument\_error.ts
+  \item json\_pipe.ts
+  \item number\_pipe.ts
+  \item slice\_pipe.ts
+\end{itemize}
+
+All the pipe classes are marked with the
+\texttt{Pipe}
+decorator. All the pipes implement the
+\texttt{PipeTransform}
+interface. As an example, slice\_pipe.ts has the following:
+
+\input{6_the_common_package/code/6_3_4_0.tex}
+
+\texttt{COMMON\_PIPES}
+(in index.ts) lists the defined pipes and will often be used when
+creating components.
+
+\input{6_the_common_package/code/6_3_4_1.tex}
+
+We saw its use in the
+\texttt{NgModule}
+decorator attached to
+\texttt{CommonModule}
+.
+
+Finally,
+\texttt{InvalidPipeArgumentError}
+extends
+\texttt{BaseError:}
+
+\input{6_the_common_package/code/6_3_4_2.tex}

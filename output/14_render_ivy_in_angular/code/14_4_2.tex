@@ -1,0 +1,22 @@
+\begin{minted}{typescript}
+  emitAllPartialModules({
+    ngModuleByPipeOrDirective,
+    files,
+  }: NgAnalyzedModules): PartialModule[] {
+    // Using reduce like this is a select
+    // many pattern (where map is a select pattern)
+    return files.reduce<PartialModule[]>((r, file) => {
+      r.push(
+        ...this._emitPartialModule(
+          file.fileName,
+          ngModuleByPipeOrDirective,
+          file.directives,
+          file.pipes,
+          file.ngModules,
+          file.injectables
+        )
+      );
+      return r;
+    }, []);
+  }
+\end{minted}

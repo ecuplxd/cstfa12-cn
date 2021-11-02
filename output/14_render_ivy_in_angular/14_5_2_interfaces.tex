@@ -1,0 +1,140 @@
+\subsection{Interfaces}
+
+When trying to figure out how Render3 works, a good place to start is with its
+interfaces. Let’s look at this first:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/renderer.ts}
+        {<ANGULAR-MASTER>/packages/core/src/render3/interfaces/renderer.ts}
+\end{itemize}
+
+There are some simple helper interfaces describing a node, an element and a text
+node. The node is defined as have three methods to insert, append and remove a
+child:
+
+\input{14_render_ivy_in_angular/code/14_5_2_0.tex}
+
+The element allows adding and removing of listeners, working with attributes and
+properties and style configuration – it is defined as:
+
+\input{14_render_ivy_in_angular/code/14_5_2_1.tex}
+
+The text node adds a
+\texttt{textContent}
+property:
+
+\input{14_render_ivy_in_angular/code/14_5_2_2.tex}
+
+It has this factory code. Note the return type from
+\texttt{createRenderer}
+is
+\texttt{Render3}
+1
+–
+and that for the
+\texttt{domRendererFactory3}
+implementation
+2
+this is the normal DOM
+\texttt{document}
+:
+
+\input{14_render_ivy_in_angular/code/14_5_2_3.tex}
+
+This is key to moving back to regular DOM usage for code that runs in the main
+browser UI thread, and yet allowing alternatives elsewhere.
+\texttt{Renderer3}
+is a type alias:
+
+\input{14_render_ivy_in_angular/code/14_5_2_4.tex}
+
+This represents the two kinds of renderers that are supported. The bolded text in the
+comment highlights the usage scenario for the first of these:
+
+\input{14_render_ivy_in_angular/code/14_5_2_5.tex}
+
+\texttt{ProceduralRender3}
+is intended to be used from web workers and server-side:
+
+\input{14_render_ivy_in_angular/code/14_5_2_6.tex}
+
+Let’s now look at
+\url{view.ts}
+. It includes the following to work with static data:
+
+\input{14_render_ivy_in_angular/code/14_5_2_7.tex}
+
+\texttt{TData}
+is defined as:
+
+\input{14_render_ivy_in_angular/code/14_5_2_8.tex}
+
+A tree of
+\texttt{LView}
+s or
+\texttt{LContainer}
+s will be needed, so this type is a node in the
+hierarchy:
+
+\input{14_render_ivy_in_angular/code/14_5_2_9.tex}
+
+An LView stores info relating to processing a view’s instructions. Detailed comments
+(not shown here) for each of its fields are in
+\url{thesource}
+.
+
+\input{14_render_ivy_in_angular/code/14_5_2_10.tex}
+
+The
+\url{container.ts}
+file looks at containers, which are collections of views and sub-
+containers. It exports one type,
+\texttt{TContainer}
+:
+
+\input{14_render_ivy_in_angular/code/14_5_2_11.tex}
+
+and one interface,
+\texttt{LContainer}
+: (note
+\url{thesourcefile}
+contained detailed comments for
+each field):
+
+\input{14_render_ivy_in_angular/code/14_5_2_12.tex}
+
+The
+\url{query.ts}
+file contains the
+\texttt{QueryReadType}
+class:
+
+\input{14_render_ivy_in_angular/code/14_5_2_13.tex}
+
+and the
+\texttt{LQuery}
+interface:
+
+\input{14_render_ivy_in_angular/code/14_5_2_14.tex}
+
+The
+\url{projection.ts}
+file define LProjection as:
+
+\input{14_render_ivy_in_angular/code/14_5_2_15.tex}
+
+The injector.ts file has this:
+
+\input{14_render_ivy_in_angular/code/14_5_2_16.tex}
+
+The node.ts file is large and contains a hierarchy of node-related types.
+
+The root,
+\texttt{LNode}
+, is defined (abbreviated) as:
+
+\input{14_render_ivy_in_angular/code/14_5_2_17.tex}
+
+Each of the other types adds a few additional fields to represent that node type.
+
+Render3 as  a View Processing Unit (VPU)

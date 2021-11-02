@@ -1,0 +1,14 @@
+\begin{minted}{ts}
+// Fields to lower within metadata in render2 mode.
+const LOWER_FIELDS =
+                ['useValue', 'useFactory', 'data', 'id', 'loadChildren'];
+// Fields to lower within metadata in render3 mode.
+const R3_LOWER_FIELDS = [...LOWER_FIELDS, 'providers', 'imports', 'exports'];
+
+class AngularCompilerProgram implements Program {
+  constructor(
+  …
+    this.loweringMetadataTransform =
+               new LowerMetadataTransform(
+                       options.enableIvy ? R3_LOWER_FIELDS : LOWER_FIELDS);
+\end{minted}

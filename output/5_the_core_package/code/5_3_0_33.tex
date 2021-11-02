@@ -1,0 +1,16 @@
+\begin{minted}{typescript}
+  private _views: InternalViewRef[] = [];
+  attachView(viewRef: ViewRef): void {
+    const view = viewRef as InternalViewRef;
+    this._views.push(view);
+    view.attachToAppRef(this);
+  }
+  detachView(viewRef: ViewRef): void {
+    const view = viewRef as InternalViewRef;
+    remove(this._views, view);
+    view.detachFromAppRef();
+  }
+  get viewCount() {
+    return this._views.length;
+  }
+\end{minted}

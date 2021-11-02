@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+@Directive({ selector: '[ngFor][ngForOf]' })
+export class NgForOf<T> implements DoCheck, OnChanges {
+  private _differ: IterableDiffer<T> | null = null;
+  private _trackByFn: TrackByFunction<T>;
+
+  constructor(
+    private _viewContainer: ViewContainerRef,
+    private _template: TemplateRef<NgForOfContext<T>>,
+    private _differs: IterableDiffers
+  ) {}
+}
+\end{minted}

@@ -1,0 +1,39 @@
+\section{Forms API}
+
+The exported API of the @Angular/Forms package can be sub-divided into four groups
+– main, directives, accessors and validator directives.
+
+The main group can be represented as:
+
+Its index.ts file contains this one line:
+
+\input{15_the_forms_package/code/15_1_0.tex}
+
+The parts of forms.ts related to exporting the above are:
+
+\input{15_the_forms_package/code/15_1_1.tex}
+
+Two NgModules are supplied, one for normal forms, FormsModule, and the other for
+FormsModule
+@Angular/Forms API (main)
+
+reactive forms, ReactiveFormsModule. The control hierarchy starts with a root, and
+has FormControl for actual controls,and two combinations of controls, one for group
+(of fixed size) and one for array (of dynamic size).
+
+A large directive hierarchy is supplied for both types of forms:
+
+The parts of forms.ts related to exporting directives are:
+
+\input{15_the_forms_package/code/15_1_2.tex}
+
+The accessor hierarchy can be represented as:
+
+The parts of forms.ts related to exporting accessors are:
+
+\input{15_the_forms_package/code/15_1_3.tex}
+
+The part of forms.ts related to exporting validator directives is:
+ControlValueAccessor
+
+\input{15_the_forms_package/code/15_1_4.tex}

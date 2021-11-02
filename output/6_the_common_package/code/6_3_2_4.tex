@@ -1,0 +1,29 @@
+\begin{minted}{typescript}
+  private _updateView() {
+    if (this._context.$implicit) {
+      if (!this._thenViewRef) {
+        this._viewContainer.clear();
+        this._elseViewRef = null;
+        if (this._thenTemplateRef) {
+          this._thenViewRef =
+            %\step{1}% this._viewContainer.createEmbeddedView(
+              this._thenTemplateRef,
+              this._context
+            );
+        }
+      }
+    } else {
+      if (!this._elseViewRef) {
+        this._viewContainer.clear();
+        this._thenViewRef = null;
+        if (this._elseTemplateRef) {
+          this._elseViewRef =
+            %\step{2}% this._viewContainer.createEmbeddedView(
+              this._elseTemplateRef,
+              this._context
+            );
+        }
+      }
+    }
+  }
+\end{minted}

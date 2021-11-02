@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+/**
+ * Visit every node in a list of {@link TemplateAst}s with the given
+ * {@link TemplateAstVisitor}.
+ */
+export function templateVisitAll(
+  visitor: TemplateAstVisitor,
+  asts: TemplateAst[],
+  context: any = null
+): any[] {
+  const result: any[] = [];
+  const visit = visitor.visit
+    ? (ast: TemplateAst) =>
+        visitor.visit!(ast, context) || ast.visit(visitor, context)
+    : (ast: TemplateAst) => ast.visit(visitor, context);
+  asts.forEach((ast) => {
+    const astResult = visit(ast);
+    if (astResult) {
+      result.push(astResult);
+    }
+  });
+  return result;
+}
+\end{minted}

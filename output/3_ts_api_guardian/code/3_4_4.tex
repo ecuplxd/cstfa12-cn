@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+export interface SerializationOptions {
+  /**
+   * Removes all exports matching the regular expression.
+   */
+  stripExportPattern?: RegExp;
+  /**
+   * Whitelists these identifiers as modules in the output. For example,
+   * ```
+   * import * as angular from './angularjs';
+   *
+   * export class Foo extends angular.Bar {}
+   * ```
+   * will produce `export class Foo extends angular.Bar {}` and requires
+   * whitelisting angular.
+   */
+  allowModuleIdentifiers?: string[];
+  /**
+   * Warns or errors if stability annotations are missing on an export.
+   * Supports experimental, stable and deprecated.
+   */
+  onStabilityMissing?: string; // 'warn' | 'error' | 'none'
+}
+\end{minted}

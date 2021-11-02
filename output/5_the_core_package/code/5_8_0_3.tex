@@ -1,0 +1,22 @@
+\begin{minted}{typescript}
+export class DebugElement extends DebugNode {
+  name: string;
+  properties: { [key: string]: any };
+  attributes: { [key: string]: string | null };
+  classes: { [key: string]: boolean };
+  styles: { [key: string]: string | null };
+  childNodes: DebugNode[];
+  nativeElement: any;
+
+  constructor(nativeNode: any, parent: any, _debugContext: DebugContext) {
+    super(nativeNode, parent, _debugContext);
+    this.properties = {};
+    this.attributes = {};
+    this.classes = {};
+    this.styles = {};
+    this.childNodes = [];
+    this.nativeElement = nativeNode;
+  }
+  ..
+}
+\end{minted}

@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+// Spawns a new class and initializes the WebWorkerInstance
+function spawnWebWorker(uri: string, instance: WebWorkerInstance): void {
+  %\step{1}% const webWorker: Worker = new Worker(uri);
+  %\step{2}% const sink = new PostMessageBusSink(webWorker);
+  const source = new PostMessageBusSource(webWorker);
+  const bus = new PostMessageBus(sink, source);
+  %\step{3}% instance.init(webWorker, bus);
+  ..
+}
+\end{minted}

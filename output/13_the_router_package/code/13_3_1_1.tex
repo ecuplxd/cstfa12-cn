@@ -1,0 +1,10 @@
+\begin{minted}{typescript}
+  @Input()
+  set routerLink(commands: any[] | string) {
+    if (commands != null) {
+      this.commands = Array.isArray(commands) ? commands : [commands];
+    } else {
+      this.commands = [];
+    }
+  }
+\end{minted}

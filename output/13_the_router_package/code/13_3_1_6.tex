@@ -1,0 +1,7 @@
+\begin{minted}{typescript}
+  private updateTargetUrlAndHref(): void {
+    this.href = this.locationStrategy.prepareExternalUrl(
+      this.router.serializeUrl(this.urlTree)
+    );
+  }
+\end{minted}

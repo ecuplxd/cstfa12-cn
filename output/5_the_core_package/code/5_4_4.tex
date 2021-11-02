@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+export abstract class Injector {
+  static THROW_IF_NOT_FOUND = _THROW_IF_NOT_FOUND;
+  static NULL: Injector = new _NullInjector();
+  abstract get<T>(token: Type<T> | InjectionToken<T>, notFoundValue?: T): T;
+  abstract get(token: any, notFoundValue?: any): any;
+  static create(providers: StaticProvider[], parent?: Injector): Injector {
+    return new StaticInjector(providers, parent);
+  }
+}
+\end{minted}

@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+@Injectable()
+export class HammerGesturesPlugin extends EventManagerPlugin {
+  constructor(
+    @Inject(DOCUMENT) doc: any,
+    @Inject(HAMMER_GESTURE_CONFIG) private _config: HammerGestureConfig,
+    private console: Console,
+    @Optional() @Inject(HAMMER_LOADER) private loader?: HammerLoader | null
+  ) {
+    super(doc);
+  }
+  ..
+}
+\end{minted}

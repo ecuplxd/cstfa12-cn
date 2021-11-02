@@ -1,0 +1,44 @@
+\begin{minted}{typescript}
+export class NgZone {
+  readonly hasPendingMicrotasks: boolean = false;
+  readonly hasPendingMacrotasks: boolean = false;
+  readonly isStable: boolean = true;
+  readonly onUnstable: EventEmitter<any> = new EventEmitter(false);
+  readonly onMicrotaskEmpty: EventEmitter<any> = new EventEmitter(false);
+  readonly onStable: EventEmitter<any> = new EventEmitter(false);
+  readonly onError: EventEmitter<any> = new EventEmitter(false);
+  constructor({ enableLongStackTrace = false }) {
+    ..
+  }
+  static isInAngularZone(): boolean {
+    ..
+  }
+  static assertInAngularZone(): void {
+    ..
+  }
+  static assertNotInAngularZone(): void {
+    ..
+  }
+  run<T>(fn: (...args: any[]) => T, applyThis?: any, applyArgs?: any[]): T {
+    ..
+  }
+  runTask<T>(
+    fn: (...args: any[]) => T,
+    applyThis?: any,
+    applyArgs?: any[],
+    name?: string
+  ): T {
+    ..
+  }
+  runGuarded<T>(
+    fn: (...args: any[]) => T,
+    applyThis?: any,
+    applyArgs?: any[]
+  ): T {
+    ..
+  }
+  runOutsideAngular<T>(fn: (...args: any[]) => T): T {
+    ..
+  }
+}
+\end{minted}

@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+  triggerEventHandler(eventName: string, eventObj: any) {
+    this.listeners.forEach((listener) => {
+      if (listener.name == eventName) {
+        listener.callback(eventObj);
+      }
+    });
+  }
+\end{minted}

@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+@Injectable()
+export class WebWorkerRendererFactory2 implements RendererFactory2 {
+  globalEvents = new NamedEventEmitter();
+
+  private _messageBroker: ClientMessageBroker;
+
+  constructor(
+    messageBrokerFactory: ClientMessageBrokerFactory,
+    bus: MessageBus,
+    private _serializer: Serializer,
+    public renderStore: RenderStore
+  ) {
+    this._messageBroker =
+      messageBrokerFactory.createMessageBroker(RENDERER_2_CHANNEL);
+    %\step{1}% bus.initChannel(EVENT_2_CHANNEL);
+    %\step{2}% const source = bus.from(EVENT_2_CHANNEL);
+    %\step{3}% source.subscribe({
+      next: (message: any) => this._dispatchEvent(message),
+    });
+  }
+  ..
+}
+\end{minted}

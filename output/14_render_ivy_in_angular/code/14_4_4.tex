@@ -1,0 +1,24 @@
+\begin{minted}{ts}
+// Process all components and directives
+1   directives.forEach(directiveType => {
+      const directiveMetadata =
+this._metadataResolver.getDirectiveMetadata(directiveType);
+      if (directiveMetadata.isComponent) {
+        ..
+        const {template: parsedTemplate} =
+            this._parseTemplate(
+directiveMetadata, module, module.transitiveModule.directives);
+2 compileIvyComponent(
+context, directiveMetadata, parsedTemplate, this._reflector);
+      } else {
+3 compileIvyDirective(context, directiveMetadata, this._reflector);
+      }
+    });
+
+    if (context.statements) {
+      return [{fileName, statements:
+[...context.constantPool.statements, ...context.statements]}];
+    }
+    return [];
+  }
+\end{minted}

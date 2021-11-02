@@ -1,0 +1,13 @@
+\begin{minted}{typescript}
+@NgModule({
+  providers: [
+    ..
+    WebWorkerRendererFactory2,
+    { provide: RendererFactory2, useExisting: WebWorkerRendererFactory2 },
+    RenderStore,
+    ..
+  ],
+  ..
+})
+export class WorkerAppModule {}
+\end{minted}

@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+/**
+ * Set the GetTestability implementation used by
+ * the Angular testing framework.
+ */
+export function setTestabilityGetter(getter: GetTestability): void {
+  _testabilityGetter = getter;
+}
+\end{minted}

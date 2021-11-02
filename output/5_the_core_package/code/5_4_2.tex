@@ -1,0 +1,11 @@
+\begin{minted}{typescript}
+export const Self: SelfDecorator = makeParamDecorator('Self');
+export const SkipSelf: SkipSelfDecorator = makeParamDecorator('SkipSelf');
+export const Inject: InjectDecorator = makeParamDecorator(
+  'Inject',
+  (token: any) => ({ token })
+);
+export const Optional: OptionalDecorator = makeParamDecorator('Optional');
+export const Injectable: InjectableDecorator = makeDecorator('Injectable');
+export const Host: HostDecorator = makeParamDecorator('Host');
+\end{minted}

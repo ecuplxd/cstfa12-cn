@@ -1,0 +1,24 @@
+\begin{minted}{typescript}
+interface ZoneType {
+  /**
+   * @returns {Zone} Returns the current [Zone]. The only way to change
+   * the current zone is by invoking a run() method, which will update the
+   * current zone for the duration of the run method callback.
+   */
+  current: Zone;
+  /**
+   * @returns {Task} The task associated with the current execution.
+   */
+  currentTask: Task | null;
+  /**
+   * Verify that Zone has been correctly patched.
+   * Specifically that Promise is zone aware.
+   */
+  assertZonePatched(): void;
+  /**
+   *  Return the root zone.
+   */
+  root: Zone;
+}
+declare const Zone: ZoneType;
+\end{minted}

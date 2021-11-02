@@ -1,0 +1,12 @@
+\begin{minted}{typescript}
+  private instruction(
+    statements: o.Statement[],
+    span: ParseSourceSpan | null,
+    reference: o.ExternalReference,
+    ...params: o.Expression[]
+  ) {
+    statements.push(
+      o.importExpr(reference, null, span).callFn(params, span).toStmt()
+    );
+  }
+\end{minted}

@@ -1,0 +1,14 @@
+\begin{minted}{typescript}
+export class AngularProfiler {
+  appRef: ApplicationRef;
+
+  constructor(ref: ComponentRef<any>) {
+    this.appRef = ref.injector.get(ApplicationRef);
+  }
+
+  timeChangeDetection(config: any): ChangeDetectionPerfRecord {
+    ..
+    return new ChangeDetectionPerfRecord(msPerTick, numTicks);
+  }
+}
+\end{minted}

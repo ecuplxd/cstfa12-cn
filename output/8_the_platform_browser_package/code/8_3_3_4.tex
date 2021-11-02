@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+@Injectable()
+export class DomSanitizerImpl extends DomSanitizer {
+  constructor(@Inject(DOCUMENT) private _doc: any) {
+    super();
+  }
+  ..
+}
+\end{minted}

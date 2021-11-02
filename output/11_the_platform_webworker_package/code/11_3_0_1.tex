@@ -1,0 +1,9 @@
+\begin{minted}{typescript}
+export function createMessageBus(zone: NgZone): MessageBus {
+  const sink = new PostMessageBusSink(_postMessage);
+  const source = new PostMessageBusSource();
+  const bus = new PostMessageBus(sink, source);
+  bus.attachToZone(zone);
+  return bus;
+}
+\end{minted}

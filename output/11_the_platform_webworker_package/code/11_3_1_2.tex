@@ -1,0 +1,26 @@
+\begin{minted}{typescript}
+export interface MessageBusSink {
+  /**
+   * Sets up a new channel on the MessageBusSink.
+   * MUST be called before calling to on the channel.
+   * If runInZone is true the sink will buffer messages and send only
+   * once the zone exits.
+   * if runInZone is false the sink will send messages immediately.
+   */
+  initChannel(channel: string, runInZone: boolean): void;
+
+  /**
+   * Assigns this sink to the given zone.
+   * Any channels which are initialized with runInZone set to true will
+   * wait for the given zone to exit before sending messages.
+   */
+  attachToZone(zone: NgZone): void;
+
+  /**
+   * Returns an {@link EventEmitter} for the given channel
+   * To publish methods to that channel just call next on the
+   * returned emitter
+   */
+  to(channel: string): EventEmitter<any>;
+}
+\end{minted}

@@ -1,0 +1,8 @@
+\begin{minted}{typescript}
+  private get analyzedModules(): NgAnalyzedModules {
+    if (!this._analyzedModules) {
+      this.initSync();
+    }
+    return this._analyzedModules!; %\step{1}%
+  }
+\end{minted}
