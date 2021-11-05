@@ -19,7 +19,7 @@
 
 % Utils.ts contains simple string helpers:
 
-\input{8_the_platform_browser_package/code/8_3_1_0.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_0.tex}
 
 % The two main files involved in delivering the DomRenderer are dom\_adapter.ts and
 % dom\_renderer.ts. A DomAdapter is a class that represents an API very close to the
@@ -101,14 +101,14 @@
 % \texttt{setDOM()}
 % to get and set it.
 
-\input{8_the_platform_browser_package/code/8_3_1_1.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_1.tex}
 
 % The
 % \texttt{DomAdapter}
 % class is a very long list of methods similar to what you would find a
 % normal DOM API (pay attention to the security warning!)– here is just a sampling:
 
-\input{8_the_platform_browser_package/code/8_3_1_2.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_2.tex}
 
 % The dom\_renderer.ts file defines the DOM renderer that relies on
 % \texttt{getDOM()}
@@ -127,7 +127,7 @@
 % \texttt{NgModule}
 % :
 
-\input{8_the_platform_browser_package/code/8_3_1_3.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_3.tex}
 
 % The
 % \texttt{DomRendererFactory2}
@@ -135,7 +135,7 @@
 % \texttt{Renderer2}
 % instances.
 
-\input{8_the_platform_browser_package/code/8_3_1_4.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_4.tex}
 
 % Its
 % \texttt{createRenderer()}
@@ -144,7 +144,7 @@
 % \texttt{Renderer2}
 % :
 
-\input{8_the_platform_browser_package/code/8_3_1_5.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_5.tex}
 
 % \texttt{DefaultDomRenderer2}
 % is where renderering actually occurs. It implements
@@ -153,7 +153,7 @@
 % \texttt{createElement()}
 % method:
 
-\input{8_the_platform_browser_package/code/8_3_1_6.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_6.tex}
 
 % DOM debugging is supported via:
 
@@ -169,7 +169,7 @@
 % to supply predicates for its query
 % functions. It supplies three predicates – all, css and directive:
 
-\input{8_the_platform_browser_package/code/8_3_1_7.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_7.tex}
 
 % DOM events are supported via:
 
@@ -192,7 +192,7 @@
 % \texttt{EventManagerPlugin}
 % s, which is defined as:
 
-\input{8_the_platform_browser_package/code/8_3_1_8.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_8.tex}
 
 % It provides two methods to add event listeners to targets represented either by an
 % \texttt{HTMLElement}
@@ -200,7 +200,7 @@
 % \texttt{EventManager}
 % itself is defined as an injectable class:
 
-\input{8_the_platform_browser_package/code/8_3_1_9.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_9.tex}
 
 % Its constructor is defined in such a way as to allow dependency injection to inject an
 % array of event manager plugins. We note this list is reversed in the constructor, which
@@ -212,24 +212,24 @@
 % \texttt{DomEventsPlugin}
 % :
 
-\input{8_the_platform_browser_package/code/8_3_1_10.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_10.tex}
 
 % Touch events via the hammer project are supported via the hammer\_gesture.ts file.
 % The list of supported touch events are:
 
-\input{8_the_platform_browser_package/code/8_3_1_11.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_11.tex}
 
 % This is used by
 % \texttt{HammerGesturesPlugin}
 % :
 
-\input{8_the_platform_browser_package/code/8_3_1_12.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_12.tex}
 
 % Its
 % \texttt{addEventListener}
 % method is implemented as:
 
-\input{8_the_platform_browser_package/code/8_3_1_13.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_13.tex}
 
 % Note the use of
 % \texttt{zone.runOutsideAngular()}
@@ -243,7 +243,7 @@
 % \texttt{HammerGestureConfig}
 % class:
 
-\input{8_the_platform_browser_package/code/8_3_1_14.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_14.tex}
 
 % These event manager plugins need to be set in the
 % \texttt{NgModule}
@@ -252,4 +252,4 @@
 % \texttt{BROWSER\_MODULE\_PROVIDERS}
 % :
 
-\input{8_the_platform_browser_package/code/8_3_1_15.tex}
+\input{../output/8_the_platform_browser_package/code/8_3_1_15.tex}

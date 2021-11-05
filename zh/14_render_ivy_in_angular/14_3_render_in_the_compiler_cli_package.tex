@@ -10,7 +10,7 @@
 
 % as follows, which lists their entry points:
 
-\input{14_render_ivy_in_angular/code/14_3_0.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_0.tex}
 
 % Ngc is the main Angular template compiler, ivy-ngcc is the Angular Compatibility
 % Compiler and ng-xi18n is for internationalization.
@@ -27,16 +27,16 @@
 % \url{main.ts}
 % has this:
 
-\input{14_render_ivy_in_angular/code/14_3_1.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_1.tex}
 
 % and this detailed error reporter:
 
-\input{14_render_ivy_in_angular/code/14_3_2.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_2.tex}
 
 % \url{perform_compile.ts}
 % has this:
 
-\input{14_render_ivy_in_angular/code/14_3_3.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_3.tex}
 
 % The CompilerOptions interface is defined in the transformers sub-directory. In:
 
@@ -51,14 +51,14 @@
 % \texttt{ts.CompilerOptions}
 % with Angular-specific fields.
 
-\input{14_render_ivy_in_angular/code/14_3_4.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_4.tex}
 
 % Despite this comment about aot-compiler.md, that Markdown file actually contains no
 % mention of Ivy. The
 % \texttt{CompilerOptions}
 % interface in api.ts does contain this addition:
 
-\input{14_render_ivy_in_angular/code/14_3_5.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_5.tex}
 
 % So we see there is a new ngtsc compiler in addition to the normal tsc compiler, and
 % this switch is used to select one or the other. We will soon explore how ngtsc works.
@@ -69,11 +69,11 @@
 % \texttt{default}
 % includes codegen):
 
-\input{14_render_ivy_in_angular/code/14_3_6.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_6.tex}
 
 % The tsc\_pass\_through.ts file defines an implementation of the Program API:
 
-\input{14_render_ivy_in_angular/code/14_3_7.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_7.tex}
 
 % We see Ivy impacting the program.ts file in a number of ways.
 
@@ -86,35 +86,35 @@
 % \texttt{getAotCompilerOptions()}
 % :
 
-\input{14_render_ivy_in_angular/code/14_3_8.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_8.tex}
 
 % Metadata is expected to be lower case:
 
-\input{14_render_ivy_in_angular/code/14_3_9.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_9.tex}
 
 % Also in
 % \texttt{AngularCompilerProgram}
 % we see the use of reified decorators for Render3:
 
-\input{14_render_ivy_in_angular/code/14_3_10.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_10.tex}
 
 % The
 % \texttt{emit}
 % method has protection against being inadvertently called for Ivy:
 
-\input{14_render_ivy_in_angular/code/14_3_11.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_11.tex}
 
 % The createProgram function is where the decision is made which compilation program
 % to use; this is influenced by the value for enableIvy:
 
-\input{14_render_ivy_in_angular/code/14_3_12.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_12.tex}
 
 % Before leaving program.ts, we wish to mention two other functions. This file also
 % contains the
 % \texttt{defaultEmitCallback}
 % :
 
-\input{14_render_ivy_in_angular/code/14_3_13.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_13.tex}
 
 % We see at
 % 1
@@ -124,7 +124,7 @@
 % \texttt{calculateTransforms()}
 % , defined as:
 
-\input{14_render_ivy_in_angular/code/14_3_14.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_14.tex}
 
 % We see at
 % 1
@@ -140,7 +140,7 @@
 
 % as follows:
 
-\input{14_render_ivy_in_angular/code/14_3_15.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_15.tex}
 
 % Two important types are also defined in r3\_transform.ts to describe what a
 % \texttt{Transformer}
@@ -148,7 +148,7 @@
 % \texttt{TransformerFactory}
 % are:
 
-\input{14_render_ivy_in_angular/code/14_3_16.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_16.tex}
 
 % The
 % \texttt{PartialModuleMetadataTransformer}
@@ -161,13 +161,13 @@
 
 % as:
 
-\input{14_render_ivy_in_angular/code/14_3_17.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_17.tex}
 
 % Now we are ready go back to Compiler-CLI’s
 % \url{program.ts}
 % file to look at:
 
-\input{14_render_ivy_in_angular/code/14_3_18.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_18.tex}
 
 % This takes a range of input parameters (note
 % \texttt{emitFlags}
@@ -184,20 +184,20 @@
 % says what needs to be
 % emitted – if nothing, then we return immediately:
 
-\input{14_render_ivy_in_angular/code/14_3_19.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_19.tex}
 
 % The partial modules are processed with this important call to
 % \texttt{emitAllPartialModules}
 % in Angular’s Compiler package (we will examine this in detail
 % shortly):
 
-\input{14_render_ivy_in_angular/code/14_3_20.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_20.tex}
 
 % The
 % \texttt{this.analyzedModules}
 % getter is defined as:
 
-\input{14_render_ivy_in_angular/code/14_3_21.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_21.tex}
 
 % Note the
 % \texttt{!}
@@ -217,7 +217,7 @@
 % \texttt{\_analyzedModules}
 % field is initialized earlier as:
 
-\input{14_render_ivy_in_angular/code/14_3_22.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_22.tex}
 
 % Returning to our coverage of
 % \texttt{\_emitRender3}
@@ -229,11 +229,11 @@
 % \texttt{emitOnlyDtsFiles}
 % consts are set up:
 
-\input{14_render_ivy_in_angular/code/14_3_23.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_23.tex}
 
 % Then the custom transformers are configured (note the partial modules parameter):
 
-\input{14_render_ivy_in_angular/code/14_3_24.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_24.tex}
 
 % Finally the
 % \texttt{emitResult}
@@ -242,7 +242,7 @@
 % in there) and
 % then returned:
 
-\input{14_render_ivy_in_angular/code/14_3_25.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_25.tex}
 
 % We should briefly mention differences between
 % \texttt{\_emitRender3}
@@ -254,7 +254,7 @@
 % . The latter is a much larger function compared to
 % \texttt{\_emitRender3:}
 
-\input{14_render_ivy_in_angular/code/14_3_26.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_26.tex}
 
 % It also used a different helper function,
 % \texttt{generateFilesForEmit}
@@ -262,7 +262,7 @@
 % call into Angular’s Compiler package. So importantly we have two separate call paths
 % into the Angular Compiler package depending on which renderer we are using:
 
-\input{14_render_ivy_in_angular/code/14_3_27.tex}
+\input{../output/14_render_ivy_in_angular/code/14_3_27.tex}
 
 % The ivy-ngcc tool called here is the Angular Compatibility Compiler from Complier-CLI
 % which is described here:

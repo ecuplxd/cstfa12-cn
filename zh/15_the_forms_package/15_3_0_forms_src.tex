@@ -18,7 +18,7 @@
 % NgModules as
 % follows:
 
-\input{15_the_forms_package/code/15_3_0_0.tex}
+\input{../output/15_the_forms_package/code/15_3_0_0.tex}
 
 % We note the two difference between
 % \texttt{FormsModule}
@@ -42,7 +42,7 @@
 
 % directives.ts defines these:
 
-\input{15_the_forms_package/code/15_3_0_1.tex}
+\input{../output/15_the_forms_package/code/15_3_0_1.tex}
 
 % A nice discussion of how to create dynamic forms using
 % \texttt{REACTIVE\_FORM\_DIRECTIVES}
@@ -67,19 +67,19 @@
 % \texttt{control()}
 % methods. They are defined as:
 
-\input{15_the_forms_package/code/15_3_0_2.tex}
+\input{../output/15_the_forms_package/code/15_3_0_2.tex}
 
 % The validators.ts file first declares two opaque tokens for dependency injection:
 
-\input{15_the_forms_package/code/15_3_0_3.tex}
+\input{../output/15_the_forms_package/code/15_3_0_3.tex}
 
 % It also defines the Validators class:
 
-\input{15_the_forms_package/code/15_3_0_4.tex}
+\input{../output/15_the_forms_package/code/15_3_0_4.tex}
 
 % A sample implementation of one of the validators is:
 
-\input{15_the_forms_package/code/15_3_0_5.tex}
+\input{../output/15_the_forms_package/code/15_3_0_5.tex}
 
 % The return value
 % 1
@@ -97,7 +97,7 @@
 % The status of a form control is one of:
 % AbstractControl
 
-\input{15_the_forms_package/code/15_3_0_6.tex}
+\input{../output/15_the_forms_package/code/15_3_0_6.tex}
 
 % The
 % \texttt{AbstractControl}
@@ -105,19 +105,19 @@
 % validator functions. This class also defines a bunch of getters which map to private
 % fields. The value field refers to data we wish to strore within the control:
 
-\input{15_the_forms_package/code/15_3_0_7.tex}
+\input{../output/15_the_forms_package/code/15_3_0_7.tex}
 
 % The
 % \texttt{\_status}
 % field refers to the validator checking:
 
-\input{15_the_forms_package/code/15_3_0_8.tex}
+\input{../output/15_the_forms_package/code/15_3_0_8.tex}
 
 % The
 % \texttt{\_error}
 % field returns a map of errors (if any):
 
-\input{15_the_forms_package/code/15_3_0_9.tex}
+\input{../output/15_the_forms_package/code/15_3_0_9.tex}
 
 % The
 % \texttt{\_pristine}
@@ -127,30 +127,30 @@
 % \texttt{dirty()}
 % is true if changed:
 
-\input{15_the_forms_package/code/15_3_0_10.tex}
+\input{../output/15_the_forms_package/code/15_3_0_10.tex}
 
 % The
 % \texttt{\_touched}
 % field refers to whether the user has visited the control (if does not
 % mean that the control’s value has been changed):
 
-\input{15_the_forms_package/code/15_3_0_11.tex}
+\input{../output/15_the_forms_package/code/15_3_0_11.tex}
 
 % There are also two
 % \texttt{xxChanges()}
 % getters, for value changes and status changes, that
 % return observables:
 
-\input{15_the_forms_package/code/15_3_0_12.tex}
+\input{../output/15_the_forms_package/code/15_3_0_12.tex}
 
 % These are initialized to event emitters via:
 
-\input{15_the_forms_package/code/15_3_0_13.tex}
+\input{../output/15_the_forms_package/code/15_3_0_13.tex}
 
 % \texttt{AbstractControl}
 % also declares a function:
 
-\input{15_the_forms_package/code/15_3_0_14.tex}
+\input{../output/15_the_forms_package/code/15_3_0_14.tex}
 
 % which executes the condition function over the control and its children and return a
 % boolean. This
@@ -158,28 +158,28 @@
 % function is used in many helper methods to determine
 % information about the control, e.g.:
 
-\input{15_the_forms_package/code/15_3_0_15.tex}
+\input{../output/15_the_forms_package/code/15_3_0_15.tex}
 
 % It has a parent field:
 
-\input{15_the_forms_package/code/15_3_0_16.tex}
+\input{../output/15_the_forms_package/code/15_3_0_16.tex}
 
 % which is used when the state of the control is being updated.
 
-\input{15_the_forms_package/code/15_3_0_17.tex}
+\input{../output/15_the_forms_package/code/15_3_0_17.tex}
 
 % It is set via:
 
-\input{15_the_forms_package/code/15_3_0_18.tex}
+\input{../output/15_the_forms_package/code/15_3_0_18.tex}
 
 % Its is hierarchical and this is supplied to find the root:
 
-\input{15_the_forms_package/code/15_3_0_19.tex}
+\input{../output/15_the_forms_package/code/15_3_0_19.tex}
 
 % The FormControl class is supplied for atomic controls (that do not contain any child
 % controls).
 
-\input{15_the_forms_package/code/15_3_0_20.tex}
+\input{../output/15_the_forms_package/code/15_3_0_20.tex}
 
 % Its
 % \texttt{\_value}
@@ -188,30 +188,30 @@
 % method which reacts depending on the four
 % optional booleans supplied:
 
-\input{15_the_forms_package/code/15_3_0_21.tex}
+\input{../output/15_the_forms_package/code/15_3_0_21.tex}
 
 % It has a
 % \texttt{reset()}
 % method to reset control data:
 
-\input{15_the_forms_package/code/15_3_0_22.tex}
+\input{../output/15_the_forms_package/code/15_3_0_22.tex}
 
 % The FormGroup class extends AbstractControl:
 
-\input{15_the_forms_package/code/15_3_0_23.tex}
+\input{../output/15_the_forms_package/code/15_3_0_23.tex}
 
 % Its constructor’s first parameter defines a controls associative map (in constrast to
 % FormArray):
 
-\input{15_the_forms_package/code/15_3_0_24.tex}
+\input{../output/15_the_forms_package/code/15_3_0_24.tex}
 
 % Controls can be registered with w FormGroup via:
 
-\input{15_the_forms_package/code/15_3_0_25.tex}
+\input{../output/15_the_forms_package/code/15_3_0_25.tex}
 
 % The values of all controls in the group may be set via:
 
-\input{15_the_forms_package/code/15_3_0_26.tex}
+\input{../output/15_the_forms_package/code/15_3_0_26.tex}
 
 % Note it throws an exception is any of the controls are missing
 % 1
@@ -219,12 +219,12 @@
 
 % The FormArray class extends AbstractControl:
 
-\input{15_the_forms_package/code/15_3_0_27.tex}
+\input{../output/15_the_forms_package/code/15_3_0_27.tex}
 
 % Its constructor’s first parameter is simply an array:
 
-\input{15_the_forms_package/code/15_3_0_28.tex}
+\input{../output/15_the_forms_package/code/15_3_0_28.tex}
 
 % It allows you to insert at the end of the array or at a given location, and to remove:
 
-\input{15_the_forms_package/code/15_3_0_29.tex}
+\input{../output/15_the_forms_package/code/15_3_0_29.tex}

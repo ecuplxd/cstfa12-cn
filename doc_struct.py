@@ -89,11 +89,13 @@ class DocStruct:
         contents: list[str] = []
 
         for item in self.content:
-            if not item.strip() or DocStruct.should_skip(item):
+            if '/code/' in item:
+                contents.append(item.replace('input{', 'input{../output/'))
+            elif not item.strip() or DocStruct.should_skip(item):
                 contents.append(item)
             else:
                 result = []
-                
+
                 for line in item.split('\n'):
                     if line:
                         result.append('% ' + line)

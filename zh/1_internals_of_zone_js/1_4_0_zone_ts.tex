@@ -6,20 +6,20 @@
 % \texttt{Zone}
 % const:
 
-\input{1_internals_of_zone_js/code/1_4_0_0.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_0.tex}
 
 % The
 % \texttt{\_ZonePrivate}
 % interface defines private information that is managed per zone:
 
-\input{1_internals_of_zone_js/code/1_4_0_1.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_1.tex}
 
 % When using the client API you will not see this, but when debugging through the
 % Zone.js implementation, it will crop up from time to time.
 
 % A microtask queue is managed, which requries these variables:
 
-\input{1_internals_of_zone_js/code/1_4_0_2.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_2.tex}
 
 % \texttt{\_microTaskQueue}
 % is an array of microtasks, that must be executed before we give up
@@ -54,13 +54,13 @@
 % \texttt{ZoneTask}
 % is the simplest of these classes:
 
-\input{1_internals_of_zone_js/code/1_4_0_3.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_3.tex}
 
 % The constructor just records the supplied parameters and sets up
 % \texttt{invoke}
 % :
 
-\input{1_internals_of_zone_js/code/1_4_0_4.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_4.tex}
 
 % The interesting activity in here is setting up the
 % \texttt{invoke}
@@ -79,7 +79,7 @@
 % \texttt{\_numberOfNestedTaskFrames}
 % .
 
-\input{1_internals_of_zone_js/code/1_4_0_5.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_5.tex}
 
 % A custom
 % \texttt{toString()}
@@ -90,12 +90,12 @@
 % \texttt{toString()}
 % result:
 
-\input{1_internals_of_zone_js/code/1_4_0_6.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_6.tex}
 
 % \texttt{drainMicroTaskQueue()}
 % is defined as:
 
-\input{1_internals_of_zone_js/code/1_4_0_7.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_7.tex}
 
 % The
 % \texttt{\_microTaskQueue}
@@ -103,7 +103,7 @@
 % \texttt{scheduleMicroTask}
 % :
 
-\input{1_internals_of_zone_js/code/1_4_0_8.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_8.tex}
 
 % If needed (not running in a task), this calls
 % \texttt{setTimeout}
@@ -150,13 +150,13 @@
 % for each of
 % these, which are initialized in the constructor.
 
-\input{1_internals_of_zone_js/code/1_4_0_9.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_9.tex}
 
 % \texttt{ZoneDelegate}
 % also declares three variables, to store the delegates zone and parent
 % delegate, and to represent task counts (for each kind of task):
 
-\input{1_internals_of_zone_js/code/1_4_0_10.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_10.tex}
 
 % In
 % \texttt{ZoneDelegate}
@@ -175,7 +175,7 @@
 % (if
 % not null), or the parent delegate’s:
 
-\input{1_internals_of_zone_js/code/1_4_0_11.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_11.tex}
 
 % The
 % \texttt{ZoneDelegate}
@@ -190,7 +190,7 @@
 % ,
 % otherwise it calls the supplied callback directly:
 
-\input{1_internals_of_zone_js/code/1_4_0_12.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_12.tex}
 
 % The
 % \texttt{scheduleTask}
@@ -211,7 +211,7 @@
 % it is
 % an error:
 
-\input{1_internals_of_zone_js/code/1_4_0_13.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_13.tex}
 
 % The fork method is where new zones get created. If
 % \texttt{\_forkZS}
@@ -222,7 +222,7 @@
 % \texttt{zoneSpec}
 % :
 
-\input{1_internals_of_zone_js/code/1_4_0_14.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_14.tex}
 
 % The internal variable
 % \texttt{\_currentZoneFrame}
@@ -230,4 +230,4 @@
 % \texttt{\_currentTask}
 % to null:
 
-\input{1_internals_of_zone_js/code/1_4_0_15.tex}
+\input{../output/1_internals_of_zone_js/code/1_4_0_15.tex}

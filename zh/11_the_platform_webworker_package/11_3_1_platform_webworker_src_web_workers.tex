@@ -29,7 +29,7 @@
 % multi-channel message bus. The shared/messaging\_api.ts file defines the names of
 % the three channels used by Angular:
 
-\input{11_the_platform_webworker_package/code/11_3_1_0.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_0.tex}
 
 % If you are familiar with TCP/IP, the channel name here serves the same purpose as a
 % port number – it is needed to multiplex multiple independent message streams on a
@@ -55,7 +55,7 @@
 % \texttt{EventEmitter}
 % ) that can be observed in order to read the incoming messages.
 
-\input{11_the_platform_webworker_package/code/11_3_1_1.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_1.tex}
 
 % Similarly,
 % \texttt{MessageBusSink}
@@ -65,7 +65,7 @@
 % ) used
 % to send messages:
 
-\input{11_the_platform_webworker_package/code/11_3_1_2.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_2.tex}
 
 % \texttt{MessageBus}
 % is an abstract class that implements both
@@ -74,7 +74,7 @@
 % \texttt{MessageBusSink}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_3.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_3.tex}
 
 % So far the message bus description has only specified what the functionality that
 % needs to be supplied. A single implementation is supplied, in post\_message\_bus.ts,
@@ -89,20 +89,20 @@
 % , that implement the above similarly
 % named types.
 
-\input{11_the_platform_webworker_package/code/11_3_1_4.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_4.tex}
 
 % A useful private class is supplied called
 % \texttt{\_Channel}
 % that keeps track of two pieces of
 % data:
 
-\input{11_the_platform_webworker_package/code/11_3_1_5.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_5.tex}
 
 % Channels are initialized with
 % \texttt{PostMessageBusSource.initChannel()}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_6.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_6.tex}
 
 % So we see a channel is nothing more that a name that maps to a
 % \texttt{\_Channel}
@@ -116,19 +116,19 @@
 % manages
 % a map of these called \_channels:
 
-\input{11_the_platform_webworker_package/code/11_3_1_7.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_7.tex}
 
 % The
 % \texttt{from()}
 % method just returns the appropriate channel emitter:
 
-\input{11_the_platform_webworker_package/code/11_3_1_8.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_8.tex}
 
 % The constructor calls
 % \texttt{addEventListener}
 % to add an event listener:
 
-\input{11_the_platform_webworker_package/code/11_3_1_9.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_9.tex}
 
 % The
 % \texttt{\_handleMessages}
@@ -136,7 +136,7 @@
 % \texttt{\_handleMessage}
 % function, which emits it on the approapriate channel:
 
-\input{11_the_platform_webworker_package/code/11_3_1_10.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_10.tex}
 
 % The
 % \texttt{PostMessageBusSink}
@@ -147,7 +147,7 @@
 % \texttt{PostMessageTarget}
 % parameter:
 
-\input{11_the_platform_webworker_package/code/11_3_1_11.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_11.tex}
 
 % The
 % \texttt{initChannel}
@@ -158,14 +158,14 @@
 % \texttt{\_sendMessages}
 % , to immediately send the message:
 
-\input{11_the_platform_webworker_package/code/11_3_1_12.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_12.tex}
 
 % \texttt{\_sendMessages()}
 % just sends the message array via
 % \texttt{PostMessageTarget}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_13.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_13.tex}
 
 % So we saw with
 % \texttt{initChannel}
@@ -180,7 +180,7 @@
 % \texttt{\_handleOnEventDone}
 % message:
 
-\input{11_the_platform_webworker_package/code/11_3_1_14.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_14.tex}
 
 % So, what calls
 % \texttt{\_handleOnEventDone}
@@ -195,7 +195,7 @@
 
 % which has this getter:
 
-\input{11_the_platform_webworker_package/code/11_3_1_15.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_15.tex}
 
 % So when the zone has no more work to immediately carry out, it emits a message via
 % \texttt{onStable}
@@ -205,7 +205,7 @@
 % \texttt{onStable}
 % event emitter:
 
-\input{11_the_platform_webworker_package/code/11_3_1_16.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_16.tex}
 
 % With all the hard work done in
 % \texttt{PostMessageBusSource}
@@ -216,7 +216,7 @@
 % \texttt{PostMessageBus}
 % is quite simple:
 
-\input{11_the_platform_webworker_package/code/11_3_1_17.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_17.tex}
 
 % A different way of looking at the message bus is as a set of independent channels:
 
@@ -224,7 +224,7 @@
 % mechanism with web workers. It is based on a single connection, with opaque
 % messages consisting of a channel name (string) and message data:
 
-\input{11_the_platform_webworker_package/code/11_3_1_18.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_18.tex}
 
 % Angular also supplies a richer message broker layered above this simple message bus.
 % UI main thread
@@ -241,14 +241,14 @@
 % class that
 % represents a message:
 
-\input{11_the_platform_webworker_package/code/11_3_1_19.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_19.tex}
 
 % The class
 % \texttt{ServiceMessageBrokerFactory}
 % provide a factory for the service message
 % broker:
 
-\input{11_the_platform_webworker_package/code/11_3_1_20.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_20.tex}
 
 % The service message broker is created based on the supplied message bus, serializer
 % and channel name. The abstract
@@ -261,7 +261,7 @@
 % \texttt{registerMethod}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_21.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_21.tex}
 
 % It has two private fields, an event emitter
 % \texttt{\_sink}
@@ -288,7 +288,7 @@
 % for the appropriate function to execute, to handle the
 % message:
 
-\input{11_the_platform_webworker_package/code/11_3_1_22.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_22.tex}
 
 % The next question is how methods get registered in \_methods. That is the job of
 % \texttt{registerMethod()}
@@ -302,7 +302,7 @@
 % \texttt{ReceivedMessage}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_23.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_23.tex}
 
 % We see at its
 % 1
@@ -314,12 +314,12 @@
 % needed, \_ wrapWebWorkerPromise is called, to handle the then of the promise, which
 % emits the result to the sink:
 
-\input{11_the_platform_webworker_package/code/11_3_1_24.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_24.tex}
 
 % The client side of this messaging relationship is handled by client\_message\_broker.ts.
 % It defines some simple helper types:
 
-\input{11_the_platform_webworker_package/code/11_3_1_25.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_25.tex}
 
 % To construct a client message borker it defines the
 % \texttt{ClientMessageBrokerFactory}
@@ -332,7 +332,7 @@
 % \texttt{ClientMessageBroker}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_26.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_26.tex}
 
 % \texttt{ClientMessageBroker}
 % has an important method to run on service, which calls a
@@ -344,7 +344,7 @@
 % is implemented as
 % follows:
 
-\input{11_the_platform_webworker_package/code/11_3_1_27.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_27.tex}
 
 % It has three fields,
 % \texttt{\_pending}
@@ -372,7 +372,7 @@
 % Messages for which a return value is expected have a message id generated for them
 % via:
 
-\input{11_the_platform_webworker_package/code/11_3_1_28.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_28.tex}
 
 % It is this string that is the key into the \_pending map. We will now see how it is set up
 % in
@@ -400,7 +400,7 @@
 % 3
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_29.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_29.tex}
 
 % Things are a little more complex when a return value is required. A promise and a
 % promise completer are created
@@ -428,7 +428,7 @@
 % 6
 % .
 
-\input{11_the_platform_webworker_package/code/11_3_1_30.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_30.tex}
 
 % The
 % \texttt{\_handleMessage}
@@ -449,7 +449,7 @@
 % 4
 % is called:
 
-\input{11_the_platform_webworker_package/code/11_3_1_31.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_31.tex}
 
 % Two helper files are involved with serialization – render\_store.ts and serializer.ts. The
 % \texttt{RenderStore}
@@ -468,13 +468,13 @@
 % \texttt{serialize}
 % method is:
 
-\input{11_the_platform_webworker_package/code/11_3_1_32.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_32.tex}
 
 % Based on the type an appropriate serialization helper method is called.
 
 % The last file in the shared directory is api.ts, which has this one line:
 
-\input{11_the_platform_webworker_package/code/11_3_1_33.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_33.tex}
 
 % It is used to store a boolean value with dependency injection, stating whether the
 % current code is running in a webworker or not. At this point it would be helpful to
@@ -488,7 +488,7 @@
 
 % has this:
 
-\input{11_the_platform_webworker_package/code/11_3_1_34.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_34.tex}
 
 % Note
 % \texttt{ON\_WEB\_WORKER}
@@ -503,7 +503,7 @@
 
 % has this:
 
-\input{11_the_platform_webworker_package/code/11_3_1_35.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_35.tex}
 
 % Note
 % \texttt{ON\_WEB\_WORKER}
@@ -525,7 +525,7 @@
 % \texttt{WorkerDomAdapter}
 % is not how workers render, instead is just logs data to the console.
 
-\input{11_the_platform_webworker_package/code/11_3_1_36.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_36.tex}
 
 % The renderer.ts file supplies the
 % \texttt{WebWorkerRendererFactory2}
@@ -545,7 +545,7 @@
 
 % This is a sampling of the calls:
 
-\input{11_the_platform_webworker_package/code/11_3_1_37.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_37.tex}
 
 % \texttt{WebWorkerRendererFactory2}
 % implements Core’s
@@ -553,7 +553,7 @@
 % by setting up the
 % client message broker factory.
 
-\input{11_the_platform_webworker_package/code/11_3_1_38.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_38.tex}
 
 % An additional and very important role of
 % \texttt{WebWorkerRendererFactory2}
@@ -571,7 +571,7 @@
 % \texttt{\_dispatchEvent()}
 % method, which is implemented as:
 
-\input{11_the_platform_webworker_package/code/11_3_1_39.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_39.tex}
 
 % The ui specific code is in:
 
@@ -592,7 +592,7 @@
 % \texttt{EventDispatcher}
 % .
 
-\input{11_the_platform_webworker_package/code/11_3_1_40.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_40.tex}
 
 % Its
 % \texttt{start()}
@@ -608,7 +608,7 @@
 % \texttt{registerMethod}
 % calls:
 
-\input{11_the_platform_webworker_package/code/11_3_1_41.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_41.tex}
 
 % The local methods usually call the equivalent method in the configured renderer, and
 % often stores the result in the
@@ -617,11 +617,11 @@
 % \texttt{\_createElement()}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_42.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_42.tex}
 
 % For event listening, the event dispatcher is used:
 
-\input{11_the_platform_webworker_package/code/11_3_1_43.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_43.tex}
 
 % The
 % \texttt{EventDispatcher}
@@ -630,7 +630,7 @@
 % \texttt{dispatchRenderEvent()}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_1_44.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_1_44.tex}
 
 % The switch in the middle is a long list of all the supported events and appropriate calls
 % to an event serializer. Above we show what is has for keyboard events.

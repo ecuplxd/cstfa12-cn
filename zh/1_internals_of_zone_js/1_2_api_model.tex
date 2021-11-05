@@ -15,7 +15,7 @@
 % \texttt{ZoneType}
 % :
 
-\input{1_internals_of_zone_js/code/1_2_0.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_0.tex}
 
 % Recall that TypeScript has distinct declaration spaces for values and types, so the
 % \texttt{Zone}
@@ -52,7 +52,7 @@
 
 % – we see that is exactly what Angular’s NgZone.ts does:
 
-\input{1_internals_of_zone_js/code/1_2_1.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_1.tex}
 
 % Two simple helper types used to define tasks are
 % \texttt{TaskType}
@@ -63,7 +63,7 @@
 % is just a human-friendly string to associate with a task. It is usually set to one of the
 % three task types as noted in the comment:
 
-\input{1_internals_of_zone_js/code/1_2_2.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_2.tex}
 
 % \texttt{TaskData}
 % contains a boolean (is this task periodic, i.e. is to be repeated) and two
@@ -71,21 +71,21 @@
 % \texttt{setTimout}
 % .
 
-\input{1_internals_of_zone_js/code/1_2_3.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_3.tex}
 
 % A task is an interface declared as:
 
-\input{1_internals_of_zone_js/code/1_2_4.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_4.tex}
 
 % There are three marker interfaces derived from
 % \texttt{Task}
 % :
 
-\input{1_internals_of_zone_js/code/1_2_5.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_5.tex}
 
 % The comments for Task nicely explains their purpose:
 
-\input{1_internals_of_zone_js/code/1_2_6.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_6.tex}
 
 % There are three helper types used to define
 % \texttt{Zone}
@@ -94,7 +94,7 @@
 % just contains
 % booleans for each of the task types and a string:
 
-\input{1_internals_of_zone_js/code/1_2_7.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_7.tex}
 
 % \texttt{ZoneDelegate}
 % is used when one zone wishes to delegate to another how certain
@@ -102,7 +102,7 @@
 % intercepting, invoking and error handling, the delegate may be called upon to carry
 % out the action.
 
-\input{1_internals_of_zone_js/code/1_2_8.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_8.tex}
 
 % \texttt{ZoneSpec}
 % is an interface that allows implementations to state what should have when
@@ -110,14 +110,12 @@
 % \texttt{ZoneDelegate}
 % and the current zone:
 
-\input{1_internals_of_zone_js/code/1_2_9.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_9.tex}
 
 % The definition of the
 % \texttt{Zone}
 % type is:
 
-\input{1_internals_of_zone_js/code/1_2_10.tex}
-
-\input{1_internals_of_zone_js/1_2_0_relationship_between_zone_zonespec_zonedelegate_interfaces.tex}
+\input{../output/1_internals_of_zone_js/code/1_2_10.tex}
 
 \input{1_internals_of_zone_js/1_2_0_relationship_between_zone_zonespec_zonedelegate_interfaces.tex}

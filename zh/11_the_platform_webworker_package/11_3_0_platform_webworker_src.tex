@@ -19,14 +19,14 @@
 % \texttt{platformWorkerApp}
 % const creates a platform factory for a worker app:
 
-\input{11_the_platform_webworker_package/code/11_3_0_0.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_0.tex}
 
 % Two important helper functions are supplied.
 % \texttt{createMessageBus}
 % creates the message
 % bus that will supply communications between the main UI thread and the web worker:
 
-\input{11_the_platform_webworker_package/code/11_3_0_1.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_1.tex}
 
 % \texttt{setupWebWorker}
 % makes the web worker’s DOM adapter implementation as the current
@@ -37,13 +37,13 @@
 % worker, the worker DOM adapter needs to forward all DOM actions across the
 % message bus to the browser’s main UI thread.
 
-\input{11_the_platform_webworker_package/code/11_3_0_2.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_2.tex}
 
 % Finally, the
 % \texttt{NgModule}
 % is defined:
 
-\input{11_the_platform_webworker_package/code/11_3_0_3.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_3.tex}
 
 % The worker\_render.ts file has implementations for the worker UI. This runs in the
 % main UI thread and uses the
@@ -53,11 +53,11 @@
 % \texttt{platformWorkerUi}
 % represents a platform factory:
 
-\input{11_the_platform_webworker_package/code/11_3_0_4.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_4.tex}
 
 % The providers used are as followed:
 
-\input{11_the_platform_webworker_package/code/11_3_0_5.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_5.tex}
 
 % Note the provider configuration for
 % \texttt{WORKER\_UI\_STARTABLE\_MESSAGING\_SERVICE}
@@ -75,13 +75,13 @@
 % \texttt{init}
 % method just initializes the two fields):
 
-\input{11_the_platform_webworker_package/code/11_3_0_6.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_6.tex}
 
 % Now let’s look at
 % \texttt{initWebWorkerRenderPlatform}
 % :
 
-\input{11_the_platform_webworker_package/code/11_3_0_7.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_7.tex}
 
 % It returns a function that makes the browser Dom adatper the current adapter
 % 1
@@ -98,7 +98,7 @@
 % \texttt{spawnWebWorker}
 % function is defined as:
 
-\input{11_the_platform_webworker_package/code/11_3_0_8.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_8.tex}
 
 % It first creates a new web worker
 % 1
@@ -113,7 +113,7 @@
 % \texttt{initializeGenericWorkerRenderer}
 % function is defined as:
 
-\input{11_the_platform_webworker_package/code/11_3_0_9.tex}
+\input{../output/11_the_platform_webworker_package/code/11_3_0_9.tex}
 
 % It first asks the dependency injector for a message bus and a zone and attached the
 % bus to the zone. Then it also asks the dependency injector for a list of

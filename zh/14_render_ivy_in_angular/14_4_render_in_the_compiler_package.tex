@@ -23,7 +23,7 @@
 % Let’s start with partial\_module.ts. It has these few lines, to describe what a partial
 % module type is:
 
-\input{14_render_ivy_in_angular/code/14_4_0.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_0.tex}
 
 % We have seen from our coverage of Compiler-CLI that it makes a call to
 % \texttt{emitAllPartialModules}
@@ -34,17 +34,17 @@
 % (yes: same
 % files names, different directories):
 
-\input{14_render_ivy_in_angular/code/14_4_1.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_1.tex}
 
 % it is defined as:
 
-\input{14_render_ivy_in_angular/code/14_4_2.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_2.tex}
 
 % It calls the internal
 % \texttt{\_emitPartialModule}
 % method:
 
-\input{14_render_ivy_in_angular/code/14_4_3.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_3.tex}
 
 % After initializing context information, it loops
 % 1
@@ -59,11 +59,11 @@
 % 3
 % :
 
-\input{14_render_ivy_in_angular/code/14_4_4.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_4.tex}
 
 % We note the import at the top of the file:
 
-\input{14_render_ivy_in_angular/code/14_4_5.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_5.tex}
 
 % So in
 % \url{src/render3/r3_view_compiler.ts}
@@ -81,7 +81,7 @@
 % . r3\_identifiers.ts is
 % imported into r3\_view\_compiler.ts with this line:
 
-\input{14_render_ivy_in_angular/code/14_4_6.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_6.tex}
 
 % So anywhere in r3\_view\_compiler.ts we see “R3” being used for naming (over 50
 % times), it means something in r3\_identifiers.ts is being used. r3\_identifiers.ts  is not
@@ -90,7 +90,7 @@
 % r3\_identifier.ts contains a long list of external reference identifiers for the various
 % instructions. Here is a sampling (note that “o” is imported from output\_ast.ts):
 
-\input{14_render_ivy_in_angular/code/14_4_7.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_7.tex}
 
 % The
 % \texttt{compileDirective}
@@ -98,7 +98,7 @@
 % \url{src/render3/r3_view_compiler.ts}
 % as:
 
-\input{14_render_ivy_in_angular/code/14_4_8.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_8.tex}
 
 % It first
 % 1
@@ -126,11 +126,11 @@
 % ) is a little bit more
 % complex. Let’s look at it in stages. Its signature is:
 
-\input{14_render_ivy_in_angular/code/14_4_9.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_9.tex}
 
 % Then it sets up a template function expression on the definition map values:
 
-\input{14_render_ivy_in_angular/code/14_4_10.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_10.tex}
 
 % We note the call to the
 % \texttt{createFactory}
@@ -140,7 +140,7 @@
 % Then it sets up a template definition builder and again adds it to the definition map
 % values array:
 
-\input{14_render_ivy_in_angular/code/14_4_11.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_11.tex}
 
 % We note the use of the
 % \texttt{TemplateDefinitionBuilder}
@@ -154,11 +154,11 @@
 % sets up the class name (and uses the ! non-null assertion operator to ensure it is not
 % null):
 
-\input{14_render_ivy_in_angular/code/14_4_12.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_12.tex}
 
 % Finally it adds the new class statement:
 
-\input{14_render_ivy_in_angular/code/14_4_13.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_13.tex}
 
 % We note the
 % \texttt{initializer}
@@ -171,18 +171,18 @@
 % \texttt{createFactory}
 % function is defined as:
 
-\input{14_render_ivy_in_angular/code/14_4_14.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_14.tex}
 
 % It first resolves three reflectors:
 
-\input{14_render_ivy_in_angular/code/14_4_15.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_15.tex}
 
 % Then it loops through the
 % \texttt{type.diDeps}
 % dependencies, and pushes a relevant import
 % expression, based on the token ref:
 
-\input{14_render_ivy_in_angular/code/14_4_16.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_16.tex}
 
 % The
 % \texttt{TemplateDefinitionBuilder}
@@ -201,7 +201,7 @@
 
 % as follows:
 
-\input{14_render_ivy_in_angular/code/14_4_17.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_17.tex}
 
 % Back in
 % \url{r3_view_compiler.ts}
@@ -210,7 +210,7 @@
 % begins
 % with:
 
-\input{14_render_ivy_in_angular/code/14_4_18.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_18.tex}
 
 % We saw the call to
 % \texttt{buildTemplateFunction}
@@ -219,13 +219,13 @@
 % – its has this
 % signature:
 
-\input{14_render_ivy_in_angular/code/14_4_19.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_19.tex}
 
 % It returns an instance of
 % \texttt{o.FunctionExpr}
 % . We note the import at the top of the file:
 
-\input{14_render_ivy_in_angular/code/14_4_20.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_20.tex}
 
 % So
 % \texttt{o.FunctionExpr}
@@ -240,13 +240,13 @@
 
 % This class is defined as follows:
 
-\input{14_render_ivy_in_angular/code/14_4_21.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_21.tex}
 
 % While we are looking at output\_ast.ts, we see this
 % \texttt{fn}
 % function:
 
-\input{14_render_ivy_in_angular/code/14_4_22.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_22.tex}
 
 % It just makes a
 % \texttt{FunctionExpr}
@@ -258,7 +258,7 @@
 % \texttt{templateVisitAll}
 % :
 
-\input{14_render_ivy_in_angular/code/14_4_23.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_23.tex}
 
 % Now let’s return to the critically important
 % \texttt{buildTemplateFunction}
@@ -268,7 +268,7 @@
 % \url{r3_view_compiler.ts}
 % – a summary of its definition is:
 
-\input{14_render_ivy_in_angular/code/14_4_24.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_24.tex}
 
 % We see it first visits the template tree
 % 1
@@ -291,7 +291,7 @@
 % being emitted to the output statement array with the correct Render3 instruction. The
 % instruction function is used to add a statement like so:
 
-\input{14_render_ivy_in_angular/code/14_4_25.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_25.tex}
 
 % For example, when a text node is visited, the Render3 text instruction (
 % \texttt{R3.text}
@@ -300,18 +300,18 @@
 % \texttt{visitText}
 % method:
 
-\input{14_render_ivy_in_angular/code/14_4_26.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_26.tex}
 
 % There is an equivalent method for elements,
 % \texttt{visitElement}
 % , which is somewhat more
 % complex. After some setup code, it has this:
 
-\input{14_render_ivy_in_angular/code/14_4_27.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_27.tex}
 
 % There is also a
 % \texttt{visitEmbeddedTemplate}
 % method, which emits a number of Render3
 % instructions:
 
-\input{14_render_ivy_in_angular/code/14_4_28.tex}
+\input{../output/14_render_ivy_in_angular/code/14_4_28.tex}

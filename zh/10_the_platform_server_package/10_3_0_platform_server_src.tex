@@ -21,7 +21,7 @@
 
 % The server.ts file declares this const:
 
-\input{10_the_platform_server_package/code/10_3_0_0.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_0.tex}
 
 % The factory functions
 % \texttt{platformServer}
@@ -43,7 +43,7 @@
 % \texttt{DominoAdapter}
 % :
 
-\input{10_the_platform_server_package/code/10_3_0_1.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_1.tex}
 
 % Secondly, it adds
 % \texttt{PlatformLocation}
@@ -52,11 +52,11 @@
 % \texttt{ServerPlatformLocation}
 % , which mostly just throws exceptions:
 
-\input{10_the_platform_server_package/code/10_3_0_2.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_2.tex}
 
 % server.ts declares two exported functions:
 
-\input{10_the_platform_server_package/code/10_3_0_3.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_3.tex}
 
 % We saw earlier that
 % \texttt{platformCore}
@@ -69,7 +69,7 @@
 
 % as:
 
-\input{10_the_platform_server_package/code/10_3_0_4.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_4.tex}
 
 % \texttt{platformCoreDynamic}
 % adds additional provider config (for the dynamic compiler) to
@@ -83,7 +83,7 @@
 
 % as:
 
-\input{10_the_platform_server_package/code/10_3_0_5.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_5.tex}
 
 % \texttt{createPlatformFactory()}
 % is defined in:
@@ -104,7 +104,7 @@
 % \texttt{ServerModule}
 % :
 
-\input{10_the_platform_server_package/code/10_3_0_6.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_6.tex}
 
 % The domino\_adapter.ts file create a DOM adapter for Domino. The Domino library is a
 % DOM engine for HTML5 that runs in Node. Its project page is:
@@ -127,7 +127,7 @@
 
 % The domino\_adapter.ts file has these functions to parse and serialze a document:
 
-\input{10_the_platform_server_package/code/10_3_0_7.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_7.tex}
 
 % We see
 % \texttt{serializeDocument}
@@ -140,7 +140,7 @@
 
 % as:
 
-\input{10_the_platform_server_package/code/10_3_0_8.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_8.tex}
 
 % \texttt{BrowserDomAdapter}
 % is defined in:
@@ -155,7 +155,7 @@
 % \texttt{BrowserDomAdapter}
 % :
 
-\input{10_the_platform_server_package/code/10_3_0_9.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_9.tex}
 
 % Its static
 % \texttt{makeCurrent()}
@@ -164,7 +164,7 @@
 % \texttt{setRootDomAdapter()}
 % :
 
-\input{10_the_platform_server_package/code/10_3_0_10.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_10.tex}
 
 % Recall that
 % \texttt{setRootDomAdapter()}
@@ -177,7 +177,7 @@
 
 % as:
 
-\input{10_the_platform_server_package/code/10_3_0_11.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_11.tex}
 
 % and that
 % \texttt{getDOM()}
@@ -190,4 +190,4 @@
 % Many of the  DOM adapter methods throw exceptions as they do not make sense
 % server-side:
 
-\input{10_the_platform_server_package/code/10_3_0_12.tex}
+\input{../output/10_the_platform_server_package/code/10_3_0_12.tex}

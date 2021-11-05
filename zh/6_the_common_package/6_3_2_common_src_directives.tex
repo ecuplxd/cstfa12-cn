@@ -16,20 +16,20 @@
 
 % The indexs.ts file exports the directive types:
 
-\input{6_the_common_package/code/6_3_2_0.tex}
+\input{../output/6_the_common_package/code/6_3_2_0.tex}
 
 % along with a definition for
 % \texttt{COMMON\_DIRECTIVES}
 % , which is:
 
-\input{6_the_common_package/code/6_3_2_1.tex}
+\input{../output/6_the_common_package/code/6_3_2_1.tex}
 
 % The various ng\_ files implement the directives. Lets take a peek at one example,
 % ng\_if.ts. It uses a view container to create an embedded view based on a template
 % ref, if the supplied condition is true. We first see in its constructor it records the view
 % container and template ref passed in as parameter:
 
-\input{6_the_common_package/code/6_3_2_2.tex}
+\input{../output/6_the_common_package/code/6_3_2_2.tex}
 
 % We observe that the
 % \texttt{NgIf}
@@ -40,13 +40,13 @@
 
 % Then we see it has some setters defined as input properties, for the variations of if:
 
-\input{6_the_common_package/code/6_3_2_3.tex}
+\input{../output/6_the_common_package/code/6_3_2_3.tex}
 
 % Finally it has an internal method,
 % \texttt{\_updateView}
 % , where the view is changed as needed:
 
-\input{6_the_common_package/code/6_3_2_4.tex}
+\input{../output/6_the_common_package/code/6_3_2_4.tex}
 
 % The important calls here are (
 % 1
@@ -75,12 +75,12 @@
 % \texttt{NgForOfContext}
 % ). The helper class is implemented as:
 
-\input{6_the_common_package/code/6_3_2_5.tex}
+\input{../output/6_the_common_package/code/6_3_2_5.tex}
 
 % \texttt{NgFor}
 % is defined as:
 
-\input{6_the_common_package/code/6_3_2_6.tex}
+\input{../output/6_the_common_package/code/6_3_2_6.tex}
 
 % The first thing to note about
 % \texttt{NgFor}
@@ -93,12 +93,12 @@
 % class is a lifecycle hook defined in
 % @angular/core/src/metadata/lifecycle\_hooks.ts as:
 
-\input{6_the_common_package/code/6_3_2_7.tex}
+\input{../output/6_the_common_package/code/6_3_2_7.tex}
 
 % \texttt{OnChanges}
 % is defined in the same file as:
 
-\input{6_the_common_package/code/6_3_2_8.tex}
+\input{../output/6_the_common_package/code/6_3_2_8.tex}
 
 % Hence we would expect
 % \texttt{NgFor}

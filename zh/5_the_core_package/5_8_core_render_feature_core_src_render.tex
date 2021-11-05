@@ -64,7 +64,7 @@
 
 % and it contains this export:
 
-\input{5_the_core_package/code/5_8_0.tex}
+\input{../output/5_the_core_package/code/5_8_0.tex}
 
 % We note a number of the exports have “2” in their name and when we examine the
 % actual definitions we see those that do not are deprecated so will will not be covering
@@ -87,14 +87,14 @@
 % is used to identify component types for which rendering is needed,
 % and is defined as:
 
-\input{5_the_core_package/code/5_8_1.tex}
+\input{../output/5_the_core_package/code/5_8_1.tex}
 
 % The
 % \texttt{RendererFactory2}
 % class is used to register a provider with dependency injection
 % and is defined as:
 
-\input{5_the_core_package/code/5_8_2.tex}
+\input{../output/5_the_core_package/code/5_8_2.tex}
 
 % Essentially, its main method,
 % \texttt{createRenderer()}
@@ -113,7 +113,7 @@
 % \texttt{browserModule}
 % is defined as:
 
-\input{5_the_core_package/code/5_8_3.tex}
+\input{../output/5_the_core_package/code/5_8_3.tex}
 
 % Another example usage is in:
 
@@ -126,7 +126,7 @@
 % \texttt{WorkerAppModule}
 % is defined as:
 
-\input{5_the_core_package/code/5_8_4.tex}
+\input{../output/5_the_core_package/code/5_8_4.tex}
 
 % The result of this is that different root renderers can be supplied via dependency
 % injection for differing scenarios, and client code using the renderer API can use a
@@ -142,15 +142,15 @@
 
 % has this:
 
-\input{5_the_core_package/code/5_8_5.tex}
+\input{../output/5_the_core_package/code/5_8_5.tex}
 
 % which is called from:
 
-\input{5_the_core_package/code/5_8_6.tex}
+\input{../output/5_the_core_package/code/5_8_6.tex}
 
 % which in turn is called from:
 
-\input{5_the_core_package/code/5_8_7.tex}
+\input{../output/5_the_core_package/code/5_8_7.tex}
 
 % which is finally called from inside:
 
@@ -163,7 +163,7 @@
 % \texttt{NgModuleFactory\_.create()}
 % method:
 
-\input{5_the_core_package/code/5_8_8.tex}
+\input{../output/5_the_core_package/code/5_8_8.tex}
 
 % Now we’ll return to:
 
@@ -180,7 +180,7 @@
 % \texttt{Renderer2}
 % in full is as follows:
 
-\input{5_the_core_package/code/5_8_9.tex}
+\input{../output/5_the_core_package/code/5_8_9.tex}
 
 % Here only the interface is being defined – for actual implementation, refer to the
 % various platform renderers in the different platform modules. The renderer is a simple
@@ -191,13 +191,13 @@
 % \texttt{RendererStyleFlags2}
 % defined as:
 
-\input{5_the_core_package/code/5_8_10.tex}
+\input{../output/5_the_core_package/code/5_8_10.tex}
 
 % It is used to supply a flag parameter to two of
 % \texttt{Renderer2}
 % ’s methods:
 
-\input{5_the_core_package/code/5_8_11.tex}
+\input{../output/5_the_core_package/code/5_8_11.tex}
 
 \input{5_the_core_package/5_8_0_core_src_debug.tex}
 

@@ -14,11 +14,11 @@
 
 % Cli.ts starts with some useful comments about how to call ts-api-guardian:
 
-\input{3_ts_api_guardian/code/3_4_0.tex}
+\input{../output/3_ts_api_guardian/code/3_4_0.tex}
 
 % cli.ts accepts the following command line options:
 
-\input{3_ts_api_guardian/code/3_4_1.tex}
+\input{../output/3_ts_api_guardian/code/3_4_1.tex}
 
 % The Angular API allows annotations to be attached to each API indicating whether it is
 % stable, deprecated or experiemental. The
@@ -37,7 +37,7 @@
 % - both are in main.ts and are actually quite short
 % functions:
 
-\input{3_ts_api_guardian/code/3_4_2.tex}
+\input{../output/3_ts_api_guardian/code/3_4_2.tex}
 
 % generateGoldenFile calls publicApi (from Serializer.ts) to generate the contents of the
 % golden file and then writes it to a file.  VerifyAgainstGoldenFile() also calls publicApi
@@ -46,13 +46,13 @@
 % calls createPatch (from the diff package), to create a representation of the differences
 % between the actual and expected golden files.
 
-\input{3_ts_api_guardian/code/3_4_3.tex}
+\input{../output/3_ts_api_guardian/code/3_4_3.tex}
 
 % serializer.ts defines
 % \texttt{SerializationOptions}
 % which has three optional properties:
 
-\input{3_ts_api_guardian/code/3_4_4.tex}
+\input{../output/3_ts_api_guardian/code/3_4_4.tex}
 
 % Serializer.ts defines a public API function which just calls
 % \texttt{publicApiInternal()}

@@ -20,7 +20,7 @@
 % \texttt{NgModule}
 % definitions, the main one being:
 
-\input{7_the_common_http_sub_package/code/7_1_0_0.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_0.tex}
 
 % That
 % \texttt{HttpXHRBackend}
@@ -46,7 +46,7 @@
 % are defined when examining XSRF
 % shortly):
 
-\input{7_the_common_http_sub_package/code/7_1_0_1.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_1.tex}
 
 % The headers.ts file provides the
 % \texttt{HttpHeaders}
@@ -55,11 +55,11 @@
 % \texttt{Map}
 % data structure. It defines its primary data structure as:
 
-\input{7_the_common_http_sub_package/code/7_1_0_2.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_2.tex}
 
 % It offers functionality to work with that data structure.
 
-\input{7_the_common_http_sub_package/code/7_1_0_3.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_3.tex}
 
 % The request.ts file implements the
 % \texttt{Request}
@@ -67,13 +67,13 @@
 % of headers, and a content type. Depending on the request method, a body may or
 % may not be needed. To supply initialization parameters, this interface is defined:
 
-\input{7_the_common_http_sub_package/code/7_1_0_4.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_4.tex}
 
 % We see its use in the constructor for
 % \texttt{Request}
 % :
 
-\input{7_the_common_http_sub_package/code/7_1_0_5.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_5.tex}
 
 % Similarly, the response.ts implements the
 % \texttt{Response}
@@ -81,13 +81,13 @@
 % \texttt{HttpResponseBase}
 % class:
 
-\input{7_the_common_http_sub_package/code/7_1_0_6.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_6.tex}
 
 % The backend.ts file provides classes for pluggable connection handling. By providing
 % alternative implementations of these, flexible server communication is supported.
 % Note what the comments in the code say:
 
-\input{7_the_common_http_sub_package/code/7_1_0_7.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_7.tex}
 
 % The backend is important because it means a test-oriented in-memory backend could
 % be switched for the real backend as needed, without further changes to HTTP code.
@@ -98,18 +98,18 @@
 % \url{xhr.ts}
 % :
 
-\input{7_the_common_http_sub_package/code/7_1_0_8.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_8.tex}
 
 % The
 % \url{xsrf.ts}
 % file defines two injectable classes that helps with XSRF (Cross Site Request
 % Forgery) protection:
 
-\input{7_the_common_http_sub_package/code/7_1_0_9.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_9.tex}
 
 % This files also defines:
 
-\input{7_the_common_http_sub_package/code/7_1_0_10.tex}
+\input{../output/7_the_common_http_sub_package/code/7_1_0_10.tex}
 
 % These are used when defining the @NgModule
 % \texttt{HttpClientXsrfModule}
