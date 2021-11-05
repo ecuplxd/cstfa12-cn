@@ -1,16 +1,16 @@
 \section{Introduction}
 
-RxJS is a wonderful framework to handle observable streams of items. We see its use
-in Angular as event emitters, HTTP responses and services. To become a good Angular
-developer you first have to become a good RxJS developer. It is that critical to the
-correct programming of Angular. RxJS is also the base technology for NgRx, the very
-popular state cache engine for client apps.
+% RxJS is a wonderful framework to handle observable streams of items. We see its use
+% in Angular as event emitters, HTTP responses and services. To become a good Angular
+% developer you first have to become a good RxJS developer. It is that critical to the
+% correct programming of Angular. RxJS is also the base technology for NgRx, the very
+% popular state cache engine for client apps.
 
-An observable is a dual of an enumerable. With an enumerable, your code would
-call .next() repeatable to get the next item in a sequence. In contrast, with an
-observable, you supply one method to handle new data items, and optionally a
-method to handle errors and another to handle the completion event (successful end
-of items). The internals of the observable will call your code when it has data items to
-deliver to you. So you could imagine a HTTP request being sent to the server, and a
-blob of data coming back in multiple packets. As more items come in, the observable
-will call the handler in your code to process them.
+% An observable is a dual of an enumerable. With an enumerable, your code would
+% call .next() repeatable to get the next item in a sequence. In contrast, with an
+% observable, you supply one method to handle new data items, and optionally a
+% method to handle errors and another to handle the completion event (successful end
+% of items). The internals of the observable will call your code when it has data items to
+% deliver to you. So you could imagine a HTTP request being sent to the server, and a
+% blob of data coming back in multiple packets. As more items come in, the observable
+% will call the handler in your code to process them.

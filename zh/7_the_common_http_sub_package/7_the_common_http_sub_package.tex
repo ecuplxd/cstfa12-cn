@@ -1,33 +1,33 @@
 \chapter{The Common/HTTP Sub-package}
 
-The Common/Http sub-package provides client-side access to an HTTP stack with
-configurable HTTP backends (e.g. alternatives for test). For production use, it usually
-makes calls to the browser’s
-\texttt{XmlHttpRequest()}
-function.
+% The Common/Http sub-package provides client-side access to an HTTP stack with
+% configurable HTTP backends (e.g. alternatives for test). For production use, it usually
+% makes calls to the browser’s
+% \texttt{XmlHttpRequest()}
+% function.
 
-Note that in ealier versions of Angular, HTTP was a top-level package (similar to core,
-common, router, forms) but in recent versions of Angular it has been moved to be a
-sub-package of Common. Be aware that in older books, blogs and code samples you
-will still find references to this older top-level HTTP package. You will also find its API
-still described in the Angular API documentation, with all its types marekd as
-“deprecated”. For new code you write it is recommended to use the Common/HTTP
-sub-package and that is what we describe here.
+% Note that in ealier versions of Angular, HTTP was a top-level package (similar to core,
+% common, router, forms) but in recent versions of Angular it has been moved to be a
+% sub-package of Common. Be aware that in older books, blogs and code samples you
+% will still find references to this older top-level HTTP package. You will also find its API
+% still described in the Angular API documentation, with all its types marekd as
+% “deprecated”. For new code you write it is recommended to use the Common/HTTP
+% sub-package and that is what we describe here.
 
-An interesting additional project called in-memory-web-api can be used for a test-
-friendly implementation. It is located here:
+% An interesting additional project called in-memory-web-api can be used for a test-
+% friendly implementation. It is located here:
 
 \begin{itemize}
   \item \url{https://github.com/angular/in-memory-web-api}
 \end{itemize}
 
-This can work with the new Common/HTTP sub-package or the older HTTP top-level
-package. The link about describes how to set up each – make sure it is appropriate for
-your needs. A very important note on that page is:
+% This can work with the new Common/HTTP sub-package or the older HTTP top-level
+% package. The link about describes how to set up each – make sure it is appropriate for
+% your needs. A very important note on that page is:
 
-\emph{Always import the HttpClientInMemoryWebApiModule after the}
-\emph{HttpClientModule to ensure that the in-memory backend provider}
-\emph{supersedes the Angular version.}
+% \emph{Always import the HttpClientInMemoryWebApiModule after the}
+% \emph{HttpClientModule to ensure that the in-memory backend provider}
+% \emph{supersedes the Angular version.}
 
 \input{7_the_common_http_sub_package/7_0_common_http_public_api.tex}
 \input{7_the_common_http_sub_package/7_1_source_tree_layout.tex}

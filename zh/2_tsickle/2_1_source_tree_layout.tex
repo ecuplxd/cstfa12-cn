@@ -1,6 +1,6 @@
 \section{Source Tree Layout}
 
-The Tsickle source tree has these sub-directories:
+% The Tsickle source tree has these sub-directories:
 
 \begin{itemize}
   \item src
@@ -9,7 +9,7 @@ The Tsickle source tree has these sub-directories:
   \item third\_party
 \end{itemize}
 
-The main directory has these important files:
+% The main directory has these important files:
 
 \begin{itemize}
   \item readme.md
@@ -18,23 +18,23 @@ The main directory has these important files:
   \item tsconfig.json
 \end{itemize}
 
-The readme.md contains useful information about the project, including this important
-guidance about the use of tsconfig.json:
+% The readme.md contains useful information about the project, including this important
+% guidance about the use of tsconfig.json:
 
-\emph{Tsickle works by wrapping tsc. To use it, you must set up your project such}
-\emph{that it builds correctly when you run tsc from the command line, by}
-\emph{configuring the settings in tsconfig.json.}
+% \emph{Tsickle works by wrapping tsc. To use it, you must set up your project such}
+% \emph{that it builds correctly when you run tsc from the command line, by}
+% \emph{configuring the settings in tsconfig.json.}
 
-\emph{If you have complicated tsc command lines and flags in a build file (like a}
-\emph{gulpfile etc.) Tsickle won't know about it. Another reason it's nice to put}
-\emph{everything in tsconfig.json is so your editor inherits all these settings as}
-\emph{well.}
+% \emph{If you have complicated tsc command lines and flags in a build file (like a}
+% \emph{gulpfile etc.) Tsickle won't know about it. Another reason it's nice to put}
+% \emph{everything in tsconfig.json is so your editor inherits all these settings as}
+% \emph{well.}
 
-The package.json file contains:
+% The package.json file contains:
 
 \input{2_tsickle/code/2_1_0.tex}
 
-The gulpfile.js file contains the following Gulp tasks:
+% The gulpfile.js file contains the following Gulp tasks:
 
 \begin{itemize}
   \item gulp format

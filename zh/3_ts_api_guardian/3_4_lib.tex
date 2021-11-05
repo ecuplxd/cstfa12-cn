@@ -1,6 +1,6 @@
 \section{lib}
 
-The lib sub-directory contains these files:
+% The lib sub-directory contains these files:
 
 \begin{itemize}
   \item cli.ts – command-line interface, processes argument list and invokes commands
@@ -8,59 +8,59 @@ The lib sub-directory contains these files:
   \item serializer.ts – code to serialize an API (to create the contents of a golden file)
 \end{itemize}
 
-A golden file is a textual representation of an API and the two key tasks of ts-api-
-guardian is to either create or verify golden files based on supplied command line
-arguments.
+% A golden file is a textual representation of an API and the two key tasks of ts-api-
+% guardian is to either create or verify golden files based on supplied command line
+% arguments.
 
-Cli.ts starts with some useful comments about how to call ts-api-guardian:
+% Cli.ts starts with some useful comments about how to call ts-api-guardian:
 
 \input{3_ts_api_guardian/code/3_4_0.tex}
 
-cli.ts accepts the following command line options:
+% cli.ts accepts the following command line options:
 
 \input{3_ts_api_guardian/code/3_4_1.tex}
 
-The Angular API allows annotations to be attached to each API indicating whether it is
-stable, deprecated or experiemental. The
-\texttt{onStabilityMissing}
-option indicates what
-action is required if such an annotation is missing. The
-\texttt{startCli()}
-function parses
-the command line and initializes an instance of
-\texttt{SerializationOptions}
-, and then for
-generation mode calls
-\texttt{generateGoldenFile()}
-or for verification mode calls
-\texttt{verifyAgainstGoldenFile()}
-- both are in main.ts and are actually quite short
-functions:
+% The Angular API allows annotations to be attached to each API indicating whether it is
+% stable, deprecated or experiemental. The
+% \texttt{onStabilityMissing}
+% option indicates what
+% action is required if such an annotation is missing. The
+% \texttt{startCli()}
+% function parses
+% the command line and initializes an instance of
+% \texttt{SerializationOptions}
+% , and then for
+% generation mode calls
+% \texttt{generateGoldenFile()}
+% or for verification mode calls
+% \texttt{verifyAgainstGoldenFile()}
+% - both are in main.ts and are actually quite short
+% functions:
 
 \input{3_ts_api_guardian/code/3_4_2.tex}
 
-generateGoldenFile calls publicApi (from Serializer.ts) to generate the contents of the
-golden file and then writes it to a file.  VerifyAgainstGoldenFile() also calls publicApi
-and saves the result in a string called actual, and then loads the existing golden file
-data into a string called expected, and then compares then. If then are different, it
-calls createPatch (from the diff package), to create a representation of the differences
-between the actual and expected golden files.
+% generateGoldenFile calls publicApi (from Serializer.ts) to generate the contents of the
+% golden file and then writes it to a file.  VerifyAgainstGoldenFile() also calls publicApi
+% and saves the result in a string called actual, and then loads the existing golden file
+% data into a string called expected, and then compares then. If then are different, it
+% calls createPatch (from the diff package), to create a representation of the differences
+% between the actual and expected golden files.
 
 \input{3_ts_api_guardian/code/3_4_3.tex}
 
-serializer.ts defines
-\texttt{SerializationOptions}
-which has three optional properties:
+% serializer.ts defines
+% \texttt{SerializationOptions}
+% which has three optional properties:
 
 \input{3_ts_api_guardian/code/3_4_4.tex}
 
-Serializer.ts defines a public API function which just calls
-\texttt{publicApiInternal()}
-,
-which in turn calls
-\texttt{ResolvedDeclarationEmitter()}
-, which is a 200-line class where
-the actual work is performed. It has three methods which perform the serialization:
+% Serializer.ts defines a public API function which just calls
+% \texttt{publicApiInternal()}
+% ,
+% which in turn calls
+% \texttt{ResolvedDeclarationEmitter()}
+% , which is a 200-line class where
+% the actual work is performed. It has three methods which perform the serialization:
 
 \begin{itemize}
   \item emit(): string

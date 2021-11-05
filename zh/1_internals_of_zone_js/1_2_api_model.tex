@@ -1,120 +1,120 @@
 \section{API Model}
 
-Zone.js exposes an API for applications to use in the
-\href{https://github.com/angular/zone.js/blob/master/dist/zone.js.d.ts}
-{<ZONE-MASTER>/dist/zone.js.d.ts}
-file.
+% Zone.js exposes an API for applications to use in the
+% \href{https://github.com/angular/zone.js/blob/master/dist/zone.js.d.ts}
+% {<ZONE-MASTER>/dist/zone.js.d.ts}
+% file.
 
-The two main types it offers are for tasks and zones, along with some helper types. A
-zone is a (usually named) asynchronous execution context; a task is a block of
-functionality (may also be named). Tasks run in the context of a zone.
+% The two main types it offers are for tasks and zones, along with some helper types. A
+% zone is a (usually named) asynchronous execution context; a task is a block of
+% functionality (may also be named). Tasks run in the context of a zone.
 
-Zone.js also supplies a const value, also called
-\texttt{Zone}
-, of type
-\texttt{ZoneType}
-:
+% Zone.js also supplies a const value, also called
+% \texttt{Zone}
+% , of type
+% \texttt{ZoneType}
+% :
 
 \input{1_internals_of_zone_js/code/1_2_0.tex}
 
-Recall that TypeScript has distinct declaration spaces for values and types, so the
-\texttt{Zone}
-value is distinct from the
-\texttt{Zone}
-type. For further details, see the TypeScript
-Language Specification – Section 2.3 – Declarations:
+% Recall that TypeScript has distinct declaration spaces for values and types, so the
+% \texttt{Zone}
+% value is distinct from the
+% \texttt{Zone}
+% type. For further details, see the TypeScript
+% Language Specification – Section 2.3 – Declarations:
 
 \begin{itemize}
   \item \url{https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#2.3}
 \end{itemize}
 
-Apart from being used to define the
-\texttt{Zone}
-value,
-\texttt{ZoneType}
-is not used further.
+% Apart from being used to define the
+% \texttt{Zone}
+% value,
+% \texttt{ZoneType}
+% is not used further.
 
-When your application code wishes to find out the current zone it simply uses
-\texttt{Zone.current}
-, and when it wants to discover the current task within that zone, it
-uses
-\texttt{Zone.currentTask}
-. If you need to figure out whether Zone.js is available to your
-application (it will be for Angular applications), then just make sure
-\texttt{Zone}
-is not
-undefined. If we examine:
+% When your application code wishes to find out the current zone it simply uses
+% \texttt{Zone.current}
+% , and when it wants to discover the current task within that zone, it
+% uses
+% \texttt{Zone.currentTask}
+% . If you need to figure out whether Zone.js is available to your
+% application (it will be for Angular applications), then just make sure
+% \texttt{Zone}
+% is not
+% undefined. If we examine:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/zone/ng_zone.ts}
         {<ANGULAR-MASTER>/packages/core/src/zone/ng\_zone.ts}
 \end{itemize}
 
-– we see that is exactly what Angular’s NgZone.ts does:
+% – we see that is exactly what Angular’s NgZone.ts does:
 
 \input{1_internals_of_zone_js/code/1_2_1.tex}
 
-Two simple helper types used to define tasks are
-\texttt{TaskType}
-and
-\texttt{TaskData}
-.
-\texttt{TaskType}
-is just a human-friendly string to associate with a task. It is usually set to one of the
-three task types as noted in the comment:
+% Two simple helper types used to define tasks are
+% \texttt{TaskType}
+% and
+% \texttt{TaskData}
+% .
+% \texttt{TaskType}
+% is just a human-friendly string to associate with a task. It is usually set to one of the
+% three task types as noted in the comment:
 
 \input{1_internals_of_zone_js/code/1_2_2.tex}
 
-\texttt{TaskData}
-contains a boolean (is this task periodic, i.e. is to be repeated) and two
-numbers - delay before executing this task and a handler id from
-\texttt{setTimout}
-.
+% \texttt{TaskData}
+% contains a boolean (is this task periodic, i.e. is to be repeated) and two
+% numbers - delay before executing this task and a handler id from
+% \texttt{setTimout}
+% .
 
 \input{1_internals_of_zone_js/code/1_2_3.tex}
 
-A task is an interface declared as:
+% A task is an interface declared as:
 
 \input{1_internals_of_zone_js/code/1_2_4.tex}
 
-There are three marker interfaces derived from
-\texttt{Task}
-:
+% There are three marker interfaces derived from
+% \texttt{Task}
+% :
 
 \input{1_internals_of_zone_js/code/1_2_5.tex}
 
-The comments for Task nicely explains their purpose:
+% The comments for Task nicely explains their purpose:
 
 \input{1_internals_of_zone_js/code/1_2_6.tex}
 
-There are three helper types used to define
-\texttt{Zone}
-.
-\texttt{HasTaskState}
-just contains
-booleans for each of the task types and a string:
+% There are three helper types used to define
+% \texttt{Zone}
+% .
+% \texttt{HasTaskState}
+% just contains
+% booleans for each of the task types and a string:
 
 \input{1_internals_of_zone_js/code/1_2_7.tex}
 
-\texttt{ZoneDelegate}
-is used when one zone wishes to delegate to another how certain
-operations should be performed. So for forcking (creating new tasks), scheduling,
-intercepting, invoking and error handling, the delegate may be called upon to carry
-out the action.
+% \texttt{ZoneDelegate}
+% is used when one zone wishes to delegate to another how certain
+% operations should be performed. So for forcking (creating new tasks), scheduling,
+% intercepting, invoking and error handling, the delegate may be called upon to carry
+% out the action.
 
 \input{1_internals_of_zone_js/code/1_2_8.tex}
 
-\texttt{ZoneSpec}
-is an interface that allows implementations to state what should have when
-certain actions are needed. It uses
-\texttt{ZoneDelegate}
-and the current zone:
+% \texttt{ZoneSpec}
+% is an interface that allows implementations to state what should have when
+% certain actions are needed. It uses
+% \texttt{ZoneDelegate}
+% and the current zone:
 
 \input{1_internals_of_zone_js/code/1_2_9.tex}
 
-The definition of the
-\texttt{Zone}
-type is:
+% The definition of the
+% \texttt{Zone}
+% type is:
 
 \input{1_internals_of_zone_js/code/1_2_10.tex}
 

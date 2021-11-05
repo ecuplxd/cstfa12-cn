@@ -1,28 +1,28 @@
 \section{Overview}
 
-Platform-Server represents a platform when the application is running on a server.
+% Platform-Server represents a platform when the application is running on a server.
 
-Most of the time Angular applications run in the browser and use either
-Platform-Browser (with the offline template compiler) or Platform-Browser-Dynamic
-(with the runtime template compiler). Running Angular applications on the server is a
-more specialist deployment. It can be of interest for search engine optimization and
-for pre-rendering output, which is later downloaded to browsers (this can speed up
-initial display of content to users for some types of applications; and also ease
-development with backend databases that might not be exposed via REST API to
-browser code). Platform-Server is used by Angular Universal as its platform module.
+% Most of the time Angular applications run in the browser and use either
+% Platform-Browser (with the offline template compiler) or Platform-Browser-Dynamic
+% (with the runtime template compiler). Running Angular applications on the server is a
+% more specialist deployment. It can be of interest for search engine optimization and
+% for pre-rendering output, which is later downloaded to browsers (this can speed up
+% initial display of content to users for some types of applications; and also ease
+% development with backend databases that might not be exposed via REST API to
+% browser code). Platform-Server is used by Angular Universal as its platform module.
 
-When considering Platform-Server, there are two questions the curious software
-engineer might ponder. Firstly, we wonder, if for the browser there are dynamic and
-non-dynamic versions of the platform, why not for the server? The answer to this is
-that for the browser, one wishes to support low-end devices serviced by poor network
-connections, so reducing the burden on the browser is of great interest (hence using
-the offline template compiler only); but one assumes the server has ample disk space
-and RAM and a small amount of extra code is not an issue, so bundling both kinds of
-server platforms (one that uses the offline template compiler, the other - “dynamic” -
-that uses the runtime template compiler) in the same module simplifies matters.
+% When considering Platform-Server, there are two questions the curious software
+% engineer might ponder. Firstly, we wonder, if for the browser there are dynamic and
+% non-dynamic versions of the platform, why not for the server? The answer to this is
+% that for the browser, one wishes to support low-end devices serviced by poor network
+% connections, so reducing the burden on the browser is of great interest (hence using
+% the offline template compiler only); but one assumes the server has ample disk space
+% and RAM and a small amount of extra code is not an issue, so bundling both kinds of
+% server platforms (one that uses the offline template compiler, the other - “dynamic” -
+% that uses the runtime template compiler) in the same module simplifies matters.
 
-The second question is how rendering works on the server (where there is no DOM)?
-The answer is the rendered output is written via the Angular renderer API to an HTML
-file, which then can be downloaded to a browser or made available to a search engine
-- we need to explore how this rendering works (but for the curious, a library called
-Domino is used which provides a DOM for node apps).
+% The second question is how rendering works on the server (where there is no DOM)?
+% The answer is the rendered output is written via the Angular renderer API to an HTML
+% file, which then can be downloaded to a browser or made available to a search engine
+% - we need to explore how this rendering works (but for the curious, a library called
+% Domino is used which provides a DOM for node apps).

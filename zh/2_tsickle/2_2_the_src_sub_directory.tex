@@ -1,6 +1,6 @@
 \section{The src Sub-Directory}
 
-The src sub-directory contains the following source files:
+% The src sub-directory contains the following source files:
 
 \begin{itemize}
   \item class\_decorator\_downlevel\_transformer.ts
@@ -22,87 +22,87 @@ The src sub-directory contains the following source files:
   \item util.ts
 \end{itemize}
 
-main.ts is where the call to tsickle starts executing and tsickle.ts is where the core
-logic is – the other files are helpers.
+% main.ts is where the call to tsickle starts executing and tsickle.ts is where the core
+% logic is – the other files are helpers.
 
-The entry point at the bottom of main.ts calls the main function passing in the
-argument list as an array of strings.
+% The entry point at the bottom of main.ts calls the main function passing in the
+% argument list as an array of strings.
 
 \input{2_tsickle/code/2_2_0.tex}
 
-The main function first loads the settings
-1
-from the args and
-2
-the tsc config. Then it
-calls the
-\texttt{toClosureJs()}
-function
-3
-, and outputs to a file
-4
-each resulting JavaScript
-file. If
-\texttt{externsPath}
-is set in settings, they too are written out to files
-5
-.
+% The main function first loads the settings
+% 1
+% from the args and
+% 2
+% the tsc config. Then it
+% calls the
+% \texttt{toClosureJs()}
+% function
+% 3
+% , and outputs to a file
+% 4
+% each resulting JavaScript
+% file. If
+% \texttt{externsPath}
+% is set in settings, they too are written out to files
+% 5
+% .
 
-The
-\texttt{loadSettingsfromArgs()}
-function handles the command-line arguments, which
-can be a mix of tsickle-specific arguments and regular tsc arguments. The tsickle-
-specific arguments are –externs (generate externs file) and –untyped (every
-TypeScript type becomes a Closure {?} type).
+% The
+% \texttt{loadSettingsfromArgs()}
+% function handles the command-line arguments, which
+% can be a mix of tsickle-specific arguments and regular tsc arguments. The tsickle-
+% specific arguments are –externs (generate externs file) and –untyped (every
+% TypeScript type becomes a Closure {?} type).
 
-The
-\texttt{toClosureJs()}
-function is where the transformation occurs. It returns
-1
-a map of
-transformed file contents, optionally with externs information, it so configured.
+% The
+% \texttt{toClosureJs()}
+% function is where the transformation occurs. It returns
+% 1
+% a map of
+% transformed file contents, optionally with externs information, it so configured.
 
 \input{2_tsickle/code/2_2_1.tex}
 
-It first creates
-1
-a compiler host based on the supplied options, then
-2
-it uses
-TypeScript’s
-\texttt{createProgram}
-method with the original program source to ensure it is
-syntatically correct and any error messages refer the original source, not the modified
-source. Then it creates
-\texttt{3}
-a
-\texttt{tsickle.TsickleHost}
-instance which it passes
-\texttt{4}
-to
-\texttt{tsickle.emitWithTsickle()}
-.
+% It first creates
+% 1
+% a compiler host based on the supplied options, then
+% 2
+% it uses
+% TypeScript’s
+% \texttt{createProgram}
+% method with the original program source to ensure it is
+% syntatically correct and any error messages refer the original source, not the modified
+% source. Then it creates
+% \texttt{3}
+% a
+% \texttt{tsickle.TsickleHost}
+% instance which it passes
+% \texttt{4}
+% to
+% \texttt{tsickle.emitWithTsickle()}
+% .
 
-The
-\texttt{annotate}
-function is a simple function:
+% The
+% \texttt{annotate}
+% function is a simple function:
 
 \input{2_tsickle/code/2_2_2.tex}
 
-Classes called rewriters are used to rewrite the source. The rewriter.ts file has the
-\texttt{Rewriter}
-abstract class. An important method is
-\texttt{maybeProcess()}
-.
+% Classes called rewriters are used to rewrite the source. The rewriter.ts file has the
+% \texttt{Rewriter}
+% abstract class. An important method is
+% \texttt{maybeProcess()}
+% .
 
 \input{2_tsickle/code/2_2_3.tex}
 
-tsickle.ts has some classes that derive from
-\texttt{Rewriter}
-, according to this hierarchy:
+% tsickle.ts has some classes that derive from
+% \texttt{Rewriter}
+% , according to this hierarchy:
 
-\texttt{Annotator.maybeProcess()}
-is where the actual rewriting occurs.
-Annotator
-ClosureRewriter
-Rewriter
+% \texttt{Annotator.maybeProcess()}
+% is where the actual rewriting occurs.
+% Annotator
+% ClosureRewriter
+% Rewriter

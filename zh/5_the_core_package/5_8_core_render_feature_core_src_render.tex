@@ -1,29 +1,29 @@
 \section{Core Render Feature (core/src/render)}
 
-\emph{Note: There is a new view compliation and rendering architecture  (called}
-\emph{Render3, better known by its code name, Ivy) under intensive development}
-\emph{by the Angular team. A good place to keep an eye on progress and how it is}
-\emph{evolving is:}
-\emph{https://github.com/angular/angular/tree/master/packages/core/src/render3}
+% \emph{Note: There is a new view compliation and rendering architecture  (called}
+% \emph{Render3, better known by its code name, Ivy) under intensive development}
+% \emph{by the Angular team. A good place to keep an eye on progress and how it is}
+% \emph{evolving is:}
+% \emph{https://github.com/angular/angular/tree/master/packages/core/src/render3}
 
-\emph{What we describe below is Render2, which is the current stable view}
-\emph{engine. Please see the appendix for detailed coverage of Render3.}
+% \emph{What we describe below is Render2, which is the current stable view}
+% \emph{engine. Please see the appendix for detailed coverage of Render3.}
 
-Layering for Angular applications involves your application code talking to the Angular
-framework, which is layered into an application layer and a renderer layer, with a
-renderer API in between. The core/src/render/api.ts file defines this thin API and
-nothing else. The API consists of these abstract classes -
-\texttt{RendererType2}
-,
-\texttt{Renderer2,}
-\texttt{RendererFactory2}
-and
-\texttt{RendererStyleFlags2.}
-Implementation of this API is not
-part of Core. Instead, the various Platform-X packages need to provide the actual
-implementations for different scenarios.
+% Layering for Angular applications involves your application code talking to the Angular
+% framework, which is layered into an application layer and a renderer layer, with a
+% renderer API in between. The core/src/render/api.ts file defines this thin API and
+% nothing else. The API consists of these abstract classes -
+% \texttt{RendererType2}
+% ,
+% \texttt{Renderer2,}
+% \texttt{RendererFactory2}
+% and
+% \texttt{RendererStyleFlags2.}
+% Implementation of this API is not
+% part of Core. Instead, the various Platform-X packages need to provide the actual
+% implementations for different scenarios.
 
-Scenarios with diverse rendering requirements include:
+% Scenarios with diverse rendering requirements include:
 
 \begin{itemize}
   \item UI web apps in regular browser
@@ -33,169 +33,169 @@ Scenarios with diverse rendering requirements include:
   \item testing
 \end{itemize}
 
-The Renderer API is defined in terms of elements – and provides functionality e.g. to
-create elements, set their properties and listen for their events. The Renderer API is
-not defined in terms of a DOM. Indeed, the term “DOM” is not part of any of the
-method names in this API (though it is mentioned in some comments). In that way,
-how rendering is provided is an internal implementation detail, easily replaced in
-different scenarios if needed. Obviously, for a web app running in the main UI thread
-in a regular browser, the platform used for that needs to implement the Renderer API
-in terms of the browser’s DOM (and platform-browser does). But take a web worker
-as an alternative, where there simply is no browser DOM – a different platform needs
-to provide an alternative rendering solution. We will be examining in detail how
-rendering implementations work when we cover platforms later.
+% The Renderer API is defined in terms of elements – and provides functionality e.g. to
+% create elements, set their properties and listen for their events. The Renderer API is
+% not defined in terms of a DOM. Indeed, the term “DOM” is not part of any of the
+% method names in this API (though it is mentioned in some comments). In that way,
+% how rendering is provided is an internal implementation detail, easily replaced in
+% different scenarios if needed. Obviously, for a web app running in the main UI thread
+% in a regular browser, the platform used for that needs to implement the Renderer API
+% in terms of the browser’s DOM (and platform-browser does). But take a web worker
+% as an alternative, where there simply is no browser DOM – a different platform needs
+% to provide an alternative rendering solution. We will be examining in detail how
+% rendering implementations work when we cover platforms later.
 
-A notable characteristic of the Renderer API is that, even though it is defined in terms
-of elements, it does not list anywhere what those elements are. Elements are
-identified in terms of string names, but what are valid names is not part of the
-renderer. Instead, there is an element schema registry defined in the template
-compiler (
-\href{https://github.com/angular/angular/tree/master/packages/compiler/src/schema}
-{<ANGULAR-MASTER>/packages/compiler/src/schema}
-) and we will examine
-it further when looking at the template compiler.
+% A notable characteristic of the Renderer API is that, even though it is defined in terms
+% of elements, it does not list anywhere what those elements are. Elements are
+% identified in terms of string names, but what are valid names is not part of the
+% renderer. Instead, there is an element schema registry defined in the template
+% compiler (
+% \href{https://github.com/angular/angular/tree/master/packages/compiler/src/schema}
+% {<ANGULAR-MASTER>/packages/compiler/src/schema}
+% ) and we will examine
+% it further when looking at the template compiler.
 
-Now we will move on to looking at the renderer API. This API is exported from the
+% Now we will move on to looking at the renderer API. This API is exported from the
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render.ts}
         {<ANGULAR-MASTER>/packages/core/src/render.ts}
 \end{itemize}
 
-and it contains this export:
+% and it contains this export:
 
 \input{5_the_core_package/code/5_8_0.tex}
 
-We note a number of the exports have “2” in their name and when we examine the
-actual definitions we see those that do not are deprecated so will will not be covering
-those here. If looking at older documentation you may encounter them, but
-specifically for rendering, for up to date code you should be looking at rendering
-classes with 2 in the name. Also note ‘2’ for rendering is not tied to Angular version 2
-(actually that version of Angular used the older version of the rendering APIs).
+% We note a number of the exports have “2” in their name and when we examine the
+% actual definitions we see those that do not are deprecated so will will not be covering
+% those here. If looking at older documentation you may encounter them, but
+% specifically for rendering, for up to date code you should be looking at rendering
+% classes with 2 in the name. Also note ‘2’ for rendering is not tied to Angular version 2
+% (actually that version of Angular used the older version of the rendering APIs).
 
-The core/src/render directory has just one file:
+% The core/src/render directory has just one file:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render/api.ts}
         {<ANGULAR-MASTER>/packages/core/src/render/api.ts}
 \end{itemize}
 
-and this contains the rendering definitions we will see used elsewhere by platform-
-implementations.
+% and this contains the rendering definitions we will see used elsewhere by platform-
+% implementations.
 
-\texttt{RendererType2}
-is used to identify component types for which rendering is needed,
-and is defined as:
+% \texttt{RendererType2}
+% is used to identify component types for which rendering is needed,
+% and is defined as:
 
 \input{5_the_core_package/code/5_8_1.tex}
 
-The
-\texttt{RendererFactory2}
-class is used to register a provider with dependency injection
-and is defined as:
+% The
+% \texttt{RendererFactory2}
+% class is used to register a provider with dependency injection
+% and is defined as:
 
 \input{5_the_core_package/code/5_8_2.tex}
 
-Essentially, its main method,
-\texttt{createRenderer()}
-, is used to answer this - “for a given
-host element, please give me back a renderer that I can use”. This is key to wiring up
-flexible rendering of components via dependency injection.
+% Essentially, its main method,
+% \texttt{createRenderer()}
+% , is used to answer this - “for a given
+% host element, please give me back a renderer that I can use”. This is key to wiring up
+% flexible rendering of components via dependency injection.
 
-An example usage is in:
+% An example usage is in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser/src/browser.ts}
         {<ANGULAR-MASTER>/packages/platform-browser/src/browser.ts}
 \end{itemize}
 
-where
-\texttt{browserModule}
-is defined as:
+% where
+% \texttt{browserModule}
+% is defined as:
 
 \input{5_the_core_package/code/5_8_3.tex}
 
-Another example usage is in:
+% Another example usage is in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-webworker/src/worker_app.ts}
         {<ANGULAR-MASTER>/packages/platform-webworker/src/worker\_app.ts}
 \end{itemize}
 
-where
-\texttt{WorkerAppModule}
-is defined as:
+% where
+% \texttt{WorkerAppModule}
+% is defined as:
 
 \input{5_the_core_package/code/5_8_4.tex}
 
-The result of this is that different root renderers can be supplied via dependency
-injection for differing scenarios, and client code using the renderer API can use a
-suitable implementation. If that is how the
-\texttt{RendererFactory2}
-gets into dependency
-injection system, then of course the next question is, how does it get out?
+% The result of this is that different root renderers can be supplied via dependency
+% injection for differing scenarios, and client code using the renderer API can use a
+% suitable implementation. If that is how the
+% \texttt{RendererFactory2}
+% gets into dependency
+% injection system, then of course the next question is, how does it get out?
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/view/services.ts}
         {<ANGULAR-MASTER>/packages/core/src/view/services.ts}
 \end{itemize}
 
-has this:
+% has this:
 
 \input{5_the_core_package/code/5_8_5.tex}
 
-which is called from:
+% which is called from:
 
 \input{5_the_core_package/code/5_8_6.tex}
 
-which in turn is called from:
+% which in turn is called from:
 
 \input{5_the_core_package/code/5_8_7.tex}
 
-which is finally called from inside:
+% which is finally called from inside:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/view/entrypoint.ts}
         {<ANGULAR-MASTER>/packages/core/src/view/entrypoint.ts}
 \end{itemize}
 
-in
-\texttt{NgModuleFactory\_.create()}
-method:
+% in
+% \texttt{NgModuleFactory\_.create()}
+% method:
 
 \input{5_the_core_package/code/5_8_8.tex}
 
-Now we’ll return to:
+% Now we’ll return to:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render/api.ts}
         {<ANGULAR-MASTER>/packages/core/src/render/api.ts}
 \end{itemize}
 
-and move on to the principal class in the Renderer API,
-\texttt{Renderer2}
-, which is abstract
-and declares the following methods:
+% and move on to the principal class in the Renderer API,
+% \texttt{Renderer2}
+% , which is abstract
+% and declares the following methods:
 
-\texttt{Renderer2}
-in full is as follows:
+% \texttt{Renderer2}
+% in full is as follows:
 
 \input{5_the_core_package/code/5_8_9.tex}
 
-Here only the interface is being defined – for actual implementation, refer to the
-various platform renderers in the different platform modules. The renderer is a simple
-abstraction, quite suitable for a variety of rendering engine implementations – from
-the Angular team and third parties.
+% Here only the interface is being defined – for actual implementation, refer to the
+% various platform renderers in the different platform modules. The renderer is a simple
+% abstraction, quite suitable for a variety of rendering engine implementations – from
+% the Angular team and third parties.
 
-Finally is
-\texttt{RendererStyleFlags2}
-defined as:
+% Finally is
+% \texttt{RendererStyleFlags2}
+% defined as:
 
 \input{5_the_core_package/code/5_8_10.tex}
 
-It is used to supply a flag parameter to two of
-\texttt{Renderer2}
-’s methods:
+% It is used to supply a flag parameter to two of
+% \texttt{Renderer2}
+% ’s methods:
 
 \input{5_the_core_package/code/5_8_11.tex}
 

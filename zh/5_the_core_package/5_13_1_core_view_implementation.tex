@@ -1,127 +1,127 @@
 \subsection{Core/View Implementation}
 
-The source file:
+% The source file:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/view/types.ts}
         {<ANGULAR-MASTER>/packages/core/src/view/types.ts}
 \end{itemize}
 
-defines helper types used elsewhere in Core/View. Let’s start with
-\texttt{ViewContainerData}
-which simply extends
-\texttt{ViewContainerRef}
-and adds an internal
-property to record view data for embedded views:
+% defines helper types used elsewhere in Core/View. Let’s start with
+% \texttt{ViewContainerData}
+% which simply extends
+% \texttt{ViewContainerRef}
+% and adds an internal
+% property to record view data for embedded views:
 
 \input{5_the_core_package/code/5_13_1_0.tex}
 
-The
-\texttt{TemplateData}
-interface extends
-\texttt{TemplateRef}
-and just adds an array of
-\texttt{ViewData}
-instances:
+% The
+% \texttt{TemplateData}
+% interface extends
+% \texttt{TemplateRef}
+% and just adds an array of
+% \texttt{ViewData}
+% instances:
 
 \input{5_the_core_package/code/5_13_1_1.tex}
 
-The source file:
+% The source file:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/view/refs.ts}
         {<ANGULAR-MASTER>/packages/core/src/view/refs.ts}
 \end{itemize}
 
-provides internal implementations of references (refs).
+% provides internal implementations of references (refs).
 
-\texttt{ViewContainerRef\_}
-(note the trailing \_) implements
-\texttt{ViewContainerData}
-which in
-turn implements the public
-\texttt{ViewContainerRef}
-.
+% \texttt{ViewContainerRef\_}
+% (note the trailing \_) implements
+% \texttt{ViewContainerData}
+% which in
+% turn implements the public
+% \texttt{ViewContainerRef}
+% .
 
-It takes an
-\texttt{ElementData}
-for its anchor element in its constructor:
+% It takes an
+% \texttt{ElementData}
+% for its anchor element in its constructor:
 
 \input{5_the_core_package/code/5_13_1_2.tex}
 
-The two create methods are implemented as follows:
+% The two create methods are implemented as follows:
 
 \input{5_the_core_package/code/5_13_1_3.tex}
 
-We see the difference between them –
-\texttt{createEmbeddedView()}
-calls
-1
-the
-\texttt{TemplateRef}
-’s
-\texttt{createEmbeddedView()}
-method and inserts
-2
-the resulting viewRef;
-whereas
-\texttt{createComponent()}
-calls
-3
-the component factory’s
-\texttt{create}
-method, and
-with the resulting
-\texttt{ComponentRef}
-, inserts
-4
-its
-\texttt{HostView}
-. Note the return type is
-different for each create method – the first returns an
-\texttt{EmbededViewRef}
-whereas the
-second returns a
-\texttt{ComponentRef}
-.
+% We see the difference between them –
+% \texttt{createEmbeddedView()}
+% calls
+% 1
+% the
+% \texttt{TemplateRef}
+% ’s
+% \texttt{createEmbeddedView()}
+% method and inserts
+% 2
+% the resulting viewRef;
+% whereas
+% \texttt{createComponent()}
+% calls
+% 3
+% the component factory’s
+% \texttt{create}
+% method, and
+% with the resulting
+% \texttt{ComponentRef}
+% , inserts
+% 4
+% its
+% \texttt{HostView}
+% . Note the return type is
+% different for each create method – the first returns an
+% \texttt{EmbededViewRef}
+% whereas the
+% second returns a
+% \texttt{ComponentRef}
+% .
 
-The implementations of
-\texttt{insert}
-,
-\texttt{indexOf}
-,
-\texttt{remove}
-and
-\texttt{detach}
-result in use of
-appropriate view management APIs:
+% The implementations of
+% \texttt{insert}
+% ,
+% \texttt{indexOf}
+% ,
+% \texttt{remove}
+% and
+% \texttt{detach}
+% result in use of
+% appropriate view management APIs:
 
 \input{5_the_core_package/code/5_13_1_4.tex}
 
-The
-\texttt{ComponentRef\_}
-concrete class extends
-\texttt{ComponentRef}
-. Its constructor takes in an
-\texttt{ViewRef}
-, which is used in the
-\texttt{destroy}
-method and to set the component’s change
-detector ref and host view:
+% The
+% \texttt{ComponentRef\_}
+% concrete class extends
+% \texttt{ComponentRef}
+% . Its constructor takes in an
+% \texttt{ViewRef}
+% , which is used in the
+% \texttt{destroy}
+% method and to set the component’s change
+% detector ref and host view:
 
 \input{5_the_core_package/code/5_13_1_5.tex}
 
-The
-\texttt{TemplateRef\_}
-implementation has a constructor that takes a
-\texttt{ViewData}
-for the
-parent and a
-\texttt{NodeDef}
-. Its
-\texttt{createEmbeddedView}
-method returns a new
-\texttt{ViewRef\_}
-based on those parameters.
+% The
+% \texttt{TemplateRef\_}
+% implementation has a constructor that takes a
+% \texttt{ViewData}
+% for the
+% parent and a
+% \texttt{NodeDef}
+% . Its
+% \texttt{createEmbeddedView}
+% method returns a new
+% \texttt{ViewRef\_}
+% based on those parameters.
 
 \input{5_the_core_package/code/5_13_1_6.tex}

@@ -1,23 +1,23 @@
 \subsection{Core/Linker Usage}
 
-core/Linker is really the base API for compilation and linking, but we will see these
-types being used elsewhere (in particular, in the Angular Compiler package). The
-source files in the Core/Linker feature are only a few hundred lines of code in total.
-The heavy lifting of compilation is done in the Compiler package, which is much, much
-larger. For example, a single one of its file, view\_compiler.ts, is over a thousand lines
-long. We also see Core/Linker being used by the Compiler-CLI package, which is a
-command-line interface to the Compiler package.
-COMPILER\_OPTIONS
-CompilerOptions
-CompilerFactory
-Compiler
+% core/Linker is really the base API for compilation and linking, but we will see these
+% types being used elsewhere (in particular, in the Angular Compiler package). The
+% source files in the Core/Linker feature are only a few hundred lines of code in total.
+% The heavy lifting of compilation is done in the Compiler package, which is much, much
+% larger. For example, a single one of its file, view\_compiler.ts, is over a thousand lines
+% long. We also see Core/Linker being used by the Compiler-CLI package, which is a
+% command-line interface to the Compiler package.
+% COMPILER\_OPTIONS
+% CompilerOptions
+% CompilerFactory
+% Compiler
 
-The
-\texttt{SystemJsNgModuleLoader}
-class is used in the router module, to define the
-\texttt{ROUTER\_PROVIDERS}
-array. The
-\url{router/src/router_module.ts}
-file has this:
+% The
+% \texttt{SystemJsNgModuleLoader}
+% class is used in the router module, to define the
+% \texttt{ROUTER\_PROVIDERS}
+% array. The
+% \url{router/src/router_module.ts}
+% file has this:
 
 \input{5_the_core_package/code/5_12_1_0.tex}

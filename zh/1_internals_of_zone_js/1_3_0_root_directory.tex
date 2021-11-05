@@ -1,6 +1,6 @@
 \subsection{Root directory}
 
-The root directory contains these markdown documentation files:
+% The root directory contains these markdown documentation files:
 
 \begin{itemize}
   \item CHANGELOG.md
@@ -12,12 +12,12 @@ The root directory contains these markdown documentation files:
   \item STANDARD-APIS.md
 \end{itemize}
 
-we see it is actually very well
-documented and contains plenty of detail to get us up and running writing applications
-that use Zone.js. From the DEVELOPER.md document we see the contents of dist is
-auto-generated (we need to explore how).
+% we see it is actually very well
+% documented and contains plenty of detail to get us up and running writing applications
+% that use Zone.js. From the DEVELOPER.md document we see the contents of dist is
+% auto-generated (we need to explore how).
 
-The root directory contains these JSON files:
+% The root directory contains these JSON files:
 
 \begin{itemize}
   \item tslint.json
@@ -25,67 +25,67 @@ The root directory contains these JSON files:
   \item package.json
 \end{itemize}
 
-There are multiple files starting with tsconfig – here are the compilerOptionsfrom the
-main one:
+% There are multiple files starting with tsconfig – here are the compilerOptionsfrom the
+% main one:
 
 \input{1_internals_of_zone_js/code/1_3_0_0.tex}
 
-The package.json file contains metadata (including main and browser, which provide
-alternative entry points depending on whether this package
-1
-is loaded into a server
-[node] or a
-2
-browser app):
+% The package.json file contains metadata (including main and browser, which provide
+% alternative entry points depending on whether this package
+% 1
+% is loaded into a server
+% [node] or a
+% 2
+% browser app):
 
 \input{1_internals_of_zone_js/code/1_3_0_1.tex}
 
-and a list of scripts:
+% and a list of scripts:
 
 \input{1_internals_of_zone_js/code/1_3_0_2.tex}
 
-It has no dependencies:
+% It has no dependencies:
 
 \input{1_internals_of_zone_js/code/1_3_0_3.tex}
 
-The root directory also contains the MIT license in a file called LICENSE, along with
-the same within a comment in a file called LICENSE.wrapped.
+% The root directory also contains the MIT license in a file called LICENSE, along with
+% the same within a comment in a file called LICENSE.wrapped.
 
-It contains this file concerning bundling:
+% It contains this file concerning bundling:
 
 \begin{itemize}
   \item webpack.config.js
 \end{itemize}
 
-This has the following content:
+% This has the following content:
 
 \input{1_internals_of_zone_js/code/1_3_0_4.tex}
 
-Webpack is quite a popular bundler and ts-loader is a TypeScript loader for webpack.
-Details on both projects can be found here:
+% Webpack is quite a popular bundler and ts-loader is a TypeScript loader for webpack.
+% Details on both projects can be found here:
 
 \begin{itemize}
   \item \url{https://webpack.github.io/}
   \item \url{https://github.com/TypeStrong/ts-loader}
 \end{itemize}
 
-The root directory contains this file related to GIT:
+% The root directory contains this file related to GIT:
 
 \begin{itemize}
   \item .gitignore
 \end{itemize}
 
-It contains this task runner configuration:
+% It contains this task runner configuration:
 
 \begin{itemize}
   \item gulpfile.js
 \end{itemize}
 
-It supplies a gulp task called “test/node” to run tests against the node version of
-Zone.js, and a gulp task “compile” which runs the TypeScript tsc compiler in a child
-process. It supplies many gulp tasks to build individual components and run tests.
+% It supplies a gulp task called “test/node” to run tests against the node version of
+% Zone.js, and a gulp task “compile” which runs the TypeScript tsc compiler in a child
+% process. It supplies many gulp tasks to build individual components and run tests.
 
-All of these tasks result in a call to a local method
-\texttt{generateScript}
-which minifies (if
-required) and calls webpack and places the result in the dist sub-directory.
+% All of these tasks result in a call to a local method
+% \texttt{generateScript}
+% which minifies (if
+% required) and calls webpack and places the result in the dist sub-directory.

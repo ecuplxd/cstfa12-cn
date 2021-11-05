@@ -1,6 +1,6 @@
 \subsection{platform-server/src}
 
-These source files are present:
+% These source files are present:
 
 \begin{itemize}
   \item domino\_adapter.ts
@@ -17,177 +17,177 @@ These source files are present:
   \item version.ts
 \end{itemize}
 
-There are no sub-directories beneath src.
+% There are no sub-directories beneath src.
 
-The server.ts file declares this const:
+% The server.ts file declares this const:
 
 \input{10_the_platform_server_package/code/10_3_0_0.tex}
 
-The factory functions
-\texttt{platformServer}
-and
-\texttt{platformDynamicServer}
-create server
-platforms that use the offline template compiler and the runtime template compiler
-respectively.
+% The factory functions
+% \texttt{platformServer}
+% and
+% \texttt{platformDynamicServer}
+% create server
+% platforms that use the offline template compiler and the runtime template compiler
+% respectively.
 
-It adds two additional provider configurations. Firstly,
-\texttt{PLATFORM\_INITIALIZER}
-, which
-is an initializer function called before bootstrapping. Here we see it initializes the
-domino adapter, in a call to the local function
-\texttt{initDominoAdapter()}
-which calls
-\texttt{makeCurrent()}
-for the
-\texttt{DominoAdapter}
-:
+% It adds two additional provider configurations. Firstly,
+% \texttt{PLATFORM\_INITIALIZER}
+% , which
+% is an initializer function called before bootstrapping. Here we see it initializes the
+% domino adapter, in a call to the local function
+% \texttt{initDominoAdapter()}
+% which calls
+% \texttt{makeCurrent()}
+% for the
+% \texttt{DominoAdapter}
+% :
 
 \input{10_the_platform_server_package/code/10_3_0_1.tex}
 
-Secondly, it adds
-\texttt{PlatformLocation}
-, which is used by applications to interact with
-location (URL) information. It is set to a class defined in location.ts,
-\texttt{ServerPlatformLocation}
-, which mostly just throws exceptions:
+% Secondly, it adds
+% \texttt{PlatformLocation}
+% , which is used by applications to interact with
+% location (URL) information. It is set to a class defined in location.ts,
+% \texttt{ServerPlatformLocation}
+% , which mostly just throws exceptions:
 
 \input{10_the_platform_server_package/code/10_3_0_2.tex}
 
-server.ts declares two exported functions:
+% server.ts declares two exported functions:
 
 \input{10_the_platform_server_package/code/10_3_0_3.tex}
 
-We saw earlier that
-\texttt{platformCore}
-is defined in:
+% We saw earlier that
+% \texttt{platformCore}
+% is defined in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/platform_core_providers.ts}
         {<ANGULAR-MASTER>/packages/core/src/platform\_core\_providers.ts}
 \end{itemize}
 
-as:
+% as:
 
 \input{10_the_platform_server_package/code/10_3_0_4.tex}
 
-\texttt{platformCoreDynamic}
-adds additional provider config (for the dynamic compiler) to
-\texttt{platformCore}
-and is defined in:
+% \texttt{platformCoreDynamic}
+% adds additional provider config (for the dynamic compiler) to
+% \texttt{platformCore}
+% and is defined in:
 
 \begin{itemize}
   \item \href{fix: href loss url}
         {fix: href loss url}
 \end{itemize}
 
-as:
+% as:
 
 \input{10_the_platform_server_package/code/10_3_0_5.tex}
 
-\texttt{createPlatformFactory()}
-is defined in:
+% \texttt{createPlatformFactory()}
+% is defined in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/application_ref.ts}
         {<ANGULAR-MASTER>/packages/core/src/application\_ref.ts}
 \end{itemize}
 
-it calls Core’s
-\texttt{createPlatform()}
-with the supplied parameters, resulting in a new
-platform being constructed.
+% it calls Core’s
+% \texttt{createPlatform()}
+% with the supplied parameters, resulting in a new
+% platform being constructed.
 
-The remain part of Platform-Server’s server.ts file to discuss is the definition of the
-\texttt{NgModule}
-called
-\texttt{ServerModule}
-:
+% The remain part of Platform-Server’s server.ts file to discuss is the definition of the
+% \texttt{NgModule}
+% called
+% \texttt{ServerModule}
+% :
 
 \input{10_the_platform_server_package/code/10_3_0_6.tex}
 
-The domino\_adapter.ts file create a DOM adapter for Domino. The Domino library is a
-DOM engine for HTML5 that runs in Node. Its project page is:
+% The domino\_adapter.ts file create a DOM adapter for Domino. The Domino library is a
+% DOM engine for HTML5 that runs in Node. Its project page is:
 
 \begin{itemize}
   \item \url{https://github.com/fgnass/domino}
 \end{itemize}
 
-and states:
+% and states:
 
-\emph{“As the name might suggest, domino's goal is to provide a DOM in Node.”}
+% \emph{“As the name might suggest, domino's goal is to provide a DOM in Node.”}
 
-The domino\_adapter.ts file provides an adapter class,
-\texttt{DominoDomAdapter}
-, based on
-Domino’s serialization functionality that implements a
-\texttt{DomAdapter}
-suitable for use in
-server environments.
+% The domino\_adapter.ts file provides an adapter class,
+% \texttt{DominoDomAdapter}
+% , based on
+% Domino’s serialization functionality that implements a
+% \texttt{DomAdapter}
+% suitable for use in
+% server environments.
 
-The domino\_adapter.ts file has these functions to parse and serialze a document:
+% The domino\_adapter.ts file has these functions to parse and serialze a document:
 
 \input{10_the_platform_server_package/code/10_3_0_7.tex}
 
-We see
-\texttt{serializeDocument}
-being called from:
+% We see
+% \texttt{serializeDocument}
+% being called from:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-server/src/platform_state.ts}
         {<ANGULAR-MASTER>/packages/platform-server/src/platform\_state.ts}
 \end{itemize}
 
-as:
+% as:
 
 \input{10_the_platform_server_package/code/10_3_0_8.tex}
 
-\texttt{BrowserDomAdapter}
-is defined in:
+% \texttt{BrowserDomAdapter}
+% is defined in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser/src/browser/browser_adapter.ts}
         {<ANGULAR-MASTER>/packages/platfrom-browser/src/browser/browser\_adapter.ts}
 \end{itemize}
 
-\texttt{DominoAdapter}
-simply extends
-\texttt{BrowserDomAdapter}
-:
+% \texttt{DominoAdapter}
+% simply extends
+% \texttt{BrowserDomAdapter}
+% :
 
 \input{10_the_platform_server_package/code/10_3_0_9.tex}
 
-Its static
-\texttt{makeCurrent()}
-method, that we saw Universal Angular uses for server-side
-rendering,  initializes those three variables and then calls
-\texttt{setRootDomAdapter()}
-:
+% Its static
+% \texttt{makeCurrent()}
+% method, that we saw Universal Angular uses for server-side
+% rendering,  initializes those three variables and then calls
+% \texttt{setRootDomAdapter()}
+% :
 
 \input{10_the_platform_server_package/code/10_3_0_10.tex}
 
-Recall that
-\texttt{setRootDomAdapter()}
-is defined in:
+% Recall that
+% \texttt{setRootDomAdapter()}
+% is defined in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser/src/dom/dom_adapter.ts}
         {<ANGULAR-MASTER>/packages/platform-browser/src/dom/dom\_adapter.ts}
 \end{itemize}
 
-as:
+% as:
 
 \input{10_the_platform_server_package/code/10_3_0_11.tex}
 
-and that
-\texttt{getDOM()}
-is used by the
-\texttt{DOMRenderer}
-. Hence our
-\texttt{DominoAdapter}
-gets wired
-into the DOM renderer.
-Many of the  DOM adapter methods throw exceptions as they do not make sense
-server-side:
+% and that
+% \texttt{getDOM()}
+% is used by the
+% \texttt{DOMRenderer}
+% . Hence our
+% \texttt{DominoAdapter}
+% gets wired
+% into the DOM renderer.
+% Many of the  DOM adapter methods throw exceptions as they do not make sense
+% server-side:
 
 \input{10_the_platform_server_package/code/10_3_0_12.tex}

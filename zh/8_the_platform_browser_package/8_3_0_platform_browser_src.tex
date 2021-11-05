@@ -1,6 +1,6 @@
 \subsection{platform-browser/src}
 
-This directory contains these sub-directories:
+% This directory contains these sub-directories:
 
 \begin{itemize}
   \item browser
@@ -8,59 +8,59 @@ This directory contains these sub-directories:
   \item security
 \end{itemize}
 
-and this file:
+% and this file:
 
 \begin{itemize}
   \item browser.ts
 \end{itemize}
 
-The browser.ts file defines providers (
-\texttt{INTERNAL\_BROWSER\_PLATFORM\_PROVIDERS}
-and
-\texttt{BROWSER\_SANITIZATION\_PROVIDERS}
-)  and the
-\texttt{NgModule}
--decorated
-\texttt{BrowserModule}
-, all
-important in the bootstrapping of an Angular application.
+% The browser.ts file defines providers (
+% \texttt{INTERNAL\_BROWSER\_PLATFORM\_PROVIDERS}
+% and
+% \texttt{BROWSER\_SANITIZATION\_PROVIDERS}
+% )  and the
+% \texttt{NgModule}
+% -decorated
+% \texttt{BrowserModule}
+% , all
+% important in the bootstrapping of an Angular application.
 
-\texttt{INTERNAL\_BROWSER\_PLATFORM\_PROVIDERS}
-is used to define platform-related providers
-for dependency injection:
+% \texttt{INTERNAL\_BROWSER\_PLATFORM\_PROVIDERS}
+% is used to define platform-related providers
+% for dependency injection:
 
 \input{8_the_platform_browser_package/code/8_3_0_0.tex}
 
-Sanitization providers mitigate XSS risks – note the comment:
+% Sanitization providers mitigate XSS risks – note the comment:
 
 \input{8_the_platform_browser_package/code/8_3_0_1.tex}
 
-It is used in the definition of
-\texttt{BROWSER\_MODULE\_PROVIDERS}
-:
+% It is used in the definition of
+% \texttt{BROWSER\_MODULE\_PROVIDERS}
+% :
 
 \input{8_the_platform_browser_package/code/8_3_0_2.tex}
 
-This in turn is used in the definition of
-\texttt{BrowserModule}
-:
+% This in turn is used in the definition of
+% \texttt{BrowserModule}
+% :
 
 \input{8_the_platform_browser_package/code/8_3_0_3.tex}
 
-The
-\texttt{initDomAdapter}
-function sets the current DOM adapter to be
-\texttt{BrowserDomAdapter}
-(covered shortly).
+% The
+% \texttt{initDomAdapter}
+% function sets the current DOM adapter to be
+% \texttt{BrowserDomAdapter}
+% (covered shortly).
 
 \input{8_the_platform_browser_package/code/8_3_0_4.tex}
 
-As we saw, this function is used in an initializer by the app provider list:
+% As we saw, this function is used in an initializer by the app provider list:
 
 \input{8_the_platform_browser_package/code/8_3_0_5.tex}
 
-This in turn is used by the call to
-\texttt{createPlatformFactory}
-:
+% This in turn is used by the call to
+% \texttt{createPlatformFactory}
+% :
 
 \input{8_the_platform_browser_package/code/8_3_0_6.tex}

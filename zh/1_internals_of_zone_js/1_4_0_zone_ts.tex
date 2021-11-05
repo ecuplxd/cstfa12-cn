@@ -1,44 +1,44 @@
 \subsection{zone.ts}
 
-The first six hundred lines of the zone.ts file is the well-commented definition of the
-Zone.js API, that will end up in zone.d.ts. The slightly larger remainder of the file is an
-implementation of the
-\texttt{Zone}
-const:
+% The first six hundred lines of the zone.ts file is the well-commented definition of the
+% Zone.js API, that will end up in zone.d.ts. The slightly larger remainder of the file is an
+% implementation of the
+% \texttt{Zone}
+% const:
 
 \input{1_internals_of_zone_js/code/1_4_0_0.tex}
 
-The
-\texttt{\_ZonePrivate}
-interface defines private information that is managed per zone:
+% The
+% \texttt{\_ZonePrivate}
+% interface defines private information that is managed per zone:
 
 \input{1_internals_of_zone_js/code/1_4_0_1.tex}
 
-When using the client API you will not see this, but when debugging through the
-Zone.js implementation, it will crop up from time to time.
+% When using the client API you will not see this, but when debugging through the
+% Zone.js implementation, it will crop up from time to time.
 
-A microtask queue is managed, which requries these variables:
+% A microtask queue is managed, which requries these variables:
 
 \input{1_internals_of_zone_js/code/1_4_0_2.tex}
 
-\texttt{\_microTaskQueue}
-is an array of microtasks, that must be executed before we give up
-our VM turn.
-\texttt{\_isDrainingMicrotaskQueue}
-is a boolean that tracks if we are in the
-process of emptying the microtask queue. When a task is run within an existing task,
-they are nested and
-\texttt{\_nativeMicroTaskQueuePromise}
-is used to access a native
-microtask queue. Which is stored as a global is not set. Two functions manage a
-microtask queue:
+% \texttt{\_microTaskQueue}
+% is an array of microtasks, that must be executed before we give up
+% our VM turn.
+% \texttt{\_isDrainingMicrotaskQueue}
+% is a boolean that tracks if we are in the
+% process of emptying the microtask queue. When a task is run within an existing task,
+% they are nested and
+% \texttt{\_nativeMicroTaskQueuePromise}
+% is used to access a native
+% microtask queue. Which is stored as a global is not set. Two functions manage a
+% microtask queue:
 
 \begin{itemize}
   \item scheduleMicroTask
   \item drainMicroTaskQueue
 \end{itemize}
 
-It also implements three classes:
+% It also implements three classes:
 
 \begin{itemize}
   \item Zone
@@ -46,91 +46,91 @@ It also implements three classes:
   \item ZoneTask
 \end{itemize}
 
-There are no implementations of
-\texttt{ZoneSpec}
-in this file. They are in the separate zone-
-spec sub-directory.
+% There are no implementations of
+% \texttt{ZoneSpec}
+% in this file. They are in the separate zone-
+% spec sub-directory.
 
-\texttt{ZoneTask}
-is the simplest of these classes:
+% \texttt{ZoneTask}
+% is the simplest of these classes:
 
 \input{1_internals_of_zone_js/code/1_4_0_3.tex}
 
-The constructor just records the supplied parameters and sets up
-\texttt{invoke}
-:
+% The constructor just records the supplied parameters and sets up
+% \texttt{invoke}
+% :
 
 \input{1_internals_of_zone_js/code/1_4_0_4.tex}
 
-The interesting activity in here is setting up the
-\texttt{invoke}
-function. It increments the
-\texttt{\_numberOfNestedTaskFrames}
-counter, calls
-\texttt{zone.runTask()}
-, and in a
-\texttt{finally}
-block,
-checks if
-\texttt{\_numberOfNestedTaskFrames}
-is 1, and if so, calls  the standalone function
-\texttt{drainMicroTaskQueue()}
-, and then decrements
-\texttt{\_numberOfNestedTaskFrames}
-.
+% The interesting activity in here is setting up the
+% \texttt{invoke}
+% function. It increments the
+% \texttt{\_numberOfNestedTaskFrames}
+% counter, calls
+% \texttt{zone.runTask()}
+% , and in a
+% \texttt{finally}
+% block,
+% checks if
+% \texttt{\_numberOfNestedTaskFrames}
+% is 1, and if so, calls  the standalone function
+% \texttt{drainMicroTaskQueue()}
+% , and then decrements
+% \texttt{\_numberOfNestedTaskFrames}
+% .
 
 \input{1_internals_of_zone_js/code/1_4_0_5.tex}
 
-A custom
-\texttt{toString()}
-implementation returns
-\texttt{data.handleId}
-(if available) or else the
-object’s
-\texttt{toString()}
-result:
+% A custom
+% \texttt{toString()}
+% implementation returns
+% \texttt{data.handleId}
+% (if available) or else the
+% object’s
+% \texttt{toString()}
+% result:
 
 \input{1_internals_of_zone_js/code/1_4_0_6.tex}
 
-\texttt{drainMicroTaskQueue()}
-is defined as:
+% \texttt{drainMicroTaskQueue()}
+% is defined as:
 
 \input{1_internals_of_zone_js/code/1_4_0_7.tex}
 
-The
-\texttt{\_microTaskQueue}
-gets populated via a call to
-\texttt{scheduleMicroTask}
-:
+% The
+% \texttt{\_microTaskQueue}
+% gets populated via a call to
+% \texttt{scheduleMicroTask}
+% :
 
 \input{1_internals_of_zone_js/code/1_4_0_8.tex}
 
-If needed (not running in a task), this calls
-\texttt{setTimeout}
-with timeout set to 0, to
-enqueue a request to drain the microtask queue. Even though the timeout is 0, this
-does not mean that the
-\texttt{drainMicroTaskQueue()}
-call will execute immediately.
-Instead, this puts an event in the JavaScript’s event queue, which after the already
-scheduled events have been handled (there may be one or move already in the
-queue), will itself be handled. The currently executing function will first run to
-completion before any event is removed from the event queue. Hence in the above
-code, where
-\texttt{scheduleQueueDrain()}
-is called before
-\texttt{\_microTaskQueue.push()}
-, is not
-a problem.
-\texttt{\_microTaskQueue.push()}
-will execute first, and then sometime in future,
-the
-\texttt{drainMicroTaskQueue()}
-function will be called via the timeout.
+% If needed (not running in a task), this calls
+% \texttt{setTimeout}
+% with timeout set to 0, to
+% enqueue a request to drain the microtask queue. Even though the timeout is 0, this
+% does not mean that the
+% \texttt{drainMicroTaskQueue()}
+% call will execute immediately.
+% Instead, this puts an event in the JavaScript’s event queue, which after the already
+% scheduled events have been handled (there may be one or move already in the
+% queue), will itself be handled. The currently executing function will first run to
+% completion before any event is removed from the event queue. Hence in the above
+% code, where
+% \texttt{scheduleQueueDrain()}
+% is called before
+% \texttt{\_microTaskQueue.push()}
+% , is not
+% a problem.
+% \texttt{\_microTaskQueue.push()}
+% will execute first, and then sometime in future,
+% the
+% \texttt{drainMicroTaskQueue()}
+% function will be called via the timeout.
 
-The
-\texttt{ZoneDelegate}
-class has to handle eight scenarios:
+% The
+% \texttt{ZoneDelegate}
+% class has to handle eight scenarios:
 
 \begin{itemize}
   \item fork
@@ -143,91 +143,91 @@ class has to handle eight scenarios:
   \item hasTask
 \end{itemize}
 
-It defines variables to store values for a
-\texttt{ZoneDelegate}
-and
-\texttt{ZoneSpec}
-for each of
-these, which are initialized in the constructor.
+% It defines variables to store values for a
+% \texttt{ZoneDelegate}
+% and
+% \texttt{ZoneSpec}
+% for each of
+% these, which are initialized in the constructor.
 
 \input{1_internals_of_zone_js/code/1_4_0_9.tex}
 
-\texttt{ZoneDelegate}
-also declares three variables, to store the delegates zone and parent
-delegate, and to represent task counts (for each kind of task):
+% \texttt{ZoneDelegate}
+% also declares three variables, to store the delegates zone and parent
+% delegate, and to represent task counts (for each kind of task):
 
 \input{1_internals_of_zone_js/code/1_4_0_10.tex}
 
-In
-\texttt{ZoneDelegate}
-’s constructor, the
-\texttt{zone}
-and
-\texttt{parentDelegate}
-fields are initialized to
-the supplied parameters, and the
-\texttt{ZoneDelegate}
-and
-\texttt{ZoneSpec}
-fields for the eight
-scenarios are set (using TypeScript type guards), either to the supplied
-\texttt{ZoneSpec}
-(if
-not null), or the parent delegate’s:
+% In
+% \texttt{ZoneDelegate}
+% ’s constructor, the
+% \texttt{zone}
+% and
+% \texttt{parentDelegate}
+% fields are initialized to
+% the supplied parameters, and the
+% \texttt{ZoneDelegate}
+% and
+% \texttt{ZoneSpec}
+% fields for the eight
+% scenarios are set (using TypeScript type guards), either to the supplied
+% \texttt{ZoneSpec}
+% (if
+% not null), or the parent delegate’s:
 
 \input{1_internals_of_zone_js/code/1_4_0_11.tex}
 
-The
-\texttt{ZoneDelegate}
-methods for the eight scenarios just forward the calls to the
-selected
-\texttt{ZoneSpec}
-(pr parent delegate) and does some house keeping. For example,
-the invoke method checks if
-\texttt{\_invokeZS}
-is defined, and if so, calls its
-\texttt{onInvoke}
-,
-otherwise it calls the supplied callback directly:
+% The
+% \texttt{ZoneDelegate}
+% methods for the eight scenarios just forward the calls to the
+% selected
+% \texttt{ZoneSpec}
+% (pr parent delegate) and does some house keeping. For example,
+% the invoke method checks if
+% \texttt{\_invokeZS}
+% is defined, and if so, calls its
+% \texttt{onInvoke}
+% ,
+% otherwise it calls the supplied callback directly:
 
 \input{1_internals_of_zone_js/code/1_4_0_12.tex}
 
-The
-\texttt{scheduleTask}
-method is a bit different, in that it first
-1
-tries to use the
-\texttt{\_scheduleTaskZS}
-(if defined), otherwise
-2
-tries to use the supplied task’s
-\texttt{scheduleFn}
-(if defined), otherwise
-3
-if a microtask calls
-\texttt{scheduleMicroTask()}
-, otherwise
-4
-it is
-an error:
+% The
+% \texttt{scheduleTask}
+% method is a bit different, in that it first
+% 1
+% tries to use the
+% \texttt{\_scheduleTaskZS}
+% (if defined), otherwise
+% 2
+% tries to use the supplied task’s
+% \texttt{scheduleFn}
+% (if defined), otherwise
+% 3
+% if a microtask calls
+% \texttt{scheduleMicroTask()}
+% , otherwise
+% 4
+% it is
+% an error:
 
 \input{1_internals_of_zone_js/code/1_4_0_13.tex}
 
-The fork method is where new zones get created. If
-\texttt{\_forkZS}
-is defined, it is used,
-otherwise a new zone is created with the supplied
-\texttt{targetZone}
-and
-\texttt{zoneSpec}
-:
+% The fork method is where new zones get created. If
+% \texttt{\_forkZS}
+% is defined, it is used,
+% otherwise a new zone is created with the supplied
+% \texttt{targetZone}
+% and
+% \texttt{zoneSpec}
+% :
 
 \input{1_internals_of_zone_js/code/1_4_0_14.tex}
 
-The internal variable
-\texttt{\_currentZoneFrame}
-is initialized to the root zone and
-\texttt{\_currentTask}
-to null:
+% The internal variable
+% \texttt{\_currentZoneFrame}
+% is initialized to the root zone and
+% \texttt{\_currentTask}
+% to null:
 
 \input{1_internals_of_zone_js/code/1_4_0_15.tex}

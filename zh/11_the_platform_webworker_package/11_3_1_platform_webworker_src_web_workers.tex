@@ -1,9 +1,9 @@
 \subsection{platform-webworker/src/web\_workers}
 
-The source files for web\_workers are provided in three sub-directories, one of which
-has shared messaging functionality use both by the UI side and worker side and the
-communication, the second refers only to the UI side and the third only to the worker
-side.
+% The source files for web\_workers are provided in three sub-directories, one of which
+% has shared messaging functionality use both by the UI side and worker side and the
+% communication, the second refers only to the UI side and the third only to the worker
+% side.
 
 \begin{itemize}
   \item shared/api.ts
@@ -25,612 +25,612 @@ side.
   \item worker/worker\_adapter.ts
 \end{itemize}
 
-Communication between the UI thread and the webworker is handled by a low-level
-multi-channel message bus. The shared/messaging\_api.ts file defines the names of
-the three channels used by Angular:
+% Communication between the UI thread and the webworker is handled by a low-level
+% multi-channel message bus. The shared/messaging\_api.ts file defines the names of
+% the three channels used by Angular:
 
 \input{11_the_platform_webworker_package/code/11_3_1_0.tex}
 
-If you are familiar with TCP/IP, the channel name here serves the same purpose as a
-port number – it is needed to multiplex multiple independent message streams on a
-single data connection. Note the 2 in the names. This means these channels are for
-the updated renderer architecture.
+% If you are familiar with TCP/IP, the channel name here serves the same purpose as a
+% port number – it is needed to multiplex multiple independent message streams on a
+% single data connection. Note the 2 in the names. This means these channels are for
+% the updated renderer architecture.
 
-The message\_bus.ts file defines an abstract
-\texttt{MessageBus}
-class and two interfaces,
-\texttt{MessageBusSource}
-and
-\texttt{MessageBusSink}
-. Let’s look at the interfaces first.
-\texttt{MessageBusSource}
-is for incoming messages. This interface describes the functionality
-a message source is expected to supply. It has methods to initialize a channel based
-MessageBus
-MessageBusSource
-MessageBusSink
+% The message\_bus.ts file defines an abstract
+% \texttt{MessageBus}
+% class and two interfaces,
+% \texttt{MessageBusSource}
+% and
+% \texttt{MessageBusSink}
+% . Let’s look at the interfaces first.
+% \texttt{MessageBusSource}
+% is for incoming messages. This interface describes the functionality
+% a message source is expected to supply. It has methods to initialize a channel based
+% MessageBus
+% MessageBusSource
+% MessageBusSink
 
-on a string name, to attach to a zone, and to return an RxJS observable
-(
-\texttt{EventEmitter}
-) that can be observed in order to read the incoming messages.
+% on a string name, to attach to a zone, and to return an RxJS observable
+% (
+% \texttt{EventEmitter}
+% ) that can be observed in order to read the incoming messages.
 
 \input{11_the_platform_webworker_package/code/11_3_1_1.tex}
 
-Similarly,
-\texttt{MessageBusSink}
-is for outgoing messages. Again it allows a named channel
-to be initialized, attacing to a zone and returns a RxJS observer (
-\texttt{EventEmitter}
-) used
-to send messages:
+% Similarly,
+% \texttt{MessageBusSink}
+% is for outgoing messages. Again it allows a named channel
+% to be initialized, attacing to a zone and returns a RxJS observer (
+% \texttt{EventEmitter}
+% ) used
+% to send messages:
 
 \input{11_the_platform_webworker_package/code/11_3_1_2.tex}
 
-\texttt{MessageBus}
-is an abstract class that implements both
-\texttt{MessageBusSource}
-and
-\texttt{MessageBusSink}
-:
+% \texttt{MessageBus}
+% is an abstract class that implements both
+% \texttt{MessageBusSource}
+% and
+% \texttt{MessageBusSink}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_3.tex}
 
-So far the message bus description has only specified what the functionality that
-needs to be supplied. A single implementation is supplied, in post\_message\_bus.ts,
-based on the
-\texttt{postMessage}
-API. This defines three classes,
-\texttt{PostMessageBusSource}
-,
-\texttt{PostMessageBusSink}
-and
-\texttt{PostMessageBus}
-, that implement the above similarly
-named types.
+% So far the message bus description has only specified what the functionality that
+% needs to be supplied. A single implementation is supplied, in post\_message\_bus.ts,
+% based on the
+% \texttt{postMessage}
+% API. This defines three classes,
+% \texttt{PostMessageBusSource}
+% ,
+% \texttt{PostMessageBusSink}
+% and
+% \texttt{PostMessageBus}
+% , that implement the above similarly
+% named types.
 
 \input{11_the_platform_webworker_package/code/11_3_1_4.tex}
 
-A useful private class is supplied called
-\texttt{\_Channel}
-that keeps track of two pieces of
-data:
+% A useful private class is supplied called
+% \texttt{\_Channel}
+% that keeps track of two pieces of
+% data:
 
 \input{11_the_platform_webworker_package/code/11_3_1_5.tex}
 
-Channels are initialized with
-\texttt{PostMessageBusSource.initChannel()}
-:
+% Channels are initialized with
+% \texttt{PostMessageBusSource.initChannel()}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_6.tex}
 
-So we see a channel is nothing more that a name that maps to a
-\texttt{\_Channel}
-, which is
-just an
-\texttt{EventEmitter}
-and a boolean (
-\texttt{runInZone}
-).
-\texttt{PostMessageBusSource}
-manages
-a map of these called \_channels:
+% So we see a channel is nothing more that a name that maps to a
+% \texttt{\_Channel}
+% , which is
+% just an
+% \texttt{EventEmitter}
+% and a boolean (
+% \texttt{runInZone}
+% ).
+% \texttt{PostMessageBusSource}
+% manages
+% a map of these called \_channels:
 
 \input{11_the_platform_webworker_package/code/11_3_1_7.tex}
 
-The
-\texttt{from()}
-method just returns the appropriate channel emitter:
+% The
+% \texttt{from()}
+% method just returns the appropriate channel emitter:
 
 \input{11_the_platform_webworker_package/code/11_3_1_8.tex}
 
-The constructor calls
-\texttt{addEventListener}
-to add an event listener:
+% The constructor calls
+% \texttt{addEventListener}
+% to add an event listener:
 
 \input{11_the_platform_webworker_package/code/11_3_1_9.tex}
 
-The
-\texttt{\_handleMessages}
-function passes on each message to the
-\texttt{\_handleMessage}
-function, which emits it on the approapriate channel:
+% The
+% \texttt{\_handleMessages}
+% function passes on each message to the
+% \texttt{\_handleMessage}
+% function, which emits it on the approapriate channel:
 
 \input{11_the_platform_webworker_package/code/11_3_1_10.tex}
 
-The
-\texttt{PostMessageBusSink}
-implementation is slightly different because it needs to use
-\texttt{postMessageTarget}
-to post messages. Its constructor creates a field based on the
-supplied
-\texttt{PostMessageTarget}
-parameter:
+% The
+% \texttt{PostMessageBusSink}
+% implementation is slightly different because it needs to use
+% \texttt{postMessageTarget}
+% to post messages. Its constructor creates a field based on the
+% supplied
+% \texttt{PostMessageTarget}
+% parameter:
 
 \input{11_the_platform_webworker_package/code/11_3_1_11.tex}
 
-The
-\texttt{initChannel}
-method subscribes to the emitter with a next handler that either
-(when runnign inside the Angular zone) adds the message to the
-\texttt{messageBuffer}
-where its sending is deferred, or (if running outside the Angular zone), calls
-\texttt{\_sendMessages}
-, to immediately send the message:
+% The
+% \texttt{initChannel}
+% method subscribes to the emitter with a next handler that either
+% (when runnign inside the Angular zone) adds the message to the
+% \texttt{messageBuffer}
+% where its sending is deferred, or (if running outside the Angular zone), calls
+% \texttt{\_sendMessages}
+% , to immediately send the message:
 
 \input{11_the_platform_webworker_package/code/11_3_1_12.tex}
 
-\texttt{\_sendMessages()}
-just sends the message array via
-\texttt{PostMessageTarget}
-:
+% \texttt{\_sendMessages()}
+% just sends the message array via
+% \texttt{PostMessageTarget}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_13.tex}
 
-So we saw with
-\texttt{initChannel}
-that the subscription to the emitter either calls
-\texttt{\_sendMessages}
-immediately or parks the message in a message buffer, for later
-transmission. So two questions arise – what triggers that transmission and how does
-it work. Well, to answer the second question first,
-\texttt{\_sendMessages}
-is also called for the
-bulk transmission, from inside the
-\texttt{\_handleOnEventDone}
-message:
+% So we saw with
+% \texttt{initChannel}
+% that the subscription to the emitter either calls
+% \texttt{\_sendMessages}
+% immediately or parks the message in a message buffer, for later
+% transmission. So two questions arise – what triggers that transmission and how does
+% it work. Well, to answer the second question first,
+% \texttt{\_sendMessages}
+% is also called for the
+% bulk transmission, from inside the
+% \texttt{\_handleOnEventDone}
+% message:
 
 \input{11_the_platform_webworker_package/code/11_3_1_14.tex}
 
-So, what calls
-\texttt{\_handleOnEventDone}
-? Let’s digress to look at the
-\texttt{NgZone}
-class in
+% So, what calls
+% \texttt{\_handleOnEventDone}
+% ? Let’s digress to look at the
+% \texttt{NgZone}
+% class in
 
 \begin{itemize}
   \item \href{fix: href loss url}
         {fix: href loss url}
 \end{itemize}
 
-which has this getter:
+% which has this getter:
 
 \input{11_the_platform_webworker_package/code/11_3_1_15.tex}
 
-So when the zone has no more work to immediately carry out, it emits a message via
-\texttt{onStable}
-. Back to
-\texttt{PostMessageBusSink}
-– which has this code, that subscribes to the
-\texttt{onStable}
-event emitter:
+% So when the zone has no more work to immediately carry out, it emits a message via
+% \texttt{onStable}
+% . Back to
+% \texttt{PostMessageBusSink}
+% – which has this code, that subscribes to the
+% \texttt{onStable}
+% event emitter:
 
 \input{11_the_platform_webworker_package/code/11_3_1_16.tex}
 
-With all the hard work done in
-\texttt{PostMessageBusSource}
-and
-\texttt{PostMessageBusSink}
-, the
-implementation of
-\texttt{PostMessageBus}
-is quite simple:
+% With all the hard work done in
+% \texttt{PostMessageBusSource}
+% and
+% \texttt{PostMessageBusSink}
+% , the
+% implementation of
+% \texttt{PostMessageBus}
+% is quite simple:
 
 \input{11_the_platform_webworker_package/code/11_3_1_17.tex}
 
-A different way of looking at the message bus is as a set of independent channels:
+% A different way of looking at the message bus is as a set of independent channels:
 
-In summary, the message bus in Angular is a simple efficient messaging passing
-mechanism with web workers. It is based on a single connection, with opaque
-messages consisting of a channel name (string) and message data:
+% In summary, the message bus in Angular is a simple efficient messaging passing
+% mechanism with web workers. It is based on a single connection, with opaque
+% messages consisting of a channel name (string) and message data:
 
 \input{11_the_platform_webworker_package/code/11_3_1_18.tex}
 
-Angular also supplies a richer message broker layered above this simple message bus.
-UI main thread
-Web Worker
-Communicating Over The Message Bus (actual)
+% Angular also supplies a richer message broker layered above this simple message bus.
+% UI main thread
+% Web Worker
+% Communicating Over The Message Bus (actual)
 
-Communicating Over The Message Bus (conceptual)
+% Communicating Over The Message Bus (conceptual)
 
-The files client\_message\_broker.ts and service\_message\_broker.ts along with a
-number of helper files for serialization implement the message broker.
+% The files client\_message\_broker.ts and service\_message\_broker.ts along with a
+% number of helper files for serialization implement the message broker.
 
-The service\_message\_broker.ts file defines the
-\texttt{ReceivedMessage}
-class that
-represents a message:
+% The service\_message\_broker.ts file defines the
+% \texttt{ReceivedMessage}
+% class that
+% represents a message:
 
 \input{11_the_platform_webworker_package/code/11_3_1_19.tex}
 
-The class
-\texttt{ServiceMessageBrokerFactory}
-provide a factory for the service message
-broker:
+% The class
+% \texttt{ServiceMessageBrokerFactory}
+% provide a factory for the service message
+% broker:
 
 \input{11_the_platform_webworker_package/code/11_3_1_20.tex}
 
-The service message broker is created based on the supplied message bus, serializer
-and channel name. The abstract
-\texttt{ServiceMessageBroker}
-class contains just one
-ClientMessageBroker
-ServiceMessageBroker
+% The service message broker is created based on the supplied message bus, serializer
+% and channel name. The abstract
+% \texttt{ServiceMessageBroker}
+% class contains just one
+% ClientMessageBroker
+% ServiceMessageBroker
 
-abstract class declaration,
-\texttt{registerMethod}
-:
+% abstract class declaration,
+% \texttt{registerMethod}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_21.tex}
 
-It has two private fields, an event emitter
-\texttt{\_sink}
-and a map from string to function
-\texttt{\_methods}
-. In its constructor it subscribes its internal method
-\texttt{\_ handleMessage}
-to
-\texttt{messageBus.from}
-(this handles incoming messages), and set
-\texttt{\_sink}
-to
-\texttt{messageBus.to}
-(this will be used to send messages).
+% It has two private fields, an event emitter
+% \texttt{\_sink}
+% and a map from string to function
+% \texttt{\_methods}
+% . In its constructor it subscribes its internal method
+% \texttt{\_ handleMessage}
+% to
+% \texttt{messageBus.from}
+% (this handles incoming messages), and set
+% \texttt{\_sink}
+% to
+% \texttt{messageBus.to}
+% (this will be used to send messages).
 
-\texttt{\_handleMessage()}
-message creates a
-\texttt{ReceivedMessage}
-based on the map
-parameter, and then if message.method is listed as a supported message in
-\texttt{\_methods}
-, looks up
-\texttt{\_methods}
-for the appropriate function to execute, to handle the
-message:
+% \texttt{\_handleMessage()}
+% message creates a
+% \texttt{ReceivedMessage}
+% based on the map
+% parameter, and then if message.method is listed as a supported message in
+% \texttt{\_methods}
+% , looks up
+% \texttt{\_methods}
+% for the appropriate function to execute, to handle the
+% message:
 
 \input{11_the_platform_webworker_package/code/11_3_1_22.tex}
 
-The next question is how methods get registered in \_methods. That is the job of
-\texttt{registerMethod()}
-, whose implementation adds an entry to the
-\texttt{\_methods}
-map based
-on the supplied parameters. Its key is the
-\texttt{methodName}
-supplied as a parameter and its
-value is an anonymous method, with a single parameter, message, of type
-\texttt{ReceivedMessage}
-:
+% The next question is how methods get registered in \_methods. That is the job of
+% \texttt{registerMethod()}
+% , whose implementation adds an entry to the
+% \texttt{\_methods}
+% map based
+% on the supplied parameters. Its key is the
+% \texttt{methodName}
+% supplied as a parameter and its
+% value is an anonymous method, with a single parameter, message, of type
+% \texttt{ReceivedMessage}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_23.tex}
 
-We see at its
-1
-deserialization occuring with the help of the serializer, and at
-2
-method is called with the deserialized arguments, and at
-3
-we see if a returnType is
-needed, \_ wrapWebWorkerPromise is called, to handle the then of the promise, which
-emits the result to the sink:
+% We see at its
+% 1
+% deserialization occuring with the help of the serializer, and at
+% 2
+% method is called with the deserialized arguments, and at
+% 3
+% we see if a returnType is
+% needed, \_ wrapWebWorkerPromise is called, to handle the then of the promise, which
+% emits the result to the sink:
 
 \input{11_the_platform_webworker_package/code/11_3_1_24.tex}
 
-The client side of this messaging relationship is handled by client\_message\_broker.ts.
-It defines some simple helper types:
+% The client side of this messaging relationship is handled by client\_message\_broker.ts.
+% It defines some simple helper types:
 
 \input{11_the_platform_webworker_package/code/11_3_1_25.tex}
 
-To construct a client message borker it defines the
-\texttt{ClientMessageBrokerFactory}
-which, in its
-\texttt{createMessageBroker}
-method, calls
-\texttt{initChannel}
-on the message bus
-and returns a new
-\texttt{ClientMessageBroker}
-:
+% To construct a client message borker it defines the
+% \texttt{ClientMessageBrokerFactory}
+% which, in its
+% \texttt{createMessageBroker}
+% method, calls
+% \texttt{initChannel}
+% on the message bus
+% and returns a new
+% \texttt{ClientMessageBroker}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_26.tex}
 
-\texttt{ClientMessageBroker}
-has an important method to run on service, which calls a
-method with the supplied
-\texttt{UiArguments}
-on the remote service side and returns a
-promise with the return value (if any).
-\texttt{ClientMessageBroker}
-is implemented as
-follows:
+% \texttt{ClientMessageBroker}
+% has an important method to run on service, which calls a
+% method with the supplied
+% \texttt{UiArguments}
+% on the remote service side and returns a
+% promise with the return value (if any).
+% \texttt{ClientMessageBroker}
+% is implemented as
+% follows:
 
 \input{11_the_platform_webworker_package/code/11_3_1_27.tex}
 
-It has three fields,
-\texttt{\_pending}
-,
-\texttt{\_sink}
-and
-\texttt{\_serializer}
-.
-\texttt{\_pending}
-is a map from string
-to
-\texttt{PromiseCompleter}
-. It is used to keep track of method calls that require a return
-value and are outstanding – the message has been set to the service, and the result is
-awaited. In its constructor
-\texttt{\_sink}
-is set to the
-\texttt{messageBus.to}
-and serializer set to the
-\texttt{Serializer}
-parameter. Also a source subscription is set for
-\texttt{\_handleMessage}
-.
+% It has three fields,
+% \texttt{\_pending}
+% ,
+% \texttt{\_sink}
+% and
+% \texttt{\_serializer}
+% .
+% \texttt{\_pending}
+% is a map from string
+% to
+% \texttt{PromiseCompleter}
+% . It is used to keep track of method calls that require a return
+% value and are outstanding – the message has been set to the service, and the result is
+% awaited. In its constructor
+% \texttt{\_sink}
+% is set to the
+% \texttt{messageBus.to}
+% and serializer set to the
+% \texttt{Serializer}
+% parameter. Also a source subscription is set for
+% \texttt{\_handleMessage}
+% .
 
-Messages for which a return value is expected have a message id generated for them
-via:
+% Messages for which a return value is expected have a message id generated for them
+% via:
 
 \input{11_the_platform_webworker_package/code/11_3_1_28.tex}
 
-It is this string that is the key into the \_pending map. We will now see how it is set up
-in
-\texttt{runOnService}
-and used in
-\texttt{\_handleMessage}
-.
-\texttt{RunOnService}
-is what the client calls
-when it wants the service to execute a method. It returns a promise, which is a return
-value is required, it is completed when the service returns it.
-Let’s first examine
-\texttt{runOnService}
-when
-\texttt{returnType}
-is null. This creates an array of
-serialized arguments in
-\texttt{fnArgs}
-1
-, sets up an object literal called message with
-properties “method” and “args”
-2
-, and then calls
-\texttt{\_sink.emit(message)}
-3
-:
+% It is this string that is the key into the \_pending map. We will now see how it is set up
+% in
+% \texttt{runOnService}
+% and used in
+% \texttt{\_handleMessage}
+% .
+% \texttt{RunOnService}
+% is what the client calls
+% when it wants the service to execute a method. It returns a promise, which is a return
+% value is required, it is completed when the service returns it.
+% Let’s first examine
+% \texttt{runOnService}
+% when
+% \texttt{returnType}
+% is null. This creates an array of
+% serialized arguments in
+% \texttt{fnArgs}
+% 1
+% , sets up an object literal called message with
+% properties “method” and “args”
+% 2
+% , and then calls
+% \texttt{\_sink.emit(message)}
+% 3
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_29.tex}
 
-Things are a little more complex when a return value is required. A promise and a
-promise completer are created
-1
-;
-\texttt{\_generateMessageId()}
-is called
-2
-to generate a
-unique message id for this message; an entry is made into
-\texttt{\_pending}
-3
-, whose key is
-the id and whose value is the promise completer. The then of the promise
-4
-returns
-the result
-5a
-(deserialized if needed
-5b
-). Before the message is sent via
-\texttt{sink.emit}
-,
-the generated message id is attached to the message
-6
-.
+% Things are a little more complex when a return value is required. A promise and a
+% promise completer are created
+% 1
+% ;
+% \texttt{\_generateMessageId()}
+% is called
+% 2
+% to generate a
+% unique message id for this message; an entry is made into
+% \texttt{\_pending}
+% 3
+% , whose key is
+% the id and whose value is the promise completer. The then of the promise
+% 4
+% returns
+% the result
+% 5a
+% (deserialized if needed
+% 5b
+% ). Before the message is sent via
+% \texttt{sink.emit}
+% ,
+% the generated message id is attached to the message
+% 6
+% .
 
 \input{11_the_platform_webworker_package/code/11_3_1_30.tex}
 
-The
-\texttt{\_handleMessage}
-accepts a
-\texttt{ResponseMessageData}
-parameter. It extracts
-1
-the
-message id, which it uses to look up
-\texttt{\_pending}
-2
-for the promise. If message data has
-a result field, this is used in a call to the
-\texttt{promise.resolve}
-3
-, otherwise
-\texttt{promise.reject}
-4
-is called:
+% The
+% \texttt{\_handleMessage}
+% accepts a
+% \texttt{ResponseMessageData}
+% parameter. It extracts
+% 1
+% the
+% message id, which it uses to look up
+% \texttt{\_pending}
+% 2
+% for the promise. If message data has
+% a result field, this is used in a call to the
+% \texttt{promise.resolve}
+% 3
+% , otherwise
+% \texttt{promise.reject}
+% 4
+% is called:
 
 \input{11_the_platform_webworker_package/code/11_3_1_31.tex}
 
-Two helper files are involved with serialization – render\_store.ts and serializer.ts. The
-\texttt{RenderStore}
-class, define in render\_store.ts, manages two maps – the first,
-\texttt{\_lookupById}
-, from number to any, and the second,
-\texttt{lookupByObject}
-, from any to
-number. It supplies methods to store and remove objects and serialize and de-
-serialize them.
+% Two helper files are involved with serialization – render\_store.ts and serializer.ts. The
+% \texttt{RenderStore}
+% class, define in render\_store.ts, manages two maps – the first,
+% \texttt{\_lookupById}
+% , from number to any, and the second,
+% \texttt{lookupByObject}
+% , from any to
+% number. It supplies methods to store and remove objects and serialize and de-
+% serialize them.
 
-The
-\texttt{Serializer}
-class is defined in serializer.ts and has methods to serialize and
-deserialize. The
-\texttt{serialize}
-method is:
+% The
+% \texttt{Serializer}
+% class is defined in serializer.ts and has methods to serialize and
+% deserialize. The
+% \texttt{serialize}
+% method is:
 
 \input{11_the_platform_webworker_package/code/11_3_1_32.tex}
 
-Based on the type an appropriate serialization helper method is called.
+% Based on the type an appropriate serialization helper method is called.
 
-The last file in the shared directory is api.ts, which has this one line:
+% The last file in the shared directory is api.ts, which has this one line:
 
 \input{11_the_platform_webworker_package/code/11_3_1_33.tex}
 
-It is used to store a boolean value with dependency injection, stating whether the
-current code is running in a webworker or not. At this point it would be helpful to
-review how shared functionality is actually configured with dependency injection. On
-the worker side:
+% It is used to store a boolean value with dependency injection, stating whether the
+% current code is running in a webworker or not. At this point it would be helpful to
+% review how shared functionality is actually configured with dependency injection. On
+% the worker side:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-webworker/src/worker_app.ts}
         {<ANGULAR-MASTER>/packages/platform-webworker/src/worker\_app.ts}
 \end{itemize}
 
-has this:
+% has this:
 
 \input{11_the_platform_webworker_package/code/11_3_1_34.tex}
 
-Note
-\texttt{ON\_WEB\_WORKER}
-is set to true.
+% Note
+% \texttt{ON\_WEB\_WORKER}
+% is set to true.
 
-On the ui main thread side:
+% On the ui main thread side:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-webworker/src/worker_render.ts}
         {<ANGULAR-MASTER>/packages/platform-webworker/src/worker\_render.ts}
 \end{itemize}
 
-has this:
+% has this:
 
 \input{11_the_platform_webworker_package/code/11_3_1_35.tex}
 
-Note
-\texttt{ON\_WEB\_WORKER}
-is set to false.
+% Note
+% \texttt{ON\_WEB\_WORKER}
+% is set to false.
 
-Now we will move on to looking at the worker-specific code in:
+% Now we will move on to looking at the worker-specific code in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/tree/master/packages/platform-webworker/src/web_workers}
         {<ANGULAR-MASTER>/packages/platform-webworker/src/web\_workers}
 \end{itemize}
 
-In worker\_adapter.ts,
-\texttt{WorkerDomAdapter}
-extends
-\texttt{DomAdapter}
-but only implements
-the logging functionality – for everything else an exception is raised.
-\texttt{WorkerDomAdapter}
-is not how workers render, instead is just logs data to the console.
+% In worker\_adapter.ts,
+% \texttt{WorkerDomAdapter}
+% extends
+% \texttt{DomAdapter}
+% but only implements
+% the logging functionality – for everything else an exception is raised.
+% \texttt{WorkerDomAdapter}
+% is not how workers render, instead is just logs data to the console.
 
 \input{11_the_platform_webworker_package/code/11_3_1_36.tex}
 
-The renderer.ts file supplies the
-\texttt{WebWorkerRendererFactory2}
-and
-\texttt{WebWorkerRenderer2}
-classes and this is where worker-based rendering is managed.
+% The renderer.ts file supplies the
+% \texttt{WebWorkerRendererFactory2}
+% and
+% \texttt{WebWorkerRenderer2}
+% classes and this is where worker-based rendering is managed.
 
-\texttt{WebWorkerRenderer2}
-implements the Renderer API and forwards all calls to
-runOnService from the root renderer.
-\texttt{WebWorkerRenderer2}
-is running the webworker
-where there is no DOM, so any rendering needs to be forwarded to the main UI
-thread, and that is what
-\texttt{runOnService}
-is doing here.
+% \texttt{WebWorkerRenderer2}
+% implements the Renderer API and forwards all calls to
+% runOnService from the root renderer.
+% \texttt{WebWorkerRenderer2}
+% is running the webworker
+% where there is no DOM, so any rendering needs to be forwarded to the main UI
+% thread, and that is what
+% \texttt{runOnService}
+% is doing here.
 
-This is a sampling of the calls:
+% This is a sampling of the calls:
 
 \input{11_the_platform_webworker_package/code/11_3_1_37.tex}
 
-\texttt{WebWorkerRendererFactory2}
-implements Core’s
-\texttt{RendererFactory2}
-by setting up the
-client message broker factory.
+% \texttt{WebWorkerRendererFactory2}
+% implements Core’s
+% \texttt{RendererFactory2}
+% by setting up the
+% client message broker factory.
 
 \input{11_the_platform_webworker_package/code/11_3_1_38.tex}
 
-An additional and very important role of
-\texttt{WebWorkerRendererFactory2}
-is to configure
-event handling. We see at
-1
-\texttt{initChannel()}
-being called for the
-\texttt{EVENT\_2\_CHANNEL}
-, at
-2
-the message source being accessed, and at
-3
-a subscription being set up with the
-\texttt{\_dispatchEvent()}
-method, which is implemented as:
+% An additional and very important role of
+% \texttt{WebWorkerRendererFactory2}
+% is to configure
+% event handling. We see at
+% 1
+% \texttt{initChannel()}
+% being called for the
+% \texttt{EVENT\_2\_CHANNEL}
+% , at
+% 2
+% the message source being accessed, and at
+% 3
+% a subscription being set up with the
+% \texttt{\_dispatchEvent()}
+% method, which is implemented as:
 
 \input{11_the_platform_webworker_package/code/11_3_1_39.tex}
 
-The ui specific code is in:
+% The ui specific code is in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/tree/master/packages/platform-webworker/src/web_workers/ui}
         {<ANGULAR-MASTER>/packages/platform-webworker/src/web\_workers/ui}
 \end{itemize}
 
-The renderer.ts file implements the
-\texttt{MessageBasedRenderer2}
-class. Note this class,
-despite its name, does not implement any types from Core’s rendering API. Instead, it
-accepts a
-\texttt{RendererFactory2}
-instance as a constructor parameter, and forwards all
-rendering requests to it. Its constructor also has a few other parameters which it uses
-as fields and it also defines one extra, an
-\texttt{EventDispatcher}
-.
+% The renderer.ts file implements the
+% \texttt{MessageBasedRenderer2}
+% class. Note this class,
+% despite its name, does not implement any types from Core’s rendering API. Instead, it
+% accepts a
+% \texttt{RendererFactory2}
+% instance as a constructor parameter, and forwards all
+% rendering requests to it. Its constructor also has a few other parameters which it uses
+% as fields and it also defines one extra, an
+% \texttt{EventDispatcher}
+% .
 
 \input{11_the_platform_webworker_package/code/11_3_1_40.tex}
 
-Its
-\texttt{start()}
-method initializes the
-\texttt{EVENT\_2\_CHANNEL}
-, creates a new
-\texttt{EventDispatcher}
-, and then has a very long list of calls to
-\texttt{registerMethod}
-– when
-such messages are received, then the configured local method is called. Here is a
-short selection of the
-\texttt{registerMethod}
-calls:
+% Its
+% \texttt{start()}
+% method initializes the
+% \texttt{EVENT\_2\_CHANNEL}
+% , creates a new
+% \texttt{EventDispatcher}
+% , and then has a very long list of calls to
+% \texttt{registerMethod}
+% – when
+% such messages are received, then the configured local method is called. Here is a
+% short selection of the
+% \texttt{registerMethod}
+% calls:
 
 \input{11_the_platform_webworker_package/code/11_3_1_41.tex}
 
-The local methods usually call the equivalent method in the configured renderer, and
-often stores the result in the
-\texttt{RenderStore}
-. Here is
-\texttt{\_createElement()}
-:
+% The local methods usually call the equivalent method in the configured renderer, and
+% often stores the result in the
+% \texttt{RenderStore}
+% . Here is
+% \texttt{\_createElement()}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_42.tex}
 
-For event listening, the event dispatcher is used:
+% For event listening, the event dispatcher is used:
 
 \input{11_the_platform_webworker_package/code/11_3_1_43.tex}
 
-The
-\texttt{EventDispatcher}
-class is defined in event\_dispatcher.ts and has a constructor
-and one method,
-\texttt{dispatchRenderEvent()}
-:
+% The
+% \texttt{EventDispatcher}
+% class is defined in event\_dispatcher.ts and has a constructor
+% and one method,
+% \texttt{dispatchRenderEvent()}
+% :
 
 \input{11_the_platform_webworker_package/code/11_3_1_44.tex}
 
-The switch in the middle is a long list of all the supported events and appropriate calls
-to an event serializer. Above we show what is has for keyboard events.
+% The switch in the middle is a long list of all the supported events and appropriate calls
+% to an event serializer. Above we show what is has for keyboard events.

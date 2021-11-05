@@ -1,6 +1,6 @@
 \subsection{http/src}
 
-The http/src directory has following source files:
+% The http/src directory has following source files:
 
 \begin{itemize}
   \item backend.ts
@@ -16,102 +16,102 @@ The http/src directory has following source files:
   \item xsrf.ts
 \end{itemize}
 
-The module.ts file has a number of
-\texttt{NgModule}
-definitions, the main one being:
+% The module.ts file has a number of
+% \texttt{NgModule}
+% definitions, the main one being:
 
 \input{7_the_common_http_sub_package/code/7_1_0_0.tex}
 
-That
-\texttt{HttpXHRBackend}
-provider for
-\texttt{HttpClientModule}
-may need to be replaced when
-using an in-memory-web-api for testing, as explained here (search for
-\texttt{InMemoryWebApiModule}
-):
+% That
+% \texttt{HttpXHRBackend}
+% provider for
+% \texttt{HttpClientModule}
+% may need to be replaced when
+% using an in-memory-web-api for testing, as explained here (search for
+% \texttt{InMemoryWebApiModule}
+% ):
 
 \begin{itemize}
   \item \url{https://angular.io/docs/ts/latest/tutorial/toh-pt6.html}
 \end{itemize}
 
-We note
-\texttt{HttpClientModule}
-uses
-\texttt{HttpClientXsrfModule}
-(we’ll see where
-\texttt{XSRF\_COOKIE\_NAME}
-and
-\texttt{XSRF\_HEADER\_NAME}
-are defined when examining XSRF
-shortly):
+% We note
+% \texttt{HttpClientModule}
+% uses
+% \texttt{HttpClientXsrfModule}
+% (we’ll see where
+% \texttt{XSRF\_COOKIE\_NAME}
+% and
+% \texttt{XSRF\_HEADER\_NAME}
+% are defined when examining XSRF
+% shortly):
 
 \input{7_the_common_http_sub_package/code/7_1_0_1.tex}
 
-The headers.ts file provides the
-\texttt{HttpHeaders}
-class. This is essentially a wrapper
-around a
-\texttt{Map}
-data structure. It defines its primary data structure as:
+% The headers.ts file provides the
+% \texttt{HttpHeaders}
+% class. This is essentially a wrapper
+% around a
+% \texttt{Map}
+% data structure. It defines its primary data structure as:
 
 \input{7_the_common_http_sub_package/code/7_1_0_2.tex}
 
-It offers functionality to work with that data structure.
+% It offers functionality to work with that data structure.
 
 \input{7_the_common_http_sub_package/code/7_1_0_3.tex}
 
-The request.ts file implements the
-\texttt{Request}
-class. A request is a request method, a set
-of headers, and a content type. Depending on the request method, a body may or
-may not be needed. To supply initialization parameters, this interface is defined:
+% The request.ts file implements the
+% \texttt{Request}
+% class. A request is a request method, a set
+% of headers, and a content type. Depending on the request method, a body may or
+% may not be needed. To supply initialization parameters, this interface is defined:
 
 \input{7_the_common_http_sub_package/code/7_1_0_4.tex}
 
-We see its use in the constructor for
-\texttt{Request}
-:
+% We see its use in the constructor for
+% \texttt{Request}
+% :
 
 \input{7_the_common_http_sub_package/code/7_1_0_5.tex}
 
-Similarly, the response.ts implements the
-\texttt{Response}
-classes, which are based on the
-\texttt{HttpResponseBase}
-class:
+% Similarly, the response.ts implements the
+% \texttt{Response}
+% classes, which are based on the
+% \texttt{HttpResponseBase}
+% class:
 
 \input{7_the_common_http_sub_package/code/7_1_0_6.tex}
 
-The backend.ts file provides classes for pluggable connection handling. By providing
-alternative implementations of these, flexible server communication is supported.
-Note what the comments in the code say:
+% The backend.ts file provides classes for pluggable connection handling. By providing
+% alternative implementations of these, flexible server communication is supported.
+% Note what the comments in the code say:
 
 \input{7_the_common_http_sub_package/code/7_1_0_7.tex}
 
-The backend is important because it means a test-oriented in-memory backend could
-be switched for the real backend as needed, without further changes to HTTP code.
+% The backend is important because it means a test-oriented in-memory backend could
+% be switched for the real backend as needed, without further changes to HTTP code.
 
-When communicating with a real remote server, the main workload is performed by
-\texttt{HttpXhrBackend}
-class which is defined in
-\url{xhr.ts}
-:
+% When communicating with a real remote server, the main workload is performed by
+% \texttt{HttpXhrBackend}
+% class which is defined in
+% \url{xhr.ts}
+% :
 
 \input{7_the_common_http_sub_package/code/7_1_0_8.tex}
 
-The
-\url{xsrf.ts}
-file defines two injectable classes that helps with XSRF (Cross Site Request
-Forgery) protection:
+% The
+% \url{xsrf.ts}
+% file defines two injectable classes that helps with XSRF (Cross Site Request
+% Forgery) protection:
 
 \input{7_the_common_http_sub_package/code/7_1_0_9.tex}
 
-This files also defines:
+% This files also defines:
 
 \input{7_the_common_http_sub_package/code/7_1_0_10.tex}
 
-These are used when defining the @NgModule
-\texttt{HttpClientXsrfModule}
-as we saw
-earlier.
+% These are used when defining the @NgModule
+% \texttt{HttpClientXsrfModule}
+% as we saw
+% earlier.

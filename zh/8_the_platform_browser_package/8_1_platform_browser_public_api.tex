@@ -1,56 +1,56 @@
 \section{Platform-Browser Public API}
 
-The platform-browser API can be sub-divided into these functional areas:
-browser-related, DOM and security.
-code
-Platform
-One platform / one or more applications
+% The platform-browser API can be sub-divided into these functional areas:
+% browser-related, DOM and security.
+% code
+% Platform
+% One platform / one or more applications
 
-The DOM related API can be represented as:
+% The DOM related API can be represented as:
 
-Hammer is for touch input.
-\texttt{EventManager}
-handles the flow of events.
+% Hammer is for touch input.
+% \texttt{EventManager}
+% handles the flow of events.
 
-Some important classes – e.g.
-\texttt{DomAdapter}
-- are not publically exported. Instead, they
-are registered with the dependency injector and that is how they are made available
-to application code (we will shortly examine both in detail).
+% Some important classes – e.g.
+% \texttt{DomAdapter}
+% - are not publically exported. Instead, they
+% are registered with the dependency injector and that is how they are made available
+% to application code (we will shortly examine both in detail).
 
-The browser-related API can be represented as:
+% The browser-related API can be represented as:
 
-This covers the
-\texttt{NgModule}
-, the
-\texttt{createPlatformFactory}
-function, location information,
-a title helper class, and functions to enable and disable debug tooling.
-BrowserModule
-Platform-Browser Public API (browser-related)
+% This covers the
+% \texttt{NgModule}
+% , the
+% \texttt{createPlatformFactory}
+% function, location information,
+% a title helper class, and functions to enable and disable debug tooling.
+% BrowserModule
+% Platform-Browser Public API (browser-related)
 
-The security-related API can be represented as:
+% The security-related API can be represented as:
 
-The root directory of this package has:
+% The root directory of this package has:
 
 \begin{itemize}
   \item index.ts
 \end{itemize}
 
-which has the single line:
+% which has the single line:
 
 \input{8_the_platform_browser_package/code/8_1_0.tex}
 
-and this in turn has:
+% and this in turn has:
 
 \input{8_the_platform_browser_package/code/8_1_1.tex}
 
-If we look at src/platform-browser.ts, we see the exported API of the Platform-
-Browser package:
+% If we look at src/platform-browser.ts, we see the exported API of the Platform-
+% Browser package:
 
 \input{8_the_platform_browser_package/code/8_1_2.tex}
 
-The private\_export.ts file exports types that are intended to be used by other Angular
-packages and not be normal Angular applications. It has this content:
+% The private\_export.ts file exports types that are intended to be used by other Angular
+% packages and not be normal Angular applications. It has this content:
 
 \input{8_the_platform_browser_package/code/8_1_3.tex}

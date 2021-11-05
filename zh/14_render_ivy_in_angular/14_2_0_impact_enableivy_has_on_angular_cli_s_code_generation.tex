@@ -1,35 +1,35 @@
 \subsection{Impact enableIvy has on Angular CLI’s code generation}
 
-To best see the differences the
-\texttt{enableIvy}
-option has on code generation, we will now
-create two new projects – one with and one without the
-\texttt{--enableIvy}
-option. To save
-us some time we will use the
-\texttt{–-skipInstall}
-option, which means npm install is not
-run to download all the dependency packages.
+% To best see the differences the
+% \texttt{enableIvy}
+% option has on code generation, we will now
+% create two new projects – one with and one without the
+% \texttt{--enableIvy}
+% option. To save
+% us some time we will use the
+% \texttt{–-skipInstall}
+% option, which means npm install is not
+% run to download all the dependency packages.
 
 \input{14_render_ivy_in_angular/code/14_2_0_0.tex}
 
-A search for
-\texttt{ivy}
-in the generated render2 codebase reveals no hits, as expected. A
-search for
-\texttt{ivy}
-in the render3 codebase reveals 2 hits. In package.json,
-\texttt{scripts}
-has
-this additional item:
+% A search for
+% \texttt{ivy}
+% in the generated render2 codebase reveals no hits, as expected. A
+% search for
+% \texttt{ivy}
+% in the render3 codebase reveals 2 hits. In package.json,
+% \texttt{scripts}
+% has
+% this additional item:
 
 \input{14_render_ivy_in_angular/code/14_2_0_1.tex}
 
-and in tsconfig.app.json,
-\texttt{angularCompilerOptions}
-has this entry:
+% and in tsconfig.app.json,
+% \texttt{angularCompilerOptions}
+% has this entry:
 
 \input{14_render_ivy_in_angular/code/14_2_0_2.tex}
 
-Now that we have seen how Angular CLI adds enableIvy, we are ready to move on to
-explore how Compiler CLI detects and reacts to this.
+% Now that we have seen how Angular CLI adds enableIvy, we are ready to move on to
+% explore how Compiler CLI detects and reacts to this.

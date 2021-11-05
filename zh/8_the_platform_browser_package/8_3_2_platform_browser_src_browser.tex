@@ -1,6 +1,6 @@
 \subsection{Platform-browser/src/browser}
 
-This directory contains these files:
+% This directory contains these files:
 
 \begin{itemize}
   \item browser\_adapter.ts
@@ -17,92 +17,92 @@ This directory contains these files:
   \item tools/tools.ts
 \end{itemize}
 
-generic\_browser\_adapter.ts defines the abstract
-\texttt{GenericBrowserDomAdapter}
-class
-that extends
-\texttt{DomAdapter}
-with DOM operations suitable for general browsers:
+% generic\_browser\_adapter.ts defines the abstract
+% \texttt{GenericBrowserDomAdapter}
+% class
+% that extends
+% \texttt{DomAdapter}
+% with DOM operations suitable for general browsers:
 
 \input{8_the_platform_browser_package/code/8_3_2_0.tex}
 
-For example, to check if shadow DOM is supported, it evaluates whether the
-\texttt{createShadowRoot}
-function exists:
+% For example, to check if shadow DOM is supported, it evaluates whether the
+% \texttt{createShadowRoot}
+% function exists:
 
 \input{8_the_platform_browser_package/code/8_3_2_1.tex}
 
-\texttt{GenericBrowserDomAdapter}
-does not provide the full implementation of
-\texttt{DomAdapter}
-and so a derived class is needed also.
+% \texttt{GenericBrowserDomAdapter}
+% does not provide the full implementation of
+% \texttt{DomAdapter}
+% and so a derived class is needed also.
 
-browser\_adapter.ts supplies the concrete
-\texttt{BrowserDomAdapter}
-class, which does come
-with a full implementation of
-\texttt{DomAdapter}
-:
+% browser\_adapter.ts supplies the concrete
+% \texttt{BrowserDomAdapter}
+% class, which does come
+% with a full implementation of
+% \texttt{DomAdapter}
+% :
 
 \input{8_the_platform_browser_package/code/8_3_2_2.tex}
 
-Generally its methods provide implementation based on window or document – here
-are some samples:
+% Generally its methods provide implementation based on window or document – here
+% are some samples:
 
 \input{8_the_platform_browser_package/code/8_3_2_3.tex}
 
-title.ts supplies the
-\texttt{Title}
-service:
+% title.ts supplies the
+% \texttt{Title}
+% service:
 
 \input{8_the_platform_browser_package/code/8_3_2_4.tex}
 
-The tools sub-directory contains tools.ts and common\_tools.ts. The
-\texttt{AngularProfiler}
-class is defined in common\_tools.ts:
+% The tools sub-directory contains tools.ts and common\_tools.ts. The
+% \texttt{AngularProfiler}
+% class is defined in common\_tools.ts:
 
 \input{8_the_platform_browser_package/code/8_3_2_5.tex}
 
-Tools.ts defines two functions
-\texttt{enableDebugTools}
-() and
-\texttt{disableDebugTools}
-() to add
-1
-and remove
-2
-a ng property to global:
+% Tools.ts defines two functions
+% \texttt{enableDebugTools}
+% () and
+% \texttt{disableDebugTools}
+% () to add
+% 1
+% and remove
+% 2
+% a ng property to global:
 
 \input{8_the_platform_browser_package/code/8_3_2_6.tex}
 
-The src/browser/location sub-directory contains browser\_platform\_location.ts and
-history.ts. browser\_platform\_location.ts contains the injectable class
-\texttt{BrowserPlatformLocation}
-:
+% The src/browser/location sub-directory contains browser\_platform\_location.ts and
+% history.ts. browser\_platform\_location.ts contains the injectable class
+% \texttt{BrowserPlatformLocation}
+% :
 
 \input{8_the_platform_browser_package/code/8_3_2_7.tex}
 
-This manages two private fields, location and history:
+% This manages two private fields, location and history:
 
 \input{8_the_platform_browser_package/code/8_3_2_8.tex}
 
-If you are wondering what the !: means, this StackOverflow answer:
+% If you are wondering what the !: means, this StackOverflow answer:
 
 \begin{itemize}
   \item \url{https://stackoverflow.com/questions/50983838/what-does-mean-in-typescript/50984662}
 \end{itemize}
 
-is what you are looking for:
+% is what you are looking for:
 
-\emph{“Specifically, the operation x! produces a value of the type of x with null}
-\emph{and undefined excluded.”}
+% \emph{“Specifically, the operation x! produces a value of the type of x with null}
+% \emph{and undefined excluded.”}
 
-They are initialized with
-\texttt{getDOM()}
-:
+% They are initialized with
+% \texttt{getDOM()}
+% :
 
 \input{8_the_platform_browser_package/code/8_3_2_9.tex}
 
-history.ts contains this simple function:
+% history.ts contains this simple function:
 
 \input{8_the_platform_browser_package/code/8_3_2_10.tex}

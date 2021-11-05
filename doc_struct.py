@@ -13,6 +13,17 @@ class DocStruct:
     def get_title_key(page: int, title: str) -> str:
         return str(page) + '|' + title.strip()
 
+    @staticmethod
+    def should_skip(content: str) -> bool:
+        # TODO: use find
+        skips = ['chapter', 'section', 'subsection', 'input', 'begin']
+
+        for skip in skips:
+            if content.startswith('\\' + skip):
+                return True
+
+        return False
+
     def __init__(self, toc: str, counter: str, level: int = 1):
         self.title = Title(toc, level)
         self.file_name = counter + '_' + to_file_name(toc)
@@ -74,7 +85,29 @@ class DocStruct:
 
             Creator.write_tex_file(output, code, '')
 
+    def add_comment_to_content(self):
+        contents: list[str] = []
+
+        for item in self.content:
+            if not item.strip() or DocStruct.should_skip(item):
+                contents.append(item)
+            else:
+                result = []
+                
+                for line in item.split('\n'):
+                    if line:
+                        result.append('% ' + line)
+                    else:
+                        result.append(line)
+
+                contents.append('\n'.join(result))
+
+        return contents
+
+
     def gen(self, target='en'):
+        is_en = target == 'en'
+
         for child in self.childs:
             self.content.append(Transform.to_input(self.root, child))
 
@@ -82,13 +115,15 @@ class DocStruct:
             self.content.append(Transform.to_empty_line())
 
         root = self.root
+        content = self.content
 
-        if target != 'en':
+        if not is_en:
             root = os.path.join('../' + target + '/' + root)
+            content = self.add_comment_to_content()
 
         output = os.path.join(root, self.file_name + '.tex')
 
-        Creator.write_tex_file(output, self.content)
+        Creator.write_tex_file(output, content)
 
-        if target == 'en':
+        if is_en:
             self.gen_code_file()

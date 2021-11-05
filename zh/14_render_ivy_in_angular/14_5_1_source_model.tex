@@ -1,6 +1,6 @@
 \subsection{Source Model}
 
-The source tree for the Render3 feature directly contains these source files:
+% The source tree for the Render3 feature directly contains these source files:
 
 \begin{itemize}
   \item assert.ts
@@ -20,14 +20,14 @@ The source tree for the Render3 feature directly contains these source files:
   \item util.ts
 \end{itemize}
 
-and these documents:
+% and these documents:
 
 \begin{itemize}
   \item perf\_notes.md
   \item TREE\_SHAKING.md
 \end{itemize}
 
-It also has one sub-directory, interfaces, which contains these files:
+% It also has one sub-directory, interfaces, which contains these files:
 
 \begin{itemize}
   \item container.ts
@@ -40,13 +40,13 @@ It also has one sub-directory, interfaces, which contains these files:
   \item view.ts
 \end{itemize}
 
-It could be said Render3 is a re-imagining of what rendering means for an Angular
-application. The principal change is that the DOM comes back as the main API that is
-used to render, and the idea of custom renderers goes away. In scenarios where the
-DOM does not exist (such as a web worker or on the server), then a polyfill DOM will
-be needed.
+% It could be said Render3 is a re-imagining of what rendering means for an Angular
+% application. The principal change is that the DOM comes back as the main API that is
+% used to render, and the idea of custom renderers goes away. In scenarios where the
+% DOM does not exist (such as a web worker or on the server), then a polyfill DOM will
+% be needed.
 
-In some pieces of Render3 code, we see use of the ‘L’ and ‘R’ prefixes. This is
-explained in a comment in the source:
+% In some pieces of Render3 code, we see use of the ‘L’ and ‘R’ prefixes. This is
+% explained in a comment in the source:
 
 \input{14_render_ivy_in_angular/code/14_5_1_0.tex}

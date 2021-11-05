@@ -1,38 +1,38 @@
 \section{Overview}
 
-The Zone.js project provides multiple asynchronous execution contexts running within
-a single JavaScript thread (i.e. within the main browser UI thread or within a single
-web worker). Zones are a way of sub-dividing a single thread using the JavaScript
-event loop. A single zone does not cross thread boundaries. A nice way to think about
-zones is that they sub-divide the stack within a JavaScript thread into multiple mini-
-stacks, and sub-divide the JavaScript event loop into multiple mini event loops that
-seemingly run concurrently (but really share the same VM event loop). In effect,
-Zone.js helps you write multithreaded code within a single thread.
+% The Zone.js project provides multiple asynchronous execution contexts running within
+% a single JavaScript thread (i.e. within the main browser UI thread or within a single
+% web worker). Zones are a way of sub-dividing a single thread using the JavaScript
+% event loop. A single zone does not cross thread boundaries. A nice way to think about
+% zones is that they sub-divide the stack within a JavaScript thread into multiple mini-
+% stacks, and sub-divide the JavaScript event loop into multiple mini event loops that
+% seemingly run concurrently (but really share the same VM event loop). In effect,
+% Zone.js helps you write multithreaded code within a single thread.
 
-When Zone.js is loaded by your app, it monkey-patches certain asynchronous calls
-(e.g.
-\texttt{setTimer}
-,
-\texttt{addEventListener}
-) to implement zone functionality. Zone.js does
-this by adding wrappers to the callbacks the application supplies, and when a timeout
-occurs or an event is detected, it runs the wrapper first and then the application
-callback. Chunks of executing application code form tasks and each task executes in
-the context of a zone. Zones are arranged in a hierarchy and provide useful features
-in areas such as error handling, performance measuring and executing configured
-work items upon entering and leaving a zone (all of which might be of great interest
-to implementors of change detection in a modern web UI framework, like Angular).
+% When Zone.js is loaded by your app, it monkey-patches certain asynchronous calls
+% (e.g.
+% \texttt{setTimer}
+% ,
+% \texttt{addEventListener}
+% ) to implement zone functionality. Zone.js does
+% this by adding wrappers to the callbacks the application supplies, and when a timeout
+% occurs or an event is detected, it runs the wrapper first and then the application
+% callback. Chunks of executing application code form tasks and each task executes in
+% the context of a zone. Zones are arranged in a hierarchy and provide useful features
+% in areas such as error handling, performance measuring and executing configured
+% work items upon entering and leaving a zone (all of which might be of great interest
+% to implementors of change detection in a modern web UI framework, like Angular).
 
-Zone.js is mostly transparent to application code. Zone.js runs in the background and
-for the most part “just works”. For example, Angular uses Zone.js and Angular
-application code usually runs inside a zone. Tens of thousands of Angular application
-developers have their code execute within zones without evening knowing these exist.
-More advanced applications can have custom code to make zone API calls if needed
-and become more actively involved in zone management. Some application
-developers may wish to take certain steps to move some non-UI performance-critical
-code outside of the Angular zone – using the
-\texttt{NgZone}
-class).
+% Zone.js is mostly transparent to application code. Zone.js runs in the background and
+% for the most part “just works”. For example, Angular uses Zone.js and Angular
+% application code usually runs inside a zone. Tens of thousands of Angular application
+% developers have their code execute within zones without evening knowing these exist.
+% More advanced applications can have custom code to make zone API calls if needed
+% and become more actively involved in zone management. Some application
+% developers may wish to take certain steps to move some non-UI performance-critical
+% code outside of the Angular zone – using the
+% \texttt{NgZone}
+% class).
 
 \input{1_internals_of_zone_js/1_0_0_project_information.tex}
 

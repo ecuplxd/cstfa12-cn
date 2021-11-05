@@ -1,41 +1,41 @@
 \subsection{src/resource\_loader}
 
-This directory has two files:
+% This directory has two files:
 
 \begin{itemize}
   \item resource\_loader\_cache.ts
   \item resource\_loader\_impl.ts
 \end{itemize}
 
-\texttt{CachedResourceLoader}
-is a cached version of a
-\texttt{ResourceLoader}
-(from the Compiler
-package). When the template compiler needs to access documents, it passes the job
-on to a configured resource loader.
-\texttt{ResourceLoader}
-is defined in:
+% \texttt{CachedResourceLoader}
+% is a cached version of a
+% \texttt{ResourceLoader}
+% (from the Compiler
+% package). When the template compiler needs to access documents, it passes the job
+% on to a configured resource loader.
+% \texttt{ResourceLoader}
+% is defined in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/resource_loader.ts}
         {<ANGULAR-MASTER>/packages/compiler/src/resource\_loader.ts}
 \end{itemize}
 
-as:
+% as:
 
 \input{9_the_platform_browser_dynamic_package/code/9_3_1_0.tex}
 
-\texttt{CachedResourceLoader}
-uses a promise wrapper to resolve or reject a get request:
+% \texttt{CachedResourceLoader}
+% uses a promise wrapper to resolve or reject a get request:
 
 \input{9_the_platform_browser_dynamic_package/code/9_3_1_1.tex}
 
-\texttt{ResourceLoaderImpl}
-is a different injectable implementation of
-\texttt{ResourceLoader}
-that
-use
-\texttt{XMLHttpRequest()}
-:
+% \texttt{ResourceLoaderImpl}
+% is a different injectable implementation of
+% \texttt{ResourceLoader}
+% that
+% use
+% \texttt{XMLHttpRequest()}
+% :
 
 \input{9_the_platform_browser_dynamic_package/code/9_3_1_2.tex}

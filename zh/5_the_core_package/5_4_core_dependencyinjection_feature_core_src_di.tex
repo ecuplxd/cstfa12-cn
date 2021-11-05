@@ -1,10 +1,10 @@
 \section{Core/DependencyInjection Feature (core/src/di)}
 
-The core/src/di.ts source file exports a variety of dependency injection types:
+% The core/src/di.ts source file exports a variety of dependency injection types:
 
 \input{5_the_core_package/code/5_4_0.tex}
 
-The core/src/di directory contains these files:
+% The core/src/di directory contains these files:
 
 \begin{itemize}
   \item forward\_ref.ts
@@ -19,37 +19,37 @@ The core/src/di directory contains these files:
   \item reflective\_provider.ts
 \end{itemize}
 
-The metadata.ts file defines these interfaces:
+% The metadata.ts file defines these interfaces:
 
 \input{5_the_core_package/code/5_4_1.tex}
 
-metadata.ts also defines these variables:
+% metadata.ts also defines these variables:
 
 \input{5_the_core_package/code/5_4_2.tex}
 
-Forward refs are placeholders used to faciliate out-of-sequence type declarations. The
-forward\_ref.ts file defines an interface and two functions:
+% Forward refs are placeholders used to faciliate out-of-sequence type declarations. The
+% forward\_ref.ts file defines an interface and two functions:
 
 \input{5_the_core_package/code/5_4_3.tex}
 
-The injector.ts file defines the
-\texttt{Injector}
-abstract class:
+% The injector.ts file defines the
+% \texttt{Injector}
+% abstract class:
 
 \input{5_the_core_package/code/5_4_4.tex}
 
-Application code (and indeed, Angular internal code) passes a token to
-\texttt{Injector.get()}
-, and the implementation returns the matching instance. Concrete
-implementations of this class need to override the
-\texttt{get()}
-method, so it actually works
-as expected. See reflective\_injector.ts for a derived class.
+% Application code (and indeed, Angular internal code) passes a token to
+% \texttt{Injector.get()}
+% , and the implementation returns the matching instance. Concrete
+% implementations of this class need to override the
+% \texttt{get()}
+% method, so it actually works
+% as expected. See reflective\_injector.ts for a derived class.
 
-provider.ts defines a number of
-\texttt{Provider}
-classes and then uses them to define the
-\texttt{Provider}
-type:
+% provider.ts defines a number of
+% \texttt{Provider}
+% classes and then uses them to define the
+% \texttt{Provider}
+% type:
 
 \input{5_the_core_package/code/5_4_5.tex}

@@ -1,18 +1,18 @@
 \subsection{Use Within Angular}
 
-When writing Angular applications, all your application code runs within a zone, unless
-you take specific steps to ensure some of it does not. Also, most of the Angular
-framework code itself runs in a zone. When beginning Angular application
-development, you can get by simply ignoring zones, since they are set up correctly by
-default for you and applications do not have to do anything in particular to take
-advantage of them. The end of the file
-\href{https://github.com/angular/zone.js/blob/master/MODULE.md}
-{<ZONE-MASTER>/blob/master/MODULE.md}
-explains where Angular uses zones:
+% When writing Angular applications, all your application code runs within a zone, unless
+% you take specific steps to ensure some of it does not. Also, most of the Angular
+% framework code itself runs in a zone. When beginning Angular application
+% development, you can get by simply ignoring zones, since they are set up correctly by
+% default for you and applications do not have to do anything in particular to take
+% advantage of them. The end of the file
+% \href{https://github.com/angular/zone.js/blob/master/MODULE.md}
+% {<ZONE-MASTER>/blob/master/MODULE.md}
+% explains where Angular uses zones:
 
-\emph{“Angular uses zone.js to manage async operations and decide when to perform}
-\emph{change detection. Thus, in Angular, the following APIs should be patched, otherwise}
-\emph{Angular may not work as expected.}
+% \emph{“Angular uses zone.js to manage async operations and decide when to perform}
+% \emph{change detection. Thus, in Angular, the following APIs should be patched, otherwise}
+% \emph{Angular may not work as expected.}
 
 \begin{itemize}
   \item ZoneAwarePromise
@@ -22,98 +22,98 @@ explains where Angular uses zones:
   \item XHR”
 \end{itemize}
 
-Zones are how Angular initiates change detection – when the zone’s mini-stack is
-empty, change detection occurs. Also, zones are how Angular configures global
-exception handlers. When an error occurs in a task, its zone’s configured error handler
-is called. A default implementation is provided and applications can supply a custom
-implementation via dependency injection. For details, see here:
+% Zones are how Angular initiates change detection – when the zone’s mini-stack is
+% empty, change detection occurs. Also, zones are how Angular configures global
+% exception handlers. When an error occurs in a task, its zone’s configured error handler
+% is called. A default implementation is provided and applications can supply a custom
+% implementation via dependency injection. For details, see here:
 
 \begin{itemize}
   \item \url{https://angular.io/api/core/ErrorHandler}
 \end{itemize}
 
-On that page note the code sample about setting up your own error handler:
+% On that page note the code sample about setting up your own error handler:
 
 \input{1_internals_of_zone_js/code/1_1_0_0.tex}
 
-Angular provide a class,
-\texttt{NgZone}
-, which builds on zones:
+% Angular provide a class,
+% \texttt{NgZone}
+% , which builds on zones:
 
 \begin{itemize}
   \item \url{https://angular.io/api/core/NgZone}
 \end{itemize}
 
-As you begin to create more advanced Angular applications, specifically those
-involving computationally intensive code that does not change the UI midway through
-the computation (but may at the end), you will see it is desirable to place such CPU-
-intensive work in a separate zone, and you would use a custom
-\texttt{NgZone}
-for that.
+% As you begin to create more advanced Angular applications, specifically those
+% involving computationally intensive code that does not change the UI midway through
+% the computation (but may at the end), you will see it is desirable to place such CPU-
+% intensive work in a separate zone, and you would use a custom
+% \texttt{NgZone}
+% for that.
 
-Elsewhere we will be looking in detail at
-\texttt{NgZone}
-and the use of zones within Angular in
-general when we explore the source tree for the main Angular project later, but for
-now, note the source for
-\texttt{NgZone}
-is in:
+% Elsewhere we will be looking in detail at
+% \texttt{NgZone}
+% and the use of zones within Angular in
+% general when we explore the source tree for the main Angular project later, but for
+% now, note the source for
+% \texttt{NgZone}
+% is in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/tree/master/packages/core/src/zone}
         {<ANGULAR-MASTER>/packages/core/src/zone}
 \end{itemize}
 
-and the zone setup during bootstrap for an application is in:
+% and the zone setup during bootstrap for an application is in:
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/application_ref.ts}
         {<ANGULAR-MASTER>/packages/core/src/application\_ref.ts}
 \end{itemize}
 
-When we bootstrap our Angular applications, we either use
-\texttt{bootstrapModule<M>}
-(using the dynamic compiler) or
-\texttt{bootstrapModuleFactory<M>}
-(using the offline
-compiler). Both these functions are in application\_ref.ts.
-\texttt{bootstrapModule<M>}
-calls
-the Angular compiler
-1
-and then calls
-\texttt{bootstrapModuleFactory<M>}
-\texttt{2}
-\texttt{.}
+% When we bootstrap our Angular applications, we either use
+% \texttt{bootstrapModule<M>}
+% (using the dynamic compiler) or
+% \texttt{bootstrapModuleFactory<M>}
+% (using the offline
+% compiler). Both these functions are in application\_ref.ts.
+% \texttt{bootstrapModule<M>}
+% calls
+% the Angular compiler
+% 1
+% and then calls
+% \texttt{bootstrapModuleFactory<M>}
+% \texttt{2}
+% \texttt{.}
 
 \input{1_internals_of_zone_js/code/1_1_0_1.tex}
 
-It is in
-\texttt{bootstrapModuleFactory}
-we see how zones are initialized for Angular:
+% It is in
+% \texttt{bootstrapModuleFactory}
+% we see how zones are initialized for Angular:
 
 \input{1_internals_of_zone_js/code/1_1_0_2.tex}
 
-At
-1
-we see a new
-\texttt{NgZone}
-being created and at
-2
-its
-\texttt{run()}
-method being called, at
-3
-we see an error handler implementation being requested from dependency injection (a
-default implementation will be returned unless the application supplies a custom one)
-and at
-4
-, we see that error handler being used to configure error handling for the
-newly created
-\texttt{NgZone}
-. Finally at
-5
-, we see the call to the actual bootstrapping.
+% At
+% 1
+% we see a new
+% \texttt{NgZone}
+% being created and at
+% 2
+% its
+% \texttt{run()}
+% method being called, at
+% 3
+% we see an error handler implementation being requested from dependency injection (a
+% default implementation will be returned unless the application supplies a custom one)
+% and at
+% 4
+% , we see that error handler being used to configure error handling for the
+% newly created
+% \texttt{NgZone}
+% . Finally at
+% 5
+% , we see the call to the actual bootstrapping.
 
-So in summary, Angular application developers should clearly learn about zones, since
-that is the execution context within which their application code will run.
+% So in summary, Angular application developers should clearly learn about zones, since
+% that is the execution context within which their application code will run.

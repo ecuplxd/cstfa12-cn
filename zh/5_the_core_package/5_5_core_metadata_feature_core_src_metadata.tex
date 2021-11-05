@@ -1,19 +1,19 @@
 \section{Core/Metadata Feature (core/src/metadata)}
 
-Think of metadata as little nuggets of information we would like to attach to other
-things. The
-\href{https://github.com/angular/angular/blob/master/packages/core/src/metadata.ts}
-{<ANGULAR-MASTER>/core/src/metadata.ts}
-file exports a variety of types
-from the core/src/metadata sub-directory:
+% Think of metadata as little nuggets of information we would like to attach to other
+% things. The
+% \href{https://github.com/angular/angular/blob/master/packages/core/src/metadata.ts}
+% {<ANGULAR-MASTER>/core/src/metadata.ts}
+% file exports a variety of types
+% from the core/src/metadata sub-directory:
 
 \input{5_the_core_package/code/5_5_0.tex}
 
-The source files in the
-\href{https://github.com/angular/angular/tree/master/packages/core/src/metadata}
-{<ANGULAR-MASTER>/packages/core/src/metadata}
-sub-
-directory are:
+% The source files in the
+% \href{https://github.com/angular/angular/tree/master/packages/core/src/metadata}
+% {<ANGULAR-MASTER>/packages/core/src/metadata}
+% sub-
+% directory are:
 
 \begin{itemize}
   \item di.ts
@@ -23,34 +23,34 @@ directory are:
   \item view.ts
 \end{itemize}
 
-The di.ts file defines a range of interfaces for decorators – these include
-\texttt{AttributeDecorator, ContentChildrenDecorator, ContentChildDecorator,}
-\texttt{ViewChildrenDecorator, ViewChildDecorator}
-. It also defines and exports a
-number of consts that are imp[lementations of those interfaces, created using
-\texttt{makePropDecorator}
-.
+% The di.ts file defines a range of interfaces for decorators – these include
+% \texttt{AttributeDecorator, ContentChildrenDecorator, ContentChildDecorator,}
+% \texttt{ViewChildrenDecorator, ViewChildDecorator}
+% . It also defines and exports a
+% number of consts that are imp[lementations of those interfaces, created using
+% \texttt{makePropDecorator}
+% .
 
-The view.ts file defines an enum, a var and a class. The
-\texttt{ViewEncapsulation}
-enum is
-defined as:
+% The view.ts file defines an enum, a var and a class. The
+% \texttt{ViewEncapsulation}
+% enum is
+% defined as:
 
 \input{5_the_core_package/code/5_5_1.tex}
 
-These represent how template and style encapsulation should work.
-\texttt{None}
-means don’t
-use encapsulation,
-\texttt{Native}
-means use what the renderer offers (specifically the
-Shadow DOM) and
-\texttt{Emulated}
-is best explained by the comment:
+% These represent how template and style encapsulation should work.
+% \texttt{None}
+% means don’t
+% use encapsulation,
+% \texttt{Native}
+% means use what the renderer offers (specifically the
+% Shadow DOM) and
+% \texttt{Emulated}
+% is best explained by the comment:
 
 \input{5_the_core_package/code/5_5_2.tex}
 
-The directives.ts file exports interfaces related to directive metadata. They include:
+% The directives.ts file exports interfaces related to directive metadata. They include:
 
 \begin{itemize}
   \item DirectiveDecorator
@@ -69,45 +69,45 @@ The directives.ts file exports interfaces related to directive metadata. They in
   \item HostListener
 \end{itemize}
 
-The lifecycle\_hooks.ts file defines a number of interfaces used for lifecycle hooks:
+% The lifecycle\_hooks.ts file defines a number of interfaces used for lifecycle hooks:
 
 \input{5_the_core_package/code/5_5_3.tex}
 
-These define the method signatures for handlers that application component interest
-in the lifecycle hooks must implement.
+% These define the method signatures for handlers that application component interest
+% in the lifecycle hooks must implement.
 
-The ng\_module.ts file contains constructs used to define Angular modules. An Angular
-application is built from a set of these and
-\texttt{NgModule}
-is used to tie them together:
+% The ng\_module.ts file contains constructs used to define Angular modules. An Angular
+% application is built from a set of these and
+% \texttt{NgModule}
+% is used to tie them together:
 
 \input{5_the_core_package/code/5_5_4.tex}
 
-An
-\texttt{NgModuleDecorator}
-is how
-\texttt{NgModule}
-is attached to a type:
+% An
+% \texttt{NgModuleDecorator}
+% is how
+% \texttt{NgModule}
+% is attached to a type:
 
 \input{5_the_core_package/code/5_5_5.tex}
 
-We see their usage when we explore the boilerplate code that Angular CLI generates
-for us when we use it to create a new Angular project. Look inside
+% We see their usage when we explore the boilerplate code that Angular CLI generates
+% for us when we use it to create a new Angular project. Look inside
 
 \begin{itemize}
   \item <my-project>/src/app/app.module.ts
 \end{itemize}
 
-and we will see:
+% and we will see:
 
 \input{5_the_core_package/code/5_5_6.tex}
 
-and when we look at:
+% and when we look at:
 
 \begin{itemize}
   \item <my-project>/src/main.ts
 \end{itemize}
 
-we see:
+% we see:
 
 \input{5_the_core_package/code/5_5_7.tex}

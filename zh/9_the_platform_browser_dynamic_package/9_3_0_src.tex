@@ -1,6 +1,6 @@
 \subsection{src}
 
-This directory contains these files:
+% This directory contains these files:
 
 \begin{itemize}
   \item compiler\_factory.ts
@@ -9,39 +9,39 @@ This directory contains these files:
   \item platform\_providers.ts
 \end{itemize}
 
-Let’s start with
-\url{platform_providers.ts}
-, which contains:
+% Let’s start with
+% \url{platform_providers.ts}
+% , which contains:
 
 \input{9_the_platform_browser_dynamic_package/code/9_3_0_0.tex}
 
-This extends
-\texttt{INTERNAL\_BROWSER\_PLATFORM\_PROVIDERS}
-with two additional provider
-configurations. The first is
-\texttt{COMPILER\_OPTIONS}
-, which itself needs a
-\texttt{ResourceLoader}
-(defined in the Compiler module), that we see is set to use
-\texttt{ResourceLoaderImpl}
-(defined in this package).  The second is
-\texttt{PLATFORM\_ID}
-which uses the value
-\texttt{PLATFORM\_BROWSER\_ID}
-(from the Common package).
+% This extends
+% \texttt{INTERNAL\_BROWSER\_PLATFORM\_PROVIDERS}
+% with two additional provider
+% configurations. The first is
+% \texttt{COMPILER\_OPTIONS}
+% , which itself needs a
+% \texttt{ResourceLoader}
+% (defined in the Compiler module), that we see is set to use
+% \texttt{ResourceLoaderImpl}
+% (defined in this package).  The second is
+% \texttt{PLATFORM\_ID}
+% which uses the value
+% \texttt{PLATFORM\_BROWSER\_ID}
+% (from the Common package).
 
-This file:
+% This file:
 
 \begin{itemize}
   \item ANGULAR-MASTER/packages/platform-browser-dynamic/src/compiler\_factory.ts
 \end{itemize}
 
-Its \_
-\texttt{mergeOptions}
-method takes a
-\texttt{CompilerOptions}
-parameter and returns a
-\texttt{CompilerOptions}
-instance with these additional entries:
+% Its \_
+% \texttt{mergeOptions}
+% method takes a
+% \texttt{CompilerOptions}
+% parameter and returns a
+% \texttt{CompilerOptions}
+% instance with these additional entries:
 
 \input{9_the_platform_browser_dynamic_package/code/9_3_0_1.tex}

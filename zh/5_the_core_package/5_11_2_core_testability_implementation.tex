@@ -1,44 +1,44 @@
 \subsection{Core/Testability Implementation}
 
-The implementation of the testability feature is in the testability sub-directory, which
-contains two file:
+% The implementation of the testability feature is in the testability sub-directory, which
+% contains two file:
 
 \begin{itemize}
   \item testability.externs.js
   \item testability.ts
 \end{itemize}
 
-Its provides functionality for testing Angular components, and includes use of
-\texttt{NgZone}
-.
+% Its provides functionality for testing Angular components, and includes use of
+% \texttt{NgZone}
+% .
 
-\texttt{GetTestability}
-is simply defined as:
+% \texttt{GetTestability}
+% is simply defined as:
 
 \input{5_the_core_package/code/5_11_2_0.tex}
 
-\texttt{setTestabilityGetter}
-is used to set the getter:
+% \texttt{setTestabilityGetter}
+% is used to set the getter:
 
 \input{5_the_core_package/code/5_11_2_1.tex}
 
-The
-\texttt{TestabilityRegistry}
-class is “A global registry of Testability instances for
-specific elements”.
-\texttt{TestabilityRegistry}
-maintains a map from any element to an
-instance of a testability. It provides a
-\texttt{registerApplication()}
-method which allows
-an entry to be added to this map, and a
-\texttt{getTestability()}
-method that is a lookup:
+% The
+% \texttt{TestabilityRegistry}
+% class is “A global registry of Testability instances for
+% specific elements”.
+% \texttt{TestabilityRegistry}
+% maintains a map from any element to an
+% instance of a testability. It provides a
+% \texttt{registerApplication()}
+% method which allows
+% an entry to be added to this map, and a
+% \texttt{getTestability()}
+% method that is a lookup:
 
 \input{5_the_core_package/code/5_11_2_2.tex}
 
-The
-\texttt{Testability}
-class is structured as follows:
+% The
+% \texttt{Testability}
+% class is structured as follows:
 
 \input{5_the_core_package/code/5_11_2_3.tex}
