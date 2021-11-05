@@ -1,39 +1,98 @@
-\section{Forms API}
+% \section{Forms API}
+\section{表单 API}
 
 % The exported API of the @Angular/Forms package can be sub-divided into four groups
 % – main, directives, accessors and validator directives.
 
+@Angular/Forms 暴露的 API 接口大致可以分为四组：main、directives、accessors 和 validator directives。
+
 % The main group can be represented as:
 
+main 大致可表示为：
+
+% \begin{figure}[!hbt]
+%   \centering
+%   \caption{@Angular/Forms API (main)}
+%   \centerline{
+%   \xymatrix {
+%   *+[F]\txt{FormsModule} & & *+[F]\txt{ReactiveFormsModule} \\
+%   *+[F]\txt{NG\_ASYNC\_VALIDATORS} & & *+[F]\txt{NG\_VALIDATORS} \\
+%   *+[F]\txt{Validators} & & *+[F]\txt{FormBuilder} \\
+%   & *+[F]\txt{AbstractControl} &  \\
+%   *+[F]\txt{FormControl} \ar[ru] & *+[F]\txt{FormGroup} \ar[u] & *+[F]\txt{FormArray} \ar[lu]
+%   }
+%   }
+% \end{figure}
+
+% \begin{figure}[!hbt]
+%   \centering
+%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/forms_api}}
+%   \label{fig:formsapi}
+% \end{figure}
+
 % Its index.ts file contains this one line:
+
+它的 index.ts 文件内容如下：
 
 \input{../output/15_the_forms_package/code/15_1_0.tex}
 
 % The parts of forms.ts related to exporting the above are:
 
+form.ts 中与上述内容相关的导出是：
+
 \input{../output/15_the_forms_package/code/15_1_1.tex}
 
 % Two NgModules are supplied, one for normal forms, FormsModule, and the other for
-% FormsModule
-% @Angular/Forms API (main)
-
 % reactive forms, ReactiveFormsModule. The control hierarchy starts with a root, and
 % has FormControl for actual controls,and two combinations of controls, one for group
 % (of fixed size) and one for array (of dynamic size).
 
+还提供了两个 NgModules，一个是 FormsModule，用于普通表单，
+另一个是 ReactiveFormsModule，用于响应式表单。
+表单控件层次结构从根开始，FormControl 用于实际的控件，
+以及两种控件组合，一种是表单组（固定大小），
+另一种用于数组（动态大小）
+
 % A large directive hierarchy is supplied for both types of forms:
 
+为两种类型的表单提供了一个大的指令继承结构：
+
+% \begin{figure}[!hbt]
+%   \centering
+%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/forms_api_directive}}
+%   \label{fig:formsapidirective}
+% \end{figure}
+
 % The parts of forms.ts related to exporting directives are:
+
+forms.ts 中与指令导出相关的部分是：
 
 \input{../output/15_the_forms_package/code/15_1_2.tex}
 
 % The accessor hierarchy can be represented as:
 
+访问器层次结构可以表示为：
+
+% \begin{figure}[!hbt]
+%   \centering
+%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/form_api_accessors}}
+%   \label{fig:formapiaccessors}
+% \end{figure}
+
 % The parts of forms.ts related to exporting accessors are:
+
+form.ts 中与访问器相关的部分是：
 
 \input{../output/15_the_forms_package/code/15_1_3.tex}
 
 % The part of forms.ts related to exporting validator directives is:
-% ControlValueAccessor
+
+和验证指令相关的部分是：
+
+% \begin{figure}[!hbt]
+%   \centering
+%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/forms_api_validator}}
+%   \label{fig:formsapivalidator}
+% \end{figure}
 
 \input{../output/15_the_forms_package/code/15_1_4.tex}

@@ -1,6 +1,9 @@
+% \subsection{forms/src}
 \subsection{forms/src}
 
 % The @angular/forms/src directory contains these files:
+
+@angular/forms/src 目录包含如下文件：
 
 \begin{itemize}
   \item directives.ts
@@ -17,6 +20,9 @@
 % \texttt{ReactiveFormsModule}
 % NgModules as
 % follows:
+
+forms\_providers.ts 定义了 \texttt{FormsModule} 和 \texttt{ReactiveFormsModule} 两个 NgModules，
+内容如下：
 
 \input{../output/15_the_forms_package/code/15_3_0_0.tex}
 
@@ -40,13 +46,22 @@
 % \texttt{REACTIVE\_DRIVEN\_DIRECTIVES}
 % .
 
+我们注意到 \texttt{FormsModule} 和 \texttt{ReactiveFormsModule} 两者的主要区别是：
+\texttt{ReactiveFormsModule} 有一个额外的 \texttt{FormBuilder} provider 配置，
+\texttt{FormModule} 的导出包含了 \texttt{TEMPLATE\_DRIVEN\_DIRECTIVES}，
+而 \texttt{ReactiveFormsModule} 的导出则包含 \texttt{REACTIVE\_DRIVEN\_DIRECTIVES}。
+
 % directives.ts defines these:
+
+directives.ts 定义如下：
 
 \input{../output/15_the_forms_package/code/15_3_0_1.tex}
 
 % A nice discussion of how to create dynamic forms using
 % \texttt{REACTIVE\_FORM\_DIRECTIVES}
 % is here:
+
+一个比较好的关于如何使用 \texttt{REACTIVE\_FORM\_DIRECTIVES} 创建动态表单的讨论：
 
 \begin{itemize}
   \item \url{https://angular.io/docs/ts/latest/cookbook/dynamic-form.html}
@@ -67,17 +82,28 @@
 % \texttt{control()}
 % methods. They are defined as:
 
+form\_builder.ts 文件定义了可注入的 \texttt{FormsBuilder} 类，
+可以通过 \texttt{group()}、\texttt{array()} 或 \texttt{control()} 方法
+动态构建相应的 \texttt{FormGroup}、\texttt{FormArray} 以及 \texttt{FormControl}。
+方法定义如下：
+
 \input{../output/15_the_forms_package/code/15_3_0_2.tex}
 
 % The validators.ts file first declares two opaque tokens for dependency injection:
+
+validators.ts 文件首先声明了两个用于依赖注入的 opaque tokens：
 
 \input{../output/15_the_forms_package/code/15_3_0_3.tex}
 
 % It also defines the Validators class:
 
+它还定义了 Validators 类：
+
 \input{../output/15_the_forms_package/code/15_3_0_4.tex}
 
 % A sample implementation of one of the validators is:
+
+其中一个校验器的实现：
 
 \input{../output/15_the_forms_package/code/15_3_0_5.tex}
 
@@ -92,10 +118,17 @@
 % 4
 % is returned.
 
+返回值 \step{1} 是一个 key 为 string，value 为 bool 的对象。
+如果 \step{2} 处成立，则返回 \{'required': true\} \step{3}，
+否则返回 null \step{4}。
+
 % The model.ts file is large and defines the form control hierarchy:
 
+model.ts 文件比较大，定义了表单控件继承关系：
+
 % The status of a form control is one of:
-% AbstractControl
+
+表单控件的状态是以下之一：
 
 \input{../output/15_the_forms_package/code/15_3_0_6.tex}
 
@@ -105,17 +138,25 @@
 % validator functions. This class also defines a bunch of getters which map to private
 % fields. The value field refers to data we wish to strore within the control:
 
+\texttt{AbstractControl} 类构造器接收一个 validator 和 async validator 函数。
+还定义了一系列的 getters 用于映射私有字段。
+value 字段代表我们想要存储在表单控件内的数据：
+
 \input{../output/15_the_forms_package/code/15_3_0_7.tex}
 
 % The
 % \texttt{\_status}
 % field refers to the validator checking:
 
+\texttt{\_status} 字段表示 validator 状态：
+
 \input{../output/15_the_forms_package/code/15_3_0_8.tex}
 
 % The
 % \texttt{\_error}
 % field returns a map of errors (if any):
+
+\texttt{\_error} 字段返回错误映射（如果有）：
 
 \input{../output/15_the_forms_package/code/15_3_0_9.tex}
 
@@ -127,12 +168,17 @@
 % \texttt{dirty()}
 % is true if changed:
 
+\texttt{\_pristine} 字段代表控件数据是否改变了 —— \texttt{pristine()} 为 true 则表示未变化，
+\texttt{dirty()} 为 true 则表示变化了：
+
 \input{../output/15_the_forms_package/code/15_3_0_10.tex}
 
 % The
 % \texttt{\_touched}
 % field refers to whether the user has visited the control (if does not
 % mean that the control’s value has been changed):
+
+\texttt{\_touched} 代表控件是否被用户访问（但这并不意味着控件值发生了变化）
 
 \input{../output/15_the_forms_package/code/15_3_0_11.tex}
 
@@ -141,14 +187,21 @@
 % getters, for value changes and status changes, that
 % return observables:
 
+还有两个 \texttt{xxChanges()} getter，value changes 和 status changes，
+返回 observables：
+
 \input{../output/15_the_forms_package/code/15_3_0_12.tex}
 
 % These are initialized to event emitters via:
+
+通过 event emitters 进行初始化：
 
 \input{../output/15_the_forms_package/code/15_3_0_13.tex}
 
 % \texttt{AbstractControl}
 % also declares a function:
+
+\texttt{AbstractControl} 还声明了一个函数：
 
 \input{../output/15_the_forms_package/code/15_3_0_14.tex}
 
@@ -158,26 +211,39 @@
 % function is used in many helper methods to determine
 % information about the control, e.g.:
 
+它对控件及其子控件执行条件函数并返回一个布尔值。
+\texttt{\_anyControls} 函数在许多辅助函数中用于确定有关控件的信息，例如：
+
 \input{../output/15_the_forms_package/code/15_3_0_15.tex}
 
 % It has a parent field:
+
+它有一个 parent 字段：
 
 \input{../output/15_the_forms_package/code/15_3_0_16.tex}
 
 % which is used when the state of the control is being updated.
 
+当控件的状态正在更新时使用。
+
 \input{../output/15_the_forms_package/code/15_3_0_17.tex}
 
 % It is set via:
+
+它通过以下方式设置：
 
 \input{../output/15_the_forms_package/code/15_3_0_18.tex}
 
 % Its is hierarchical and this is supplied to find the root:
 
+它是继承的，用于查找根：
+
 \input{../output/15_the_forms_package/code/15_3_0_19.tex}
 
 % The FormControl class is supplied for atomic controls (that do not contain any child
 % controls).
+
+FormControl 类是为原子控件（不包含任何子控件）提供的。
 
 \input{../output/15_the_forms_package/code/15_3_0_20.tex}
 
@@ -188,28 +254,41 @@
 % method which reacts depending on the four
 % optional booleans supplied:
 
+它的 \texttt{\_value} 字段是通过 \texttt{setValue()} 方法设置的，
+该方法根据给定的四个可选布尔值做出相应改动：
+
 \input{../output/15_the_forms_package/code/15_3_0_21.tex}
 
 % It has a
 % \texttt{reset()}
 % method to reset control data:
 
+\texttt{reset()} 方法用于重置控件数据：
+
 \input{../output/15_the_forms_package/code/15_3_0_22.tex}
 
 % The FormGroup class extends AbstractControl:
+
+FormGroup 类继承自 AbstractControl：
 
 \input{../output/15_the_forms_package/code/15_3_0_23.tex}
 
 % Its constructor’s first parameter defines a controls associative map (in constrast to
 % FormArray):
 
+它的构造函数的第一个参数定义了一个控件关联映射（与 FormArray 形成对比）：
+
 \input{../output/15_the_forms_package/code/15_3_0_24.tex}
 
-% Controls can be registered with w FormGroup via:
+% Controls can be registered with FormGroup via:
+
+可以通过以下方式向 FormGroup 注册控件：
 
 \input{../output/15_the_forms_package/code/15_3_0_25.tex}
 
 % The values of all controls in the group may be set via:
+
+group 中所有控件的值可以通过以下方式设置：
 
 \input{../output/15_the_forms_package/code/15_3_0_26.tex}
 
@@ -217,14 +296,22 @@
 % 1
 % .
 
+请注意，如果缺少任何控件，它会引发异常 \step{1}。
+
 % The FormArray class extends AbstractControl:
+
+FormArray 类继承自 AbstractControl：
 
 \input{../output/15_the_forms_package/code/15_3_0_27.tex}
 
 % Its constructor’s first parameter is simply an array:
 
+它的构造函数的第一个参数只是一个数组：
+
 \input{../output/15_the_forms_package/code/15_3_0_28.tex}
 
 % It allows you to insert at the end of the array or at a given location, and to remove:
+
+允许你在数组的末尾或给定位置进行插入，删除：
 
 \input{../output/15_the_forms_package/code/15_3_0_29.tex}

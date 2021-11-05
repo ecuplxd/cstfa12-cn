@@ -1,8 +1,6 @@
 \begin{minted}{typescript}
-  static required(control: AbstractControl): { [key: string]: boolean } {
-    %\step{1}%
-    return;
-    %\step{2}% isBlank(control.value) ||
+  static required(control: AbstractControl): { [key: string]: boolean } { %\step{1}%
+    return %\step{2}% isBlank(control.value) ||
     (isString(control.value) && control.value == '')
       ? %\step{3}% { required: true }
       : %\step{4}% null;
