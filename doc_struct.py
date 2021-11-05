@@ -24,6 +24,28 @@ class DocStruct:
 
         return False
 
+    @staticmethod
+    def add_comment_to_content(contents: list[str]) -> list[str]:
+        results: list[str] = []
+
+        for content in contents:
+            if '/code/' in content:
+                results.append(content.replace('input{', 'input{../output/'))
+            elif not content.strip() or DocStruct.should_skip(content):
+                results.append(content)
+            else:
+                result = []
+
+                for line in content.split('\n'):
+                    if line:
+                        result.append('% ' + line)
+                    else:
+                        result.append(line)
+
+                results.append('\n'.join(result))
+
+        return results
+
     def __init__(self, toc: str, counter: str, level: int = 1):
         self.title = Title(toc, level)
         self.file_name = counter + '_' + to_file_name(toc)
@@ -63,7 +85,8 @@ class DocStruct:
     def add_code(self, code: str):
         code_path = self.root + '/code'
 
-        self.add_content(Transform.to_input(code_path, self.get_code_counter()))
+        self.add_content(Transform.to_input(
+            code_path, self.get_code_counter()))
         self.add_content(Transform.to_empty_line())
         self.codes.append(code)
 
@@ -85,43 +108,20 @@ class DocStruct:
 
             Creator.write_tex_file(output, code, '')
 
-    def add_comment_to_content(self):
-        contents: list[str] = []
-
-        for item in self.content:
-            if '/code/' in item:
-                contents.append(item.replace('input{', 'input{../output/'))
-            elif not item.strip() or DocStruct.should_skip(item):
-                contents.append(item)
-            else:
-                result = []
-
-                for line in item.split('\n'):
-                    if line:
-                        result.append('% ' + line)
-                    else:
-                        result.append(line)
-
-                contents.append('\n'.join(result))
-
-        return contents
-
-
     def gen(self, target='en'):
         is_en = target == 'en'
+        content = [item for item in self.content]
+        root = self.root
 
         for child in self.childs:
-            self.content.append(Transform.to_input(self.root, child))
+            content.append(Transform.to_input(self.root, child))
 
         if len(self.childs) != 0:
-            self.content.append(Transform.to_empty_line())
-
-        root = self.root
-        content = self.content
+            content.append(Transform.to_empty_line())
 
         if not is_en:
             root = os.path.join('../' + target + '/' + root)
-            content = self.add_comment_to_content()
+            content = DocStruct.add_comment_to_content(content)
 
         output = os.path.join(root, self.file_name + '.tex')
 
