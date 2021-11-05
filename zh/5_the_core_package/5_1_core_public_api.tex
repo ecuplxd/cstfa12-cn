@@ -1,0 +1,55 @@
+\section{Core Public API}
+
+The index.ts file in Core’s root directory just exports the contents of the public-api file,
+which in turn exports the contents of src/core.ts:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/core.ts}
+        {<ANGULAR-MASTER>/packages/core/src/core.ts}
+\end{itemize}
+
+which is where Core’s exported API is defined:
+
+\input{5_the_core_package/code/5_1_0.tex}
+
+If you are writing a normal Angular application, to use the Core package you will
+import Core’s index.ts. There are two additional files with exports, which are used
+internally within Angular, to allow other Angular packages import additional types
+from the Core package (that are not in the normal index.ts). These two files are
+named private\_exports and are located in Core’s src directory (whereas index.ts is
+located in Core’s root directory).
+
+The first of these is:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/core_private_export.ts}
+        {<ANGULAR-MASTER>/packages/core/src/core\_private\_export.ts}
+\end{itemize}
+
+and has these exports:
+
+\input{5_the_core_package/code/5_1_1.tex}
+
+We observe that the exports are being renamed with the Greek Theta symbol (looks
+like a ‘o’ with a horizontal line through it) – all are exported as:
+
+\input{5_the_core_package/code/5_1_2.tex}
+
+For an explanation see here -
+\url{https://stackoverflow.com/questions/45466017/%C9%B5-theta-like-symbol-in-angular-2-source-code}
+
+\emph{“The letter ɵ is used by the Angular team to indicate that some method is}
+\emph{private to the framework and must not be called directly by the user, as the}
+\emph{API for these method is not guaranteed to stay stable between Angular}
+\emph{versions (in fact, I would say it’s almost guaranteed to break).”}
+
+The second private exports file is:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/codegen_private_exports.ts}
+        {<ANGULAR-MASTER>/packages/core/src/codegen\_private\_exports.ts}
+\end{itemize}
+
+and has these exports:
+
+\input{5_the_core_package/code/5_1_3.tex}

@@ -1,0 +1,25 @@
+\subsection{Core/Linker Public API}
+
+The public API for this feature is exported by the
+\href{https://github.com/angular/angular/blob/master/packages/core/src/core.ts}
+{<ANGULAR-MASTER>/packages/core/src/core.ts}
+file, which has this line:
+
+\input{5_the_core_package/code/5_12_0_0.tex}
+
+The
+\href{https://github.com/angular/angular/blob/master/packages/core/src/linker.ts}
+{<ANGULAR-MASTER>/packages/core/src/linker.ts}
+file lists the exports:
+
+\input{5_the_core_package/code/5_12_0_1.tex}
+
+As we see, there is one enum (
+\texttt{COMPILER\_OPTIONS}
+), one method (
+\texttt{getModuleFactory}
+),
+one type (
+\texttt{CompilerOptions}
+) and the other public exports are classes. We note there
+is not much hierarchy in the public API layout.

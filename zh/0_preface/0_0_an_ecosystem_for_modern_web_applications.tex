@@ -1,0 +1,36 @@
+\section{An Ecosystem for Modern Web Applications}
+
+The Angular ecosystem consists of multiple projects that work together to provide a
+comprehensive foundation for developing modern web applications.  With a few
+exceptions, all of these projects are written with TypeScript (even the TypeScript
+compiler is itself written in TypeScript). The exceptions are the Bazel main project
+(which uses Java), fsevents for native access to macOS FSEvents along with the
+Jasmine unit test framework and Karma test runner (all these use JavaScript). The
+dependency on other projects varies.
+
+Note that the Java-based Bazel main project is used to build Angular itself. Bazel and
+Java are not needed to build regular Angular applications. Bazel is great for
+incremental and multi-core builds so it has advantages when used with large
+codebases (such as Angular itself). In future Bazel is likely to become a sensible build
+option for larger Angular applications.
+
+None of these projects are dependent on Visual Studio Code. These projects only need
+a code editor that can work with the TypeScript tsc compiler – and there are many -
+see middle of main page at:
+
+\begin{itemize}
+  \item \url{http://typescriptlang.org}
+\end{itemize}
+
+Visual Studio Code is one such editor, that is particularly good, open source, freely
+available for macOS, Linux and Windows, and it too is written in TypeScript.
+
+\begin{itemize}
+  \item \url{https://code.visualstudio.com}
+\end{itemize}
+
+Of choose you can use any editor to investigate the source trees of these projects.
+
+\input{0_preface/0_0_0_viewing_markdown_files.tex}
+
+\input{0_preface/0_0_0_viewing_markdown_files.tex}

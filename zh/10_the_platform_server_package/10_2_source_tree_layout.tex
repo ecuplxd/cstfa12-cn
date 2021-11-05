@@ -1,0 +1,25 @@
+\section{Source Tree Layout}
+
+The source tree for the Platform-Server package contains these directories:
+PlatformState
+Platform-Server Public API
+
+\begin{itemize}
+  \item src
+  \item test (unit tests in Jasmine)
+  \item testing (test tooling)
+\end{itemize}
+
+and these files:
+
+\begin{itemize}
+  \item index.ts
+  \item package.json
+  \item public\_api.ts
+\end{itemize}
+
+Package.json has dependencies listed as:
+
+\input{10_the_platform_server_package/code/10_2_0.tex}
+
+domino is the server-side DOM editing package that we need.

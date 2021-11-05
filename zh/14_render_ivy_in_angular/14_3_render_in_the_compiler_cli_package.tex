@@ -1,0 +1,288 @@
+\section{Render3 In The Compiler-CLI Package}
+
+Despite its name, Compiler CLI is both a set of command-line interfaces and an API (a
+library). It has three apps, that we see defined in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/package.json}
+        {<ANGULAR-MASTER>/packages/compiler-cli/package.json}
+\end{itemize}
+
+as follows, which lists their entry points:
+
+\input{14_render_ivy_in_angular/code/14_3_0.tex}
+
+Ngc is the main Angular template compiler, ivy-ngcc is the Angular Compatibility
+Compiler and ng-xi18n is for internationalization.
+
+As a library, Compiler CLI mostly exports types from the Compiler package, as seen
+by its
+\url{index.ts}
+file, along with some useful diagnostics types, defined locally within
+Compiler CLI. The naming of none of these exports is Ivy-specific, but their internals
+are impacted by use of Ivy, as we shall soon see.
+
+In root of the src tree, there are references to Ivy in main.ts and perform\_compile.ts.
+
+\url{main.ts}
+has this:
+
+\input{14_render_ivy_in_angular/code/14_3_1.tex}
+
+and this detailed error reporter:
+
+\input{14_render_ivy_in_angular/code/14_3_2.tex}
+
+\url{perform_compile.ts}
+has this:
+
+\input{14_render_ivy_in_angular/code/14_3_3.tex}
+
+The CompilerOptions interface is defined in the transformers sub-directory. In:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/transformers/api.ts}
+        {<ANGULAR-MASTER>/packages/compiler-cli/src/transformers/api.ts}
+\end{itemize}
+
+we see it defines an interface,
+\texttt{CompilerOptions}
+, that extends
+\texttt{ts.CompilerOptions}
+with Angular-specific fields.
+
+\input{14_render_ivy_in_angular/code/14_3_4.tex}
+
+Despite this comment about aot-compiler.md, that Markdown file actually contains no
+mention of Ivy. The
+\texttt{CompilerOptions}
+interface in api.ts does contain this addition:
+
+\input{14_render_ivy_in_angular/code/14_3_5.tex}
+
+So we see there is a new ngtsc compiler in addition to the normal tsc compiler, and
+this switch is used to select one or the other. We will soon explore how ngtsc works.
+
+The api.ts file also defines
+\texttt{EmitFlags}
+, which is of interest to us (note the
+\texttt{default}
+includes codegen):
+
+\input{14_render_ivy_in_angular/code/14_3_6.tex}
+
+The tsc\_pass\_through.ts file defines an implementation of the Program API:
+
+\input{14_render_ivy_in_angular/code/14_3_7.tex}
+
+We see Ivy impacting the program.ts file in a number of ways.
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/transformers/program.ts}
+        {<ANGULAR-MASTER>/packages/compiler-cli/src/transformers/program.ts}
+\end{itemize}
+
+The command line option is extracted in
+\texttt{getAotCompilerOptions()}
+:
+
+\input{14_render_ivy_in_angular/code/14_3_8.tex}
+
+Metadata is expected to be lower case:
+
+\input{14_render_ivy_in_angular/code/14_3_9.tex}
+
+Also in
+\texttt{AngularCompilerProgram}
+we see the use of reified decorators for Render3:
+
+\input{14_render_ivy_in_angular/code/14_3_10.tex}
+
+The
+\texttt{emit}
+method has protection against being inadvertently called for Ivy:
+
+\input{14_render_ivy_in_angular/code/14_3_11.tex}
+
+The createProgram function is where the decision is made which compilation program
+to use; this is influenced by the value for enableIvy:
+
+\input{14_render_ivy_in_angular/code/14_3_12.tex}
+
+Before leaving program.ts, we wish to mention two other functions. This file also
+contains the
+\texttt{defaultEmitCallback}
+:
+
+\input{14_render_ivy_in_angular/code/14_3_13.tex}
+
+We see at
+1
+where the compilation is actually initiated with the set of custom
+transformers which was passed in as a parameter.
+One other important helper function is
+\texttt{calculateTransforms()}
+, defined as:
+
+\input{14_render_ivy_in_angular/code/14_3_14.tex}
+
+We see at
+1
+how those partial modules are processed. In particular, we see the use of
+the new
+\texttt{getAngularClassTransformerFactory}
+function. It is defined in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/c8a1a14b87e5907458e8e87021e47f9796cb3257/packages/compiler-cli/src/transformers/r3_transform.ts}
+        {<ANGULAR-MASTER>/packages/compiler-cli/src/transformers/r3\_transform.ts}
+\end{itemize}
+
+as follows:
+
+\input{14_render_ivy_in_angular/code/14_3_15.tex}
+
+Two important types are also defined in r3\_transform.ts to describe what a
+\texttt{Transformer}
+and a
+\texttt{TransformerFactory}
+are:
+
+\input{14_render_ivy_in_angular/code/14_3_16.tex}
+
+The
+\texttt{PartialModuleMetadataTransformer}
+function is defined in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/transformers/r3_metadata_transform.ts}
+        {<ANGULAR-MASTER>/packages/compiler-cli/src/transformers/r3\_metadata\_transform.ts}
+\end{itemize}
+
+as:
+
+\input{14_render_ivy_in_angular/code/14_3_17.tex}
+
+Now we are ready go back to Compiler-CLI’s
+\url{program.ts}
+file to look at:
+
+\input{14_render_ivy_in_angular/code/14_3_18.tex}
+
+This takes a range of input parameters (note
+\texttt{emitFlags}
+1
+and
+\texttt{emitCallback}
+2
+) and
+then returns an instance of
+\texttt{ts.EmitResult}
+3
+. The
+\texttt{emitFlags}
+says what needs to be
+emitted – if nothing, then we return immediately:
+
+\input{14_render_ivy_in_angular/code/14_3_19.tex}
+
+The partial modules are processed with this important call to
+\texttt{emitAllPartialModules}
+in Angular’s Compiler package (we will examine this in detail
+shortly):
+
+\input{14_render_ivy_in_angular/code/14_3_20.tex}
+
+The
+\texttt{this.analyzedModules}
+getter is defined as:
+
+\input{14_render_ivy_in_angular/code/14_3_21.tex}
+
+Note the
+\texttt{!}
+at the end of the return
+1
+: this is the TypeScript non-null assertion
+operator, a new language feature explained as:
+
+\emph{“A new ! post-fix expression operator may be used to assert that its operand}
+\emph{is non-null and non-undefined in contexts where the type checker is unable}
+\emph{to conclude that fact. Specifically, the operation x! produces a value of the}
+\emph{type of x with null and undefined excluded.” (}
+\emph{TypeScript release notes}
+\emph{)}
+
+The
+\texttt{\_analyzedModules}
+field is initialized earlier as:
+
+\input{14_render_ivy_in_angular/code/14_3_22.tex}
+
+Returning to our coverage of
+\texttt{\_emitRender3}
+– after the call to
+\texttt{this.compiler.emitAllPartialModules}
+to emit the modules, the
+\texttt{writeTSFile}
+and
+\texttt{emitOnlyDtsFiles}
+consts are set up:
+
+\input{14_render_ivy_in_angular/code/14_3_23.tex}
+
+Then the custom transformers are configured (note the partial modules parameter):
+
+\input{14_render_ivy_in_angular/code/14_3_24.tex}
+
+Finally the
+\texttt{emitResult}
+is set up like so (note the
+\texttt{customTransformers}
+in there) and
+then returned:
+
+\input{14_render_ivy_in_angular/code/14_3_25.tex}
+
+We should briefly mention differences between
+\texttt{\_emitRender3}
+and
+\texttt{\_emitRender2}
+, also
+in
+\url{program.ts}
+. The latter is a much larger function compared to
+\texttt{\_emitRender3:}
+
+\input{14_render_ivy_in_angular/code/14_3_26.tex}
+
+It also used a different helper function,
+\texttt{generateFilesForEmit}
+, to make a different
+call into Angular’s Compiler package. So importantly we have two separate call paths
+into the Angular Compiler package depending on which renderer we are using:
+
+\input{14_render_ivy_in_angular/code/14_3_27.tex}
+
+The ivy-ngcc tool called here is the Angular Compatibility Compiler from Complier-CLI
+which is described here:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/tree/master/packages/compiler-cli/src/ngcc}
+        {<ANGULAR-MASTER>/packages/compiler-cli/src/ngcc}
+\end{itemize}
+
+as follows:
+
+\emph{This compiler will convert node\_modules compiled with ngc, into}
+\emph{node\_modules which appear to have been compiled with ngtsc. This}
+\emph{conversion will allow such "legacy" packages to be used by the Ivy}
+\emph{rendering engine.}
+
+The is a mention of ngcc here:
+
+\begin{itemize}
+  \item \url{https://next.angular.io/guide/ivy#ngcc}
+\end{itemize}
+
+When exploring Compiler-CLI soon, we will look at ngcc.

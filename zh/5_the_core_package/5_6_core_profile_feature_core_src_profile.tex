@@ -1,0 +1,50 @@
+\section{Core/Profile Feature (core/src/profile)}
+
+The profile directory has these files:
+
+\begin{itemize}
+  \item profile.ts
+  \item wtf\_impl.ts
+\end{itemize}
+
+WTF is the Web Tracing Framework:
+
+\begin{itemize}
+  \item \url{http://google.github.io/tracing-framework/}
+\end{itemize}
+
+\emph{“The Web Tracing Framework is a collection of libraries, tools, and scripts}
+\emph{aimed at web developers trying to write large, performance-sensitive}
+\emph{Javascript applications. It's designed to be used in conjunction with the}
+\emph{built-in development tools of browsers but goes far beyond what they}
+\emph{usually support at the cost of some user setup time.”}
+\emph{from:}
+\emph{http://google.github.io/tracing-framework/overview.html}
+
+Its github project is here:
+
+\begin{itemize}
+  \item \url{https://github.com/google/tracing-framework}
+\end{itemize}
+
+wtf\_impl.ts define the following interfaces:
+
+\input{5_the_core_package/code/5_6_0.tex}
+
+It maintains two variables:
+
+\input{5_the_core_package/code/5_6_1.tex}
+
+It defines some functions to work with those variables:
+
+\input{5_the_core_package/code/5_6_2.tex}
+
+Finally it has a
+\texttt{detectWtf}
+function:
+
+\input{5_the_core_package/code/5_6_3.tex}
+
+The profile.ts file exports WTF-related variables:
+
+\input{5_the_core_package/code/5_6_4.tex}

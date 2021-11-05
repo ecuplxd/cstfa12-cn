@@ -1,0 +1,122 @@
+\subsection{platform-webworker/src}
+
+In addition to the export files, this directory contains the following files:
+
+\begin{itemize}
+  \item worker\_app.ts
+  \item worker\_render.ts
+\end{itemize}
+
+worker\_app.ts supplies functionality for an application that runs in a worker and
+worker\_render.ts supplies functionality for the the main UI thread. They communicate
+via a message broker layered above a simple message bus.
+
+A web worker cannot use the DOM directly in a web browser. Therefore Angular’s
+Platform-WebWorker creates a message bus between the web worker and the main UI
+thread and rendering (and event processing) takes place over this message bus.
+
+The
+\texttt{platformWorkerApp}
+const creates a platform factory for a worker app:
+
+\input{11_the_platform_webworker_package/code/11_3_0_0.tex}
+
+Two important helper functions are supplied.
+\texttt{createMessageBus}
+creates the message
+bus that will supply communications between the main UI thread and the web worker:
+
+\input{11_the_platform_webworker_package/code/11_3_0_1.tex}
+
+\texttt{setupWebWorker}
+makes the web worker’s DOM adapter implementation as the current
+DOM adapter. The DOM renderer is used both for apps running in a normal browser UI
+thread and apps running in web workers. What is different is the DOM adapter – for a
+browser UI thread, the DOM adapter just maps to the underlying browser DOM API.
+There is no underlying DOM API in a web worker. So for an app running in a web
+worker, the worker DOM adapter needs to forward all DOM actions across the
+message bus to the browser’s main UI thread.
+
+\input{11_the_platform_webworker_package/code/11_3_0_2.tex}
+
+Finally, the
+\texttt{NgModule}
+is defined:
+
+\input{11_the_platform_webworker_package/code/11_3_0_3.tex}
+
+The worker\_render.ts file has implementations for the worker UI. This runs in the
+main UI thread and uses the
+\texttt{BrowserDomAdapter}
+, which writes to the underlying DOM
+API of the browser.
+\texttt{platformWorkerUi}
+represents a platform factory:
+
+\input{11_the_platform_webworker_package/code/11_3_0_4.tex}
+
+The providers used are as followed:
+
+\input{11_the_platform_webworker_package/code/11_3_0_5.tex}
+
+Note the provider configuration for
+\texttt{WORKER\_UI\_STARTABLE\_MESSAGING\_SERVICE}
+is set
+to multi - thus allowing multiple messaging services to be started. Also note that
+\texttt{initWebWorkerRenderPlatform}
+is registered as a
+\texttt{PLATFORM\_INITIALIZER}
+, so it is
+going to be called when the platform launches.
+
+\texttt{WebWorkerInstance}
+is a simple injectable class representing the web worker and its
+message bus (note the
+\texttt{init}
+method just initializes the two fields):
+
+\input{11_the_platform_webworker_package/code/11_3_0_6.tex}
+
+Now let’s look at
+\texttt{initWebWorkerRenderPlatform}
+:
+
+\input{11_the_platform_webworker_package/code/11_3_0_7.tex}
+
+It returns a function that makes the browser Dom adatper the current adapter
+1
+; then
+gets the worker script from di
+2
+; then calls
+\texttt{spawnWebWorker}
+3
+; and finally calls
+\texttt{initializeGenericWorkerRenderer}
+4
+. The
+\texttt{spawnWebWorker}
+function is defined as:
+
+\input{11_the_platform_webworker_package/code/11_3_0_8.tex}
+
+It first creates a new web worker
+1
+; then it create the message bus with its sinka dn
+source
+2
+and finally it calls
+\texttt{WebWorkerInstance.init}
+3
+which we have already seen.
+The
+\texttt{initializeGenericWorkerRenderer}
+function is defined as:
+
+\input{11_the_platform_webworker_package/code/11_3_0_9.tex}
+
+It first asks the dependency injector for a message bus and a zone and attached the
+bus to the zone. Then it also asks the dependency injector for a list of
+\texttt{WORKER\_UI\_STARTABLE\_MESSAGING\_SERVICE}
+(remember we noted it was configured as
+a multi provider), and for each service, starts it.

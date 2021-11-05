@@ -1,0 +1,29 @@
+\subsection{Source Tree}
+
+This directory contains this file:
+
+\begin{itemize}
+  \item ng\_zone.ts
+\end{itemize}
+
+The small Zone.js library (
+\url{https://github.com/angular/zone.js}
+) provides a way of
+managing multiple execution contexts when using asynchronous tasks. Angular has a
+dependency on it, and we see its use here in core/src/zone.
+
+The ng\_zone.ts file in Angular Core defines the
+\texttt{NgZone}
+class, which provides an
+Angular wrapper for zones. It is defined as:
+
+\input{5_the_core_package/code/5_10_0_0.tex}
+
+Its constructor implementation is worth studying. First note Angular requires Zone.js
+and throws an error if it is not found. If
+\texttt{wtfZoneSpec}
+or
+\texttt{longStackTraceZoneSpec}
+zones are required, it forks as needed:
+
+\input{5_the_core_package/code/5_10_0_1.tex}

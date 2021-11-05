@@ -1,0 +1,36 @@
+\subsection{dist}
+
+This single directory contains all the output from the build tasks. The zone.d.ts file is
+the ambient declarations, which TypeScript application developers will want to use.
+This is surprisingly well documented, so a new application developer getting up to
+speed with zone.js should give it a careful read. A number of implementations of Zone
+are provided, such as for the browser, for the server and for Jasmine testing:
+
+\begin{itemize}
+  \item zone.js / zone.min.js
+  \item zone-node.js
+  \item jasmine-patch.js / jasmine-patch.min.js
+\end{itemize}
+
+Minified versions are supplied for the browser and jasmine builds, but not node. If you
+are using Angular in the web browser, then zone.js (or zone.min.js) is all you need
+Assuming you have created your Angular project using Angular CLI, it will
+automatically have set everything up correctly (no manual steps are needed to use
+Zone.js).
+
+The remaining files in the dist directory are builds of different zone specs, which for
+specialist reasons you may wish to include – for example:
+
+\begin{itemize}
+  \item async-test.js
+  \item fake-async-test.js
+  \item long-stack-trace-zone.js / long-stack-trace-zone.min.js
+  \item proxy.js / proxy.min.js
+  \item task-tracking.js / task-tracking.min.js
+  \item wtf.js / wtf.min.js
+\end{itemize}
+
+We will look in detail at what each of these does later when examining the
+\href{https://github.com/angular/zone.js/tree/master/lib/zone-spec}
+{<ZONE-MASTER>/lib/zone-spec}
+source directory.

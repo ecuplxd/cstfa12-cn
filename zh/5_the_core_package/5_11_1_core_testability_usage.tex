@@ -1,0 +1,47 @@
+\subsection{Core/Testability Usage}
+
+We see use of
+\texttt{TestabilityRegistry}
+in
+\url{core/src/platform_core_providers.ts}
+by
+\texttt{\_CORE\_PLATFORM\_PROVIDERS}
+:
+
+\input{5_the_core_package/code/5_11_1_0.tex}
+
+The bootstrap method in
+\texttt{ApplicationRef}
+looks for configured
+\texttt{Testability}
+elements
+via dependency injection
+1
+and if found
+2
+, then registers them
+3
+with the
+\texttt{TestabilityRegistry}
+(which itself is also accessed via dependency injection):
+
+\input{5_the_core_package/code/5_11_1_1.tex}
+
+Note there is a class
+\texttt{BrowserGetTestability}
+in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser/src/browser/testability.ts}
+        {<ANGULAR-MASTER>/packages/platform-browser/src/browser/testability.ts}
+\end{itemize}
+
+that implements
+\texttt{GetTestability}
+with a static
+\texttt{init()}
+method that calls
+\texttt{setTestabilityGetter()}
+:
+
+\input{5_the_core_package/code/5_11_1_2.tex}

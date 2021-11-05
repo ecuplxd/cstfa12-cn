@@ -1,0 +1,21 @@
+\section{Core/Linker Feature (core/src/linker)}
+
+The Core/Linker feature is used to define an API for the template compiler and is
+instrumental in how compiled components work together.
+
+When developers new to Angular hear about the linker, their mind immediately races
+to the conclusion that it is something like the C linker or linkers for other languages,
+but that is far from the case with Angular’s linker. Remember Angular is dealing with
+template syntax (a quasi-HTML representation of a page which includes embedded
+TypeScript logic) and this needs to work with component code written in TypeScript.
+So conceptually the angular linker is bringing different parts of your application
+together (so using the term “linker” is technically correct), but in practice how it works
+is quite different to what happens with an ANSI C linker.
+
+\input{5_the_core_package/5_12_0_core_linker_public_api.tex}
+\input{5_the_core_package/5_12_1_core_linker_usage.tex}
+\input{5_the_core_package/5_12_2_core_linker_implementation.tex}
+
+\input{5_the_core_package/5_12_0_core_linker_public_api.tex}
+\input{5_the_core_package/5_12_1_core_linker_usage.tex}
+\input{5_the_core_package/5_12_2_core_linker_implementation.tex}

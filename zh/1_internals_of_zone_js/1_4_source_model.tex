@@ -1,0 +1,56 @@
+\section{Source Model}
+
+The main source for Zone.js is in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/zone.js/tree/master/lib/zone-spec}
+        {<ZONE-MASTER>/lib}
+\end{itemize}
+
+It contains a number of sub-directories:
+
+\begin{itemize}
+  \item browser
+  \item closure
+  \item common
+  \item extra
+  \item jasmine
+  \item mix (a mix of browser and node)
+  \item mocha
+  \item node
+  \item rxjs
+  \item testing
+  \item zone-spec
+\end{itemize}
+
+along with one source file:
+
+\begin{itemize}
+  \item zone.ts
+\end{itemize}
+
+It is best to think of them arranged as follows:
+
+To enable Zone.js to function, any JavaScript APIs related to asynchronous code
+execution must be patched – a Zone.js specific implementation of the API is needed.
+So for calls such as
+\texttt{setTimeout}
+or
+\texttt{addEventListener}
+and similar, Zone.js needs its
+own handling, so that when timeouts and events and promises get triggered, zone
+code runs first.
+
+There are a number of environments supported by Zone.js that need monkey
+patching, such as the browser, the server (node) and Jasmine and each of these has a
+sub-direcory with patching code. The common patching code reside in the common
+directory. The core implementation of the Zone.js API (excluding
+\texttt{ZoneSpec}
+) is in
+zone.ts file. The additional directory is for zone specs, which are the configurable logic
+one can add to a zone to change its behavior. There are multiple implementations of
+these, and applications could create their own.
+
+\input{1_internals_of_zone_js/1_4_0_zone_ts.tex}
+
+\input{1_internals_of_zone_js/1_4_0_zone_ts.tex}

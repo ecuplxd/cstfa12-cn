@@ -1,0 +1,255 @@
+\subsection{Platform-browser/src/dom}
+
+We will sub-divide the code in the DOM sub-directory into four categories –
+adapter/renderer, animation, debug and events.
+
+We have seen how the Core package defines a rendering API and all other parts of the
+Angular framework and applicaton code uses it to have content rendered. But Core
+has no implementation. Now it is time to see an implementation, based on the DOM.
+That is the role of these files:
+
+\begin{itemize}
+  \item shared\_styles\_host.ts
+  \item util.ts
+  \item dom\_adapter.ts
+  \item dom\_renderer.ts
+\end{itemize}
+
+shared\_styles\_host.ts manages a set of styles.
+
+Utils.ts contains simple string helpers:
+
+\input{8_the_platform_browser_package/code/8_3_1_0.tex}
+
+The two main files involved in delivering the DomRenderer are dom\_adapter.ts and
+dom\_renderer.ts. A DomAdapter is a class that represents an API very close to the
+HTML DOM that every web developer is familiar with. A DOM renderer is an
+implementation of Core’s Rendering API in terms of a DOM adapter.
+
+The benefit that a DomAdapter brings (compared to hard-coding calls to the actual
+DOM inside a browser), is that multiple implementations of a DomAdapter can be
+supplied, including in scenarios where the real DOM is not available (e.g. server-side,
+or inside webworkers).
+
+The following diagram shows how Core’s renderer API, renderer implementations and
+DOM adapters are related. For many applications, the entire application will run in the
+main browser UI thread and so
+\texttt{BrowserDomAdapter}
+will be used alongside
+\texttt{DefaultDomRenderer2}
+.
+
+{ almost all methods use }
+
+For server applications with Platform-Server, a specialist DOM adapter called
+DominoAdapter will be used, and this results in content being written to an HTML file.
+DominoAdapter is implemented in the Platform-Server package here:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/platform-server/src/domino_adapter.ts}
+        {<ANGULAR-MASTER>/packages/platform-server/src/domino\_adapter.ts}
+\end{itemize}
+
+It is based in this project:
+
+\begin{itemize}
+  \item \url{https://github.com/fgnass/domino}
+\end{itemize}
+
+We’ll explore this further when examining the Platform-Server package.
+
+For more advanced browser applications that will use web workers, things are a little
+more complicated and involves these main classes:
+\texttt{WorkerRenderer2}
+,
+\texttt{MessageBasedRender2}
+and
+\texttt{WorkerDomAdapter}
+.
+\texttt{WorkerDomAdapter}
+is used merely for
+logging and does not place a significant part in rendering from workers. A message
+broker based on a message bus exchanges messages between the web worker and
+main browser UI thread.
+\texttt{WorkerRenderer2}
+runs in the web worker and forward all
+rendering calls over the message broker to the main browser UI thread, where an
+instance of
+\texttt{MessageBasedRender2}
+(which, despite its name, does not implement
+Core’s renderer API) receives them and calls the regular
+\texttt{DefaultDomRenderer2}
+. We
+will shortly examine in detail how rendering works with web workers. We’ll explore
+rendering and web workers in the later chapter on Platform-WebWorker.
+
+When trying to figure out how the DOM adaptor works, the best place to start is:
+
+\begin{itemize}
+  \item \href{fix: href loss url}
+        {fix: href loss url}
+\end{itemize}
+
+The dom\_adapter.ts class defines the abstract
+\texttt{DomAdapter}
+class, the
+\texttt{\_DOM}
+variable
+and two functions,
+\texttt{getDOM()}
+and
+\texttt{setDOM()}
+to get and set it.
+
+\input{8_the_platform_browser_package/code/8_3_1_1.tex}
+
+The
+\texttt{DomAdapter}
+class is a very long list of methods similar to what you would find a
+normal DOM API (pay attention to the security warning!)– here is just a sampling:
+
+\input{8_the_platform_browser_package/code/8_3_1_2.tex}
+
+The dom\_renderer.ts file defines the DOM renderer that relies on
+\texttt{getDOM()}
+to supply
+a
+\texttt{DomAdapter}
+. The main class it supplies is
+\texttt{DomRendererFactory2}
+which implements
+\texttt{RendererFactory2}
+. We saw earlier how
+\texttt{DomRendererFactory2}
+is used in the
+\texttt{BROWSER\_MODULE\_PROVIDERS}
+declaration, as used by
+\texttt{NgModule}
+:
+
+\input{8_the_platform_browser_package/code/8_3_1_3.tex}
+
+The
+\texttt{DomRendererFactory2}
+class manages a map of strings to
+\texttt{Renderer2}
+instances.
+
+\input{8_the_platform_browser_package/code/8_3_1_4.tex}
+
+Its
+\texttt{createRenderer()}
+method performs a switch on the encapsulation type and
+returns an appropriate
+\texttt{Renderer2}
+:
+
+\input{8_the_platform_browser_package/code/8_3_1_5.tex}
+
+\texttt{DefaultDomRenderer2}
+is where renderering actually occurs. It implements
+\texttt{Renderer2}
+. As an example, let’s look at its
+\texttt{createElement()}
+method:
+
+\input{8_the_platform_browser_package/code/8_3_1_6.tex}
+
+DOM debugging is supported via:
+
+\begin{itemize}
+  \item src/dom/debug/by.ts
+  \item src/dom/debug/ng\_probe.ts
+\end{itemize}
+
+The
+\texttt{By}
+class may be used with Core’s
+\texttt{DebugElement}
+to supply predicates for its query
+functions. It supplies three predicates – all, css and directive:
+
+\input{8_the_platform_browser_package/code/8_3_1_7.tex}
+
+DOM events are supported via:
+
+\begin{itemize}
+  \item src/dom/events/dom\_events.ts
+  \item src/dom/events/event\_manager.ts
+  \item src/dom/events/hammer\_common.ts
+  \item src/dom/events/hammer\_gestures.ts
+  \item src/dom/events/key\_events.ts
+\end{itemize}
+
+event\_manager.ts provides two classes –
+\texttt{EventManager}
+and
+\texttt{EventManagerPlugin}
+.
+
+\texttt{EventManager}
+manages an array of
+\texttt{EventManagerPlugin}
+s, which is defined as:
+
+\input{8_the_platform_browser_package/code/8_3_1_8.tex}
+
+It provides two methods to add event listeners to targets represented either by an
+\texttt{HTMLElement}
+or a string.
+\texttt{EventManager}
+itself is defined as an injectable class:
+
+\input{8_the_platform_browser_package/code/8_3_1_9.tex}
+
+Its constructor is defined in such a way as to allow dependency injection to inject an
+array of event manager plugins. We note this list is reversed in the constructor, which
+will impact the ordering of finding a plugin for an event type.
+
+The other files in src/dom/events supply event manager plugins.
+
+Note the comment in
+\texttt{DomEventsPlugin}
+:
+
+\input{8_the_platform_browser_package/code/8_3_1_10.tex}
+
+Touch events via the hammer project are supported via the hammer\_gesture.ts file.
+The list of supported touch events are:
+
+\input{8_the_platform_browser_package/code/8_3_1_11.tex}
+
+This is used by
+\texttt{HammerGesturesPlugin}
+:
+
+\input{8_the_platform_browser_package/code/8_3_1_12.tex}
+
+Its
+\texttt{addEventListener}
+method is implemented as:
+
+\input{8_the_platform_browser_package/code/8_3_1_13.tex}
+
+Note the use of
+\texttt{zone.runOutsideAngular()}
+1
+. Also note it does not implement
+\texttt{addGlobalEventListener}
+. Its constructor expects a
+\texttt{HAMMER\_GESTURE\_CONFIG}
+from
+dependency injection. The Hammer package is used in the injectable
+\texttt{HammerGestureConfig}
+class:
+
+\input{8_the_platform_browser_package/code/8_3_1_14.tex}
+
+These event manager plugins need to be set in the
+\texttt{NgModule}
+configuration. We see
+how this is done in
+\texttt{BROWSER\_MODULE\_PROVIDERS}
+:
+
+\input{8_the_platform_browser_package/code/8_3_1_15.tex}

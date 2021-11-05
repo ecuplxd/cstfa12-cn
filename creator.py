@@ -12,11 +12,13 @@ class Creator:
             f.write(sep.join(content))
 
     @staticmethod
-    def create_dir(name):
+    def create_dir(name, recreate=True):
         if os.path.exists(name):
-            shutil.rmtree(name)
-
-        os.mkdir(name)
+            if recreate:
+                shutil.rmtree(name)
+                os.mkdir(name)
+        else:
+            os.mkdir(name)
 
     @staticmethod
     def has_counter(name: str) -> bool:

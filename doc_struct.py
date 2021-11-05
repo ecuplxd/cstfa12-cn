@@ -67,22 +67,28 @@ class DocStruct:
 
         return root.file_name
 
-    def gen_code(self):
+    def gen_code_file(self):
         for i, code in enumerate(self.codes):
             counter = self.get_code_counter(i)
             output = os.path.join(self.code_path, counter + '.tex')
 
             Creator.write_tex_file(output, code, '')
 
-    def gen(self):
+    def gen(self, target='en'):
         for child in self.childs:
             self.content.append(Transform.to_input(self.root, child))
 
         if len(self.childs) != 0:
             self.content.append(Transform.to_empty_line())
 
-        output = os.path.join(self.root, self.file_name + '.tex')
+        root = self.root
+
+        if target != 'en':
+            root = os.path.join('../' + target + '/' + root)
+
+        output = os.path.join(root, self.file_name + '.tex')
 
         Creator.write_tex_file(output, self.content)
 
-        self.gen_code()
+        if target == 'en':
+            self.gen_code_file()

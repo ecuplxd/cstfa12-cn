@@ -11,6 +11,7 @@ from toc import parse_toc
 
 def write_result(structs: dict[str, DocStruct]):
     root = 'output'
+    zh_root = '../zh'
     chapters: list[str] = []
 
     Creator.create_dir(root)
@@ -18,12 +19,17 @@ def write_result(structs: dict[str, DocStruct]):
 
     for struct in structs.values():
         if struct.title.is_chapter():
+            # 输出英文目录
             Creator.create_dir(struct.file_name)
             Creator.create_dir(struct.code_path)
+            # 输出中文目录
+            Creator.create_dir(os.path.join(zh_root, struct.file_name), False)
 
             chapters.append(struct.file_name)
 
+        # 输出各章节
         struct.gen()
+        struct.gen('zh')
 
     Creator.write_main_text(chapters)
 

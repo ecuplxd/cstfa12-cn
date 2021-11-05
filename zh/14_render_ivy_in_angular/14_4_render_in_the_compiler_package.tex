@@ -1,0 +1,317 @@
+\section{Render3 in The Compiler Package}
+
+Inside the Angular Compiler package:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/tree/master/packages/compiler/}
+        {<ANGULAR\_MASTER>/packages/compiler}
+\end{itemize}
+
+the Render3 feature resides mainly in four files. They are:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/aot/partial_module.ts}
+        {<ANGULAR-MASTER>/packages/compiler/src/aot/partial\_module.ts}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/aot/compiler.ts}
+        {<ANGULAR-MASTER>/packages/compiler/src/aot/compiler.ts}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_identifiers.ts}
+        {<ANGULAR-MASTER>/packages/compiler/src/render3/r3\_identifiers.ts}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+        {<ANGULAR-MASTER>/packages/compiler/src/render3/r3\_view\_compiler.ts}
+\end{itemize}
+
+Let’s start with partial\_module.ts. It has these few lines, to describe what a partial
+module type is:
+
+\input{14_render_ivy_in_angular/code/14_4_0.tex}
+
+We have seen from our coverage of Compiler-CLI that it makes a call to
+\texttt{emitAllPartialModules}
+inside the Compiler package. This is to be found in the
+\url{src/aot/compiler.ts}
+file and so is exported by this line from
+\url{src/compiler.ts}
+(yes: same
+files names, different directories):
+
+\input{14_render_ivy_in_angular/code/14_4_1.tex}
+
+it is defined as:
+
+\input{14_render_ivy_in_angular/code/14_4_2.tex}
+
+It calls the internal
+\texttt{\_emitPartialModule}
+method:
+
+\input{14_render_ivy_in_angular/code/14_4_3.tex}
+
+After initializing context information, it loops
+1
+over the directives array and if a
+component is found
+2
+, calls
+\texttt{compileIvyComponent}
+2
+, otherwise calls
+\texttt{compileIvyDirective}
+3
+:
+
+\input{14_render_ivy_in_angular/code/14_4_4.tex}
+
+We note the import at the top of the file:
+
+\input{14_render_ivy_in_angular/code/14_4_5.tex}
+
+So in
+\url{src/render3/r3_view_compiler.ts}
+let’s track
+\texttt{compileComponent}
+and
+\texttt{compileDirective}
+.
+
+The
+\url{render3sub-directory}
+in the Compiler package’s src directory is new for Render3.
+It contains just two files, r3\_view\_compiler and
+\url{r3_identifiers.ts}
+. r3\_identifiers.ts is
+imported into r3\_view\_compiler.ts with this line:
+
+\input{14_render_ivy_in_angular/code/14_4_6.tex}
+
+So anywhere in r3\_view\_compiler.ts we see “R3” being used for naming (over 50
+times), it means something in r3\_identifiers.ts is being used. r3\_identifiers.ts  is not
+referenced from anywhere else in the Compiler package.
+
+r3\_identifier.ts contains a long list of external reference identifiers for the various
+instructions. Here is a sampling (note that “o” is imported from output\_ast.ts):
+
+\input{14_render_ivy_in_angular/code/14_4_7.tex}
+
+The
+\texttt{compileDirective}
+function is implemented in
+\url{src/render3/r3_view_compiler.ts}
+as:
+
+\input{14_render_ivy_in_angular/code/14_4_8.tex}
+
+It first
+1
+creates a template factory and then pushes it on the definition map values
+array
+2
+. Then it uses the output context
+3
+to push a new
+\texttt{Class}
+statement
+4
+onto the
+array of statements. We note the
+\texttt{initializer}
+is set to
+\texttt{R3.defineDirective}
+5
+.
+
+The
+\texttt{compileComponent}
+function (also in
+\url{r3_view_compiler.ts}
+) is a little bit more
+complex. Let’s look at it in stages. Its signature is:
+
+\input{14_render_ivy_in_angular/code/14_4_9.tex}
+
+Then it sets up a template function expression on the definition map values:
+
+\input{14_render_ivy_in_angular/code/14_4_10.tex}
+
+We note the call to the
+\texttt{createFactory}
+function
+1
+, which we need to follow up in a bit.
+Then it sets up a template definition builder and again adds it to the definition map
+values array:
+
+\input{14_render_ivy_in_angular/code/14_4_11.tex}
+
+We note the use of the
+\texttt{TemplateDefinitionBuilder}
+class
+1
+, and the call to its
+\texttt{buildTemplateFunction}
+method
+2
+, both of which we will examine shortly. Then it
+sets up the class name (and uses the ! non-null assertion operator to ensure it is not
+null):
+
+\input{14_render_ivy_in_angular/code/14_4_12.tex}
+
+Finally it adds the new class statement:
+
+\input{14_render_ivy_in_angular/code/14_4_13.tex}
+
+We note the
+\texttt{initializer}
+is set to
+\texttt{R3.defineComponent}
+1
+.
+
+The
+\texttt{createFactory}
+function is defined as:
+
+\input{14_render_ivy_in_angular/code/14_4_14.tex}
+
+It first resolves three reflectors:
+
+\input{14_render_ivy_in_angular/code/14_4_15.tex}
+
+Then it loops through the
+\texttt{type.diDeps}
+dependencies, and pushes a relevant import
+expression, based on the token ref:
+
+\input{14_render_ivy_in_angular/code/14_4_16.tex}
+
+The
+\texttt{TemplateDefinitionBuilder}
+class (also located in
+\url{r3_view_compiler.ts}
+) is large
+(350 lines+) and can be considered the heart of Render3 compilation. It implements
+the
+\texttt{TemplateAstVisitor}
+interface. This interface is defined in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/template_parser/template_ast.ts}
+        {<ANGULAR-MASTER>/packages/compiler/src/template\_parser/template\_ast.ts}
+\end{itemize}
+
+as follows:
+
+\input{14_render_ivy_in_angular/code/14_4_17.tex}
+
+Back in
+\url{r3_view_compiler.ts}
+, the definition of
+\texttt{TemplateDefinitionBuilder}
+begins
+with:
+
+\input{14_render_ivy_in_angular/code/14_4_18.tex}
+
+We saw the call to
+\texttt{buildTemplateFunction}
+early in
+\texttt{compileComponent}
+– its has this
+signature:
+
+\input{14_render_ivy_in_angular/code/14_4_19.tex}
+
+It returns an instance of
+\texttt{o.FunctionExpr}
+. We note the import at the top of the file:
+
+\input{14_render_ivy_in_angular/code/14_4_20.tex}
+
+So
+\texttt{o.FunctionExpr}
+means the
+\texttt{FunctionExpr}
+class in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/output/output_ast.ts}
+        {<ANGULAR-MASTER>/packages/compiler/src/output/output\_ast.ts}
+\end{itemize}
+
+This class is defined as follows:
+
+\input{14_render_ivy_in_angular/code/14_4_21.tex}
+
+While we are looking at output\_ast.ts, we see this
+\texttt{fn}
+function:
+
+\input{14_render_ivy_in_angular/code/14_4_22.tex}
+
+It just makes a
+\texttt{FunctionExpr}
+from the supplied parameters.
+
+An interesting function in
+\url{src/template_parser/template_ast.ts}
+is
+\texttt{templateVisitAll}
+:
+
+\input{14_render_ivy_in_angular/code/14_4_23.tex}
+
+Now let’s return to the critically important
+\texttt{buildTemplateFunction}
+method of
+\texttt{TemplateDefinitionBuilder}
+in
+\url{r3_view_compiler.ts}
+– a summary of its definition is:
+
+\input{14_render_ivy_in_angular/code/14_4_24.tex}
+
+We see it first visits the template tree
+1
+. Then it returns the result of a call
+2
+to the
+\texttt{fn}
+function we just looked at, passing in three entries –
+3
+an array of
+\texttt{FnParams}
+,
+4
+an
+array of statements and
+5
+\texttt{o.INFERRED\_TYPE}
+. What is happening here is that each
+node in the template tree is being visited, and where appropriate, statements are
+being emitted to the output statement array with the correct Render3 instruction. The
+instruction function is used to add a statement like so:
+
+\input{14_render_ivy_in_angular/code/14_4_25.tex}
+
+For example, when a text node is visited, the Render3 text instruction (
+\texttt{R3.text}
+)
+should be emitted. We see this happening with the
+\texttt{visitText}
+method:
+
+\input{14_render_ivy_in_angular/code/14_4_26.tex}
+
+There is an equivalent method for elements,
+\texttt{visitElement}
+, which is somewhat more
+complex. After some setup code, it has this:
+
+\input{14_render_ivy_in_angular/code/14_4_27.tex}
+
+There is also a
+\texttt{visitEmbeddedTemplate}
+method, which emits a number of Render3
+instructions:
+
+\input{14_render_ivy_in_angular/code/14_4_28.tex}

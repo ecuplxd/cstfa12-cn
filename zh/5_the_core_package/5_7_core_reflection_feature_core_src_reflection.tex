@@ -1,0 +1,34 @@
+\section{Core Reflection Feature (core/src/reflection)}
+
+The reflection directory has these files:
+
+\begin{itemize}
+  \item platform\_reflection\_capabilities.ts
+  \item reflection\_capabilities.ts
+  \item reflection.ts
+  \item reflector.ts
+  \item types.ts
+\end{itemize}
+
+The types.ts file define these:
+
+\input{5_the_core_package/code/5_7_0.tex}
+
+The reflection.ts file has these lines:
+
+\input{5_the_core_package/code/5_7_1.tex}
+
+The platform\_reflection\_capabilities.ts file defines this interface:
+
+\input{5_the_core_package/code/5_7_2.tex}
+
+The reflection\_capabilities.ts provides an implementation of that interface called
+\texttt{ReflectionCapabilities}
+. We see the main part of reflection is in the reflector.ts file,
+which defines the
+\texttt{Reflector}
+class – its methods mostly forward calls to the supplied
+\texttt{ReflectionCapabilities}
+instance:
+
+\input{5_the_core_package/code/5_7_3.tex}

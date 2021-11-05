@@ -1,0 +1,28 @@
+\section{Router API}
+
+The exported API of the Angular Router package can be represented as:
+
+The Angular Router source tree is at:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/tree/master/packages/router}
+        {<ANGULAR-MASTER>/packages/router}
+\end{itemize}
+
+Its root directory contains index.ts, which just exports the contents of public\_api.ts,
+which in turn exports the contents of .src/index.ts.
+
+This lists the exports and gives an initial impression of the size of the router package:
+
+\input{13_the_router_package/code/13_1_0.tex}
+
+It also has the line:
+
+\input{13_the_router_package/code/13_1_1.tex}
+
+As already discussed, such private exports are intended for other packages within the
+Angular Framework itself, and not to be directly used by Angular applications. The
+private\_export.ts file has these exports (note names are prepended with ’ ’);
+ɵ
+
+\input{13_the_router_package/code/13_1_2.tex}

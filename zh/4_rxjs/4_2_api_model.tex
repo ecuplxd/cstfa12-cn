@@ -1,0 +1,75 @@
+\section{API Model}
+
+In the links below, we assume <RXJS> refers to the root directory of you rRxJS
+source installation. The links below actually link to the relevant document on github.
+
+The main exports are in:
+
+\begin{itemize}
+  \item \href{https://github.com/ReactiveX/rxjs/blob/master/src/index.ts}
+        {<RXJS>/src/index.ts}
+\end{itemize}
+
+with a large range of operators in:
+
+\begin{itemize}
+  \item \href{https://github.com/ReactiveX/rxjs/blob/master/src/operators/index.ts}
+        {<RXJS>/src/operators/index.ts}
+\end{itemize}
+
+Application developers who wish to use RxJS will mostly import what they need from
+these two files. There are sub-directories inside src/internal and src/operators/internal
+and as the name suggests, external developers should not be directly importing (or in
+any way depending on) these, as they may (will) change from version to version.
+
+Developers with old code base that reply on older versions of RxJS should at some
+stage upgrade to RxJS 6 or later. But as an interim measure, a compatibility layer is
+available to help old code run against RxJS 6. The compat package is at:
+
+\begin{itemize}
+  \item \href{https://github.com/ReactiveX/rxjs/tree/master/compat}
+        {<RXJS>/compat}
+\end{itemize}
+
+If you have a large codebase it is not always convenient to immediately upgrade to
+RxJS 6, so a compat package can be very useful. You should consider use fo compat
+as a temporary measure. Over time you at first should and later must upgrade, as it is
+expected the compat package will disappear at some point in future. We do not
+discuss the compat package further here.
+
+What
+\href{https://github.com/ReactiveX/rxjs/blob/master/src/index.ts}
+{<RXJS>/src/index.ts}
+exports can be subdivided into the following categories:
+
+\begin{itemize}
+  \item Observables
+  \item Subjects (these are both observers and observables)
+  \item Schedulers
+  \item Subscription
+  \item Notification
+  \item Utils
+  \item Error Types
+  \item Static observable creation functions
+  \item Two constants (EMPTY and NEVER)
+  \item config
+\end{itemize}
+
+So where is observer exported? Hmm … There is also one
+\texttt{export *}
+:
+
+\input{4_rxjs/code/4_2_0.tex}
+
+and if we look at:
+
+\begin{itemize}
+  \item \href{https://github.com/ReactiveX/rxjs/blob/master/src/internal/types.ts}
+        {<RXJS>/src/types.ts}
+\end{itemize}
+
+we see
+\texttt{Observer}
+defined as an interface in there, along with definitions of operator
+interfaces, subscription interfaces, observable interfaces and a range of other
+observer interfaces – we will shortly explore them all.

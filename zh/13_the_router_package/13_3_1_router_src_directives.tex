@@ -1,0 +1,119 @@
+\subsection{router/src/directives}
+
+This directory has the following files:
+
+\begin{itemize}
+  \item router\_link.ts
+  \item router\_link\_active.ts
+  \item router\_outlet.ts
+\end{itemize}
+
+The router\_link.ts file contains the
+\texttt{RouterLink}
+directive:
+
+\input{13_the_router_package/code/13_3_1_0.tex}
+
+The router link commands are set via:
+
+\input{13_the_router_package/code/13_3_1_1.tex}
+
+When the link is clicked, the
+\texttt{onClick()}
+method is called:
+
+\input{13_the_router_package/code/13_3_1_2.tex}
+
+The urlTree getter uses
+\texttt{Router.createlUrlTree()}
+:
+
+\input{13_the_router_package/code/13_3_1_3.tex}
+
+The same file also contains the
+\texttt{RouterLinkWithHref}
+directive:
+
+\input{13_the_router_package/code/13_3_1_4.tex}
+
+This has a href:
+
+\input{13_the_router_package/code/13_3_1_5.tex}
+
+and manages the
+\texttt{urlTree}
+as a field and sets it from the constructor via a call to:
+
+\input{13_the_router_package/code/13_3_1_6.tex}
+
+The router\_link\_active.ts file contains the
+\texttt{RouterLinkActive}
+directive:
+
+\input{13_the_router_package/code/13_3_1_7.tex}
+
+This is used to add a CSS class to an element representing an active route. Its
+constructor is defiend as:
+
+\input{13_the_router_package/code/13_3_1_8.tex}
+
+Its
+\texttt{update}
+method uses the configured renderer to set the element class:
+
+\input{13_the_router_package/code/13_3_1_9.tex}
+
+The router\_outlet.ts file contains the
+\texttt{RouterOutlet}
+class:
+
+\input{13_the_router_package/code/13_3_1_10.tex}
+
+This is where application component whose lifecycle depends on the router live. We
+note the
+\texttt{ViewContainerRef}
+1
+and
+\texttt{ComponentFactoryResolver}
+2
+parameters to the
+constructor.
+
+\texttt{ngOnInit}
+will either call
+\texttt{attach}
+1
+or
+\texttt{activateWith}
+2
+, depending on whether there is
+an existing component:
+
+\input{13_the_router_package/code/13_3_1_11.tex}
+
+attach is defined as:
+
+\input{13_the_router_package/code/13_3_1_12.tex}
+
+When its activateWith method is called, the resolver will be asked to resolve a
+component factory for the component:
+
+\input{13_the_router_package/code/13_3_1_13.tex}
+
+The location field is of type
+\texttt{ViewContainerRef,}
+which we saw being set in the
+constructor.
+\texttt{ViewContainerRef}
+is defined in:
+
+\begin{itemize}
+  \item \href{https://github.com/angular/angular/blob/master/packages/core/src/linker/view_container_ref.ts}
+        {<ANGULAR-MASTER>/packages/core/src/linker/view\_container\_ref.ts}
+\end{itemize}
+
+\input{13_the_router_package/code/13_3_1_14.tex}
+
+So the component is appended as the last entry in the
+\texttt{ViewContainer}
+.

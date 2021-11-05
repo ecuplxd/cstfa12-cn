@@ -1,0 +1,41 @@
+\subsection{common/src/i18n}
+
+The src/i18n/localization.ts file provides localization functionality, mainly in the area of
+plurals. It defines the
+\texttt{NgLocalization}
+abstract class, the
+\texttt{NgLocaleLocalization}
+concrete class and the
+\texttt{getPluralCategory()}
+function.
+
+\input{6_the_common_package/code/6_3_1_0.tex}
+
+It declares a single abstract method,
+\texttt{getPluralCategory()}
+.
+
+The
+\texttt{getPluralCategory()}
+function calls
+\texttt{NgLocalization.getPluralCategory()}
+to
+get the plural category for a value. We note the value passed to the function is of type
+\texttt{number}
+, whereas that passed to
+\texttt{NgLocalization.getPluralCategory()}
+is of type
+\texttt{any}
+:
+
+\input{6_the_common_package/code/6_3_1_1.tex}
+
+One implementation of
+\texttt{NgLocalization}
+is provided, called
+\texttt{NgLocaleLocalization,}
+which takes in a
+\texttt{localeId}
+in its constructor:
+
+\input{6_the_common_package/code/6_3_1_2.tex}
