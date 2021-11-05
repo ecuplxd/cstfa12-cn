@@ -16,7 +16,8 @@ export class NgForOfContext<T> {
   }
 
   get even(): boolean {
-    return this.index %\%% %\step{2}% === 0;
+    // TODO: fix %
+    return this.index % %\step{2}% === 0;
   }
 
   get odd(): boolean {

@@ -7,6 +7,7 @@
 \setsansfont{Droid Sans}
 \setmonofont{CMU Typewriter Text}
 
+% \usepackage{geometry}
 \usepackage[showframe]{geometry}
 \geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=3.18cm}
 
@@ -63,7 +64,15 @@
   colorlinks
 }
 
-\usepackage[edges]{forest}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{
+  linecolor=purple!50!black,
+  backgroundcolor=lightgray,
+  shadow,
+  innertopmargin=0pt,
+  innerbottommargin=0pt,
+  innerleftmargin=2pt,
+}
 
 \usepackage[cachedir=../_minted-main]{minted}
 % xleftmargin=20pt
@@ -71,15 +80,26 @@
   fontsize=\small,
   breaklines,
   linenos,
-  bgcolor=lightgray,
   escapeinside=\%\%,
+  % 使用 mdframed 代替
+  % bgcolor=lightgray,
+  % frame=single,
+  % rulecolor=purple!50!black,
 }
 \usemintedstyle{perldoc}
 \renewcommand{\theFancyVerbLine}{\ttfamily
   \textcolor[rgb]{0.5,0.5,1.0}{\small
     \oldstylenums{\arabic{FancyVerbLine}}}}
 
+% https://tex.stackexchange.com/questions/228058/how-to-space-before-and-after-a-minted-code-block-with-bgcolor
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\minted@colorbg}{\noindent}{\vspace{0pt}\noindent}{}{}
+\apptocmd{\endminted@colorbg}{\par\vspace{0pt}}{}{}
+\makeatother
+
+% \BeforeBeginEnvironment{minted}{\begin{mdframed}}
+% \AfterEndEnvironment{minted}{\end{mdframed}}
+\surroundwithmdframed{minted}
 \newcommand\step[1]{\setlength\fboxsep{1.5pt}\colorbox{black}{\textcolor{white}{#1}}}
-% \linespread{1.0}
-% \setlength\lineskiplimit{2.625bp}
-% \setlength\lineskip{2.625bp}
+\newcommand\ts[1]{\mintinline{ts}{#1}}
