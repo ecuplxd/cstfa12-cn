@@ -1,10 +1,17 @@
-\section{Introduction}
+% \section{Introduction}
+\section{简介}
 
 % RxJS is a wonderful framework to handle observable streams of items. We see its use
 % in Angular as event emitters, HTTP responses and services. To become a good Angular
 % developer you first have to become a good RxJS developer. It is that critical to the
 % correct programming of Angular. RxJS is also the base technology for NgRx, the very
 % popular state cache engine for client apps.
+
+RxJS 是一个很棒的处理可观察流的框架。
+我们可以看到在 Angular 中像 event emitters、HTTP 响应以及服务都有应用。
+要成为一位优秀的 Angular 开发人员你首先不得不成为一位优秀的 RxJS 开发人员。
+这对于 Angular 的正确编程至关重要。
+RxJS 也是 NgRx 的基础基数，一个客户端 APP 非常流行的状态缓存引擎。
 
 % An observable is a dual of an enumerable. With an enumerable, your code would
 % call .next() repeatable to get the next item in a sequence. In contrast, with an
@@ -14,3 +21,11 @@
 % deliver to you. So you could imagine a HTTP request being sent to the server, and a
 % blob of data coming back in multiple packets. As more items come in, the observable
 % will call the handler in your code to process them.
+
+可观察对象是一个可枚举对象。
+使用可枚举，你的代码将调用 \mintinline{ts}{.next()} 以重复获取序列中的下一项。
+相比之下，使用 observable，需提供一个函数来处理新数据项，
+一个可选的方法来处理错误，以及一个方法来处理完成事件（每一项结束）。
+当有新数据要推送的时候，observable 内部会调用你的代码。
+所以你可以想象一个 HTTP 请求被发送到服务器，一个数据块以多个数据包的形式返回。
+随着更多数据被返回，可观察对象将调用你代码中的回调函数来处理它们。

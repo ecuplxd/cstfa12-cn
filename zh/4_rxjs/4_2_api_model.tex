@@ -1,9 +1,15 @@
-\section{API Model}
+% \section{API Model}
+\section{API 模型}
 
-% In the links below, we assume <RXJS> refers to the root directory of you rRxJS
+% In the links below, we assume <RXJS> refers to the root directory of you RxJS
 % source installation. The links below actually link to the relevant document on github.
 
+在下面的链接中，我们假设 <RXJS> 指的是你 RxJS 的根目录位置。
+下面的链接实际上链接到 github 上的相关文档。
+
 % The main exports are in:
+
+主要的导出在：
 
 \begin{itemize}
   \item \href{https://github.com/ReactiveX/rxjs/blob/master/src/index.ts}
@@ -11,6 +17,8 @@
 \end{itemize}
 
 % with a large range of operators in:
+
+有大量的操作符：
 
 \begin{itemize}
   \item \href{https://github.com/ReactiveX/rxjs/blob/master/src/operators/index.ts}
@@ -22,9 +30,18 @@
 % and as the name suggests, external developers should not be directly importing (or in
 % any way depending on) these, as they may (will) change from version to version.
 
+希望使用 RxJS 的应用开发人员大多会从这两个文件中导入他们需要的内容。
+在 src/internal 和 src/operators/internal 中有子目录，顾名思义，
+外部开发人员不应该直接导入（或以任何方式依赖于）这些，
+因为它们可能（将）从一个版本改变到另一个版本。
+
 % Developers with old code base that reply on older versions of RxJS should at some
 % stage upgrade to RxJS 6 or later. But as an interim measure, a compatibility layer is
 % available to help old code run against RxJS 6. The compat package is at:
+
+使用旧代码库并响应旧版本 RxJS 的开发人员应该在某个阶段升级到 RxJS 6 或更高版本。
+但是作为临时措施，可以使用兼容层来帮助旧代码针对 RxJS 6 运行。
+compat 包位于：
 
 \begin{itemize}
   \item \href{https://github.com/ReactiveX/rxjs/tree/master/compat}
@@ -37,10 +54,19 @@
 % expected the compat package will disappear at some point in future. We do not
 % discuss the compat package further here.
 
+如果你的代码库很大，立即升级到 RxJS 6 并不总是很方便，因此 compat 包可能非常有用。
+你应该考虑使用 compat 作为临时措施。
+随着时间的推移，你首先应该并且后来必须升级，因为预计 compat 包将在未来的某个时候消失。
+我们不在这里进一步讨论 compat 包。
+
 % What
 % \href{https://github.com/ReactiveX/rxjs/blob/master/src/index.ts}
 % {<RXJS>/src/index.ts}
 % exports can be subdivided into the following categories:
+
+\href{https://github.com/ReactiveX/rxjs/blob/master/src/index.ts}
+{<RXJS>/src/index.ts}
+导出的内容可以细分为以下几类：
 
 \begin{itemize}
   \item Observables
@@ -59,9 +85,13 @@
 % \texttt{export *}
 % :
 
+那么观察者在哪里导出？ 嗯……还有一个导出 \texttt{export *}：
+
 \input{../output/4_rxjs/code/4_2_0.tex}
 
 % and if we look at:
+
+如果我们看看：
 
 \begin{itemize}
   \item \href{https://github.com/ReactiveX/rxjs/blob/master/src/internal/types.ts}
@@ -73,3 +103,6 @@
 % defined as an interface in there, along with definitions of operator
 % interfaces, subscription interfaces, observable interfaces and a range of other
 % observer interfaces – we will shortly explore them all.
+
+我们看到 \texttt{Observer} 被定义为一个接口，
+以及操作员接口、订阅接口、可观察接口和一系列其他观察者接口的定义 —— 我们将很快探索它们。
