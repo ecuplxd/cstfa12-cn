@@ -1,8 +1,12 @@
-\section{Benefits of Understanding The Source}
+% \section{Benefits of Understanding The Source}
+\section{理解源码的好处}
 
 % There are many good reasons for intermediate- to advanced-developers to become
 % familiar with the source trees of the projects that provide the foundation for their daily
 % application development.
+
+中高级开发人员有很多充分的理由需要熟悉 Angular 的源码，
+因为他们日常的应用开发都需要和 Angular 打交道。
 
 % Enhanced Understanding - As in common with many software packages, descriptions
 % of software concepts and API documentation may or may not be present, and if
@@ -11,10 +15,19 @@
 % may well once have been up-to-date, but code changes, the doc not necessarily so,
 % and certainly not in lock-step, and this applies to any fast evolving framework.
 
+增强理解 —— 与许多软件包一样，
+关于概念设计和 API 的文档可能存在也可能不存在，
+如果存在也可能没有要求的那么全面，或多或少不能准确反映当前代码的真实意图 —— 文档过时了，
+毕竟代码改动后，并不总是同步地更新文档，这适用于任何快速发展的框架。
+
 % Advanced Debugging – When things go wrong, as they must assuredly will (and
 % usually just become an important presentation to potential customers), application
 % developers scrambling to fix problems will be much quicker when they have better
 % insight via knowing the source.
+
+高级调试 —— 当出现问题时，
+因为它们肯定会出现（并且通常只是向潜在客户展示的一个重要展示），
+如果深入了解过源码，能更快地解决问题。
 
 % Optimization – for large-scale production applications with high data throughput,
 % knowing how your application’s substrate actually works can be really useful in
@@ -26,10 +39,23 @@
 % intensive but non-UI code in a different zone within the same thread, and this can
 % result in much better performance).
 
+优化 —— 对于具有高数据吞吐量的大规模生产应用，
+了解应用的基板实际如何工作对于决定如何/优化什么非常有用
+（例如，当应用开发人员真正了解 Angular 的 \texttt{NgZone} 的工作原理时，
+它是如何可选的（从 Angular v5 开始）以及它如何与 Angular 的变更检测交织在一起，
+然后他们可以将 CPU 密集型但非 UI 代码放置在同一线程内的不同区域中，
+这可以带来更好的性能）。
+
 % Productivity - Familiarity with the source is important for maximum productivity with
 % any framework and is one part of a developer accumulating a broader understanding
 % of the substrate upon which their applications execute.
 
+生产力 —— 熟悉源码对于任何框架最大化生产力都是重要的，
+是开发人员积累更广泛的理解的一部分以及应用如何执行的基础。
+
 % Good practices – Studying large codebases that are well tested and subjected to
 % detailed code reviews is a great way for “regular” developers to pick up good coding
 % habits and use in their own application source trees.
+
+良好实践 —— 研究经过良好测试和详细 review 的大型代码库
+可以让开发人员养成良好编码习惯，并在自己的应用中实际运用。

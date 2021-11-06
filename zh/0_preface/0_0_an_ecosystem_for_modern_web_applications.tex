@@ -1,4 +1,5 @@
-\section{An Ecosystem for Modern Web Applications}
+% \section{An Ecosystem for Modern Web Applications}
+\section{现代 Web 应用生态}
 
 % The Angular ecosystem consists of multiple projects that work together to provide a
 % comprehensive foundation for developing modern web applications.  With a few
@@ -8,15 +9,29 @@
 % Jasmine unit test framework and Karma test runner (all these use JavaScript). The
 % dependency on other projects varies.
 
+Angular 生态由多个项目组成，这些项目协同工作，为开发现代 Web 应用提供全面的基础。
+基本上，所有这些项目都是用 TypeScript 编写的（甚至 TypeScript 编译器本身也是用 TypeScript 编写的）。
+除了 Bazel 主项目（使用 Java）、用于本地访问 macOS FSEvents 的 fsevents 以及 Jasmine 单元测试框架
+和 Karma 测试运行器（使用 JavaScript）。
+对其他项目的依赖各不相同。
+
 % Note that the Java-based Bazel main project is used to build Angular itself. Bazel and
 % Java are not needed to build regular Angular applications. Bazel is great for
 % incremental and multi-core builds so it has advantages when used with large
 % codebases (such as Angular itself). In future Bazel is likely to become a sensible build
 % option for larger Angular applications.
 
+请注意，基于 Java 的 Bazel 主项目用于构建 Angular 本身。
+构建常规 Angular 应用不需要 Bazel 和 Java。
+Bazel 非常适合增量和多核构建，因此在与大型代码库（例如 Angular 本身）一起使用时具有优势。
+未来，Bazel 很可能成为构建大型 Angular 应用的明智选项。
+
 % None of these projects are dependent on Visual Studio Code. These projects only need
 % a code editor that can work with the TypeScript tsc compiler – and there are many -
 % see middle of main page at:
+
+上面提到的那些项目都不依赖于 Visual Studio Code。
+这些项目只需要一个可以与 TypeScript tsc 编译器一起使用的代码编辑器 —— 更多信息 —— 请参见主页中间部分：
 
 \begin{itemize}
   \item \url{http://typescriptlang.org}
@@ -25,10 +40,15 @@
 % Visual Studio Code is one such editor, that is particularly good, open source, freely
 % available for macOS, Linux and Windows, and it too is written in TypeScript.
 
+Visual Studio Code 就是一个非常好、开源、可免费用于 macOS、Linux 和 Windows 的编辑器，
+而且它也是用 TypeScript 编写的。
+
 \begin{itemize}
   \item \url{https://code.visualstudio.com}
 \end{itemize}
 
 % Of choose you can use any editor to investigate the source trees of these projects.
+
+当然你也可以选择使用任何编辑器来查阅这些项目的源码。
 
 \input{0_preface/0_0_0_viewing_markdown_files.tex}
