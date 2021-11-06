@@ -8,27 +8,14 @@
 
 % The main group can be represented as:
 
-main 大致可表示为：
+main 大致表示\fref{fig:forms_api_main}。
 
-% \begin{figure}[!hbt]
-%   \centering
-%   \caption{@Angular/Forms API (main)}
-%   \centerline{
-%   \xymatrix {
-%   *+[F]\txt{FormsModule} & & *+[F]\txt{ReactiveFormsModule} \\
-%   *+[F]\txt{NG\_ASYNC\_VALIDATORS} & & *+[F]\txt{NG\_VALIDATORS} \\
-%   *+[F]\txt{Validators} & & *+[F]\txt{FormBuilder} \\
-%   & *+[F]\txt{AbstractControl} &  \\
-%   *+[F]\txt{FormControl} \ar[ru] & *+[F]\txt{FormGroup} \ar[u] & *+[F]\txt{FormArray} \ar[lu]
-%   }
-%   }
-% \end{figure}
-
-% \begin{figure}[!hbt]
-%   \centering
-%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/forms_api}}
-%   \label{fig:formsapi}
-% \end{figure}
+\begin{figure}[!hbt]
+  \centering
+  \caption{@Angular/Forms API (main)}
+  \includegraphics[width=0.75\linewidth]{15_the_forms_package/forms_api_main}
+  \label{fig:forms_api_main}
+\end{figure}
 
 % Its index.ts file contains this one line:
 
@@ -55,13 +42,14 @@ form.ts 中与上述内容相关的导出是：
 
 % A large directive hierarchy is supplied for both types of forms:
 
-为两种类型的表单提供了一个大的指令继承结构：
+为两种类型的表单提供了一个大的指令继承结构（\fref{fig:forms_api_directives}）。
 
-% \begin{figure}[!hbt]
-%   \centering
-%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/forms_api_directive}}
-%   \label{fig:formsapidirective}
-% \end{figure}
+\begin{figure}[!hbt]
+  \centering
+  \caption{@Angular/Forms API (directives)}
+  \includegraphics[width=0.75\linewidth]{15_the_forms_package/forms_api_directives}
+  \label{fig:forms_api_directives}
+\end{figure}
 
 % The parts of forms.ts related to exporting directives are:
 
@@ -71,13 +59,14 @@ forms.ts 中与指令导出相关的部分是：
 
 % The accessor hierarchy can be represented as:
 
-访问器层次结构可以表示为：
+访问器继承关系表示\fref{fig:forms_api_accessors}。
 
-% \begin{figure}[!hbt]
-%   \centering
-%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/form_api_accessors}}
-%   \label{fig:formapiaccessors}
-% \end{figure}
+\begin{figure}[!hbt]
+  \centering
+  \caption{@Angular/Forms API (accessors)}
+  \includegraphics[width=0.75\linewidth]{15_the_forms_package/forms_api_accessors}
+  \label{fig:forms_api_accessors}
+\end{figure}
 
 % The parts of forms.ts related to exporting accessors are:
 
@@ -87,12 +76,13 @@ form.ts 中与访问器相关的部分是：
 
 % The part of forms.ts related to exporting validator directives is:
 
-和验证指令相关的部分是：
+和验证指令相关的部分是（\fref{fig:forms_api_validator}）：
 
-% \begin{figure}[!hbt]
-%   \centering
-%   \fbox{\includegraphics[width=0.9\linewidth]{15_the_forms_package/forms_api_validator}}
-%   \label{fig:formsapivalidator}
-% \end{figure}
+\begin{figure}[!hbt]
+  \centering
+  \caption{@Angular/Forms API (validator directives)}
+  \includegraphics[width=0.75\linewidth]{15_the_forms_package/forms_api_validator}
+  \label{fig:forms_api_validator}
+\end{figure}
 
 \input{../output/15_the_forms_package/code/15_1_4.tex}
