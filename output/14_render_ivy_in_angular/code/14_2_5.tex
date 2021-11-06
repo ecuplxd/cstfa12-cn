@@ -1,14 +1,14 @@
-\begin{minted}{ts}
+\begin{minted}{typescript}
 export function replaceBootstrap(
   ..,
-  enableIvy?: boolean,
+  enableIvy?: boolean
 ): ts.TransformerFactory<ts.SourceFile> {
-..
-if (!enableIvy) {
-        className += 'NgFactory';
-        modulePath += '.ngfactory';
-        bootstrapIdentifier = 'bootstrapModuleFactory';
-      }
+  ..
+  if (!enableIvy) {
+    className += 'NgFactory';
+    modulePath += '.ngfactory';
+    bootstrapIdentifier = 'bootstrapModuleFactory';
+  }
   ..
 }
 \end{minted}

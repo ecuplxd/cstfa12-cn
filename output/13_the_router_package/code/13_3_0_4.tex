@@ -1,5 +1,5 @@
 \begin{minted}{typescript}
-export function setupRouter() { ..
+export function setupRouter(..) {
   const router = new Router(
     null,
     urlSerializer,
@@ -12,17 +12,12 @@ export function setupRouter() { ..
   );
 
   if (urlHandlingStrategy)
-    if (routeReuseStrategy)
-      ..
-      if (opts.errorHandler)
-        ..
-        if (opts.enableTracing)
-          ..
-          if (opts.onSameUrlNavigation)
-            ..
-            if (opts.paramsInheritanceStrategy)
-              ..
-              ..
-              return router;
+  if (routeReuseStrategy) ..
+  if (opts.errorHandler) ..
+  if (opts.enableTracing) ..
+  if (opts.onSameUrlNavigation) ..
+  if (opts.paramsInheritanceStrategy) ..
+  ..
+  return router;
 }
 \end{minted}

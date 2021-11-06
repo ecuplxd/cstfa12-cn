@@ -1,13 +1,16 @@
-\begin{minted}{ts}
-1 const moduleRef =
-<InternalNgModuleRef<M>>moduleFactory.create(ngZoneInjector);
+\begin{minted}{typescript}
+  %\step{1}% const moduleRef = <InternalNgModuleRef<M>>(
+    moduleFactory.create(ngZoneInjector)
+  );
 
-return _callAndReportToErrorHandler(exceptionHandler, ngZone !, () => {
-  const initStatus: ApplicationInitStatus =
-moduleRef.injector.get(ApplicationInitStatus);
-  initStatus.runInitializers();
-  return initStatus.donePromise.then(() => {
-2   this._moduleDoBootstrap(moduleRef);
-    return moduleRef;
+  return _callAndReportToErrorHandler(exceptionHandler, ngZone!, () => {
+    const initStatus: ApplicationInitStatus = moduleRef.injector.get(
+      ApplicationInitStatus
+    );
+    initStatus.runInitializers();
+    return initStatus.donePromise.then(() => {
+      %\step{2}% this._moduleDoBootstrap(moduleRef);
+      return moduleRef;
+    });
   });
 \end{minted}

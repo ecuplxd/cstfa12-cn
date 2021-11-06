@@ -1,21 +1,29 @@
-\begin{minted}{ts}
-activateWith(
-activatedRoute: ActivatedRoute,
-resolver: ComponentFactoryResolver|null) {
+\begin{minted}{typescript}
+  activateWith(
+    activatedRoute: ActivatedRoute,
+    resolver: ComponentFactoryResolver | null
+  ) {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
     this._activatedRoute = activatedRoute;
     const snapshot = activatedRoute._futureSnapshot;
-    const component = <any>snapshot.routeConfig !.component;
+    const component = <any>snapshot.routeConfig!.component;
     resolver = resolver || this.resolver;
     const factory = resolver.resolveComponentFactory(component);
-    const childContexts =
- this.parentContexts.getOrCreateContext(this.name).children;
-    const injector = new OutletInjector(activatedRoute,
-childContexts, this.location.injector);
+    const childContexts = this.parentContexts.getOrCreateContext(
+      this.name
+    ).children;
+    const injector = new OutletInjector(
+      activatedRoute,
+      childContexts,
+      this.location.injector
+    );
     this.activated = this.location.createComponent(
-factory, this.location.length, injector);
+      factory,
+      this.location.length,
+      injector
+    );
 
     // Calling `markForCheck` to make sure we will run the change
     // detection when the     // `RouterOutlet` is inside a
@@ -23,5 +31,4 @@ factory, this.location.length, injector);
     this.changeDetector.markForCheck();
     this.activateEvents.emit(this.activated.instance);
   }
-}
 \end{minted}

@@ -1,16 +1,19 @@
-\begin{minted}{ts}
+\begin{minted}{typescript}
 /**
  * Creates a platform.
  * Platforms have to be eagerly created via this function.
  */
-export function createPlatform(injector: Injector): PlatformRef {
-  if (_platform && !_platform.destroyed &&
-      !_platform.injector.get(ALLOW_MULTIPLE_PLATFORMS, false)) {
+ export function createPlatform(injector: Injector): PlatformRef {
+  if (
+    _platform &&
+    !_platform.destroyed &&
+    !_platform.injector.get(ALLOW_MULTIPLE_PLATFORMS, false)
+  ) {
     throw new Error(
-        'There can be only one platform.
-Destroy the previous one to create a new one.');
+      'There can be only one platform. Destroy the previous one to create a new one.'
+    );
   }
- _platform = injector.get(PlatformRef);
+  _platform = injector.get(PlatformRef);
   const inits = injector.get(PLATFORM_INITIALIZER, null);
   if (inits) inits.forEach((init: any) => init());
   return _platform;

@@ -1,10 +1,14 @@
-\begin{minted}{ts}
-export abstract class ComponentFactory<C> {}
+\begin{minted}{typescript}
+export abstract class ComponentFactory<C> {
   abstract get selector(): string;
   abstract get componentType(): Type<any>;
   abstract get ngContentSelectors(): string[];
-  abstract get inputs(): {propName: string, templateName: string}[];
-  abstract get outputs(): {propName: string, templateName: string}[];
+  abstract get inputs(): { propName: string; templateName: string }[];
+  abstract get outputs(): { propName: string; templateName: string }[];
   abstract create(
-      injector: Injector, projectableNodes?: any[][], rootSelectorOrNode?:
+    injector: Injector,
+    projectableNodes?: any[][],
+    rootSelectorOrNode?:
+  );
+}
 \end{minted}

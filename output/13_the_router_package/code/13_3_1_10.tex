@@ -12,9 +12,7 @@ export class RouterOutlet implements OnDestroy, OnInit {
 
   constructor(
     private parentContexts: ChildrenOutletContexts,
-    %\step{1}%
-    private location: ViewContainerRef,
-
+    %\step{1}% private location: ViewContainerRef,
     %\step{2}% private resolver: ComponentFactoryResolver,
     @Attribute('name') name: string,
     private changeDetector: ChangeDetectorRef

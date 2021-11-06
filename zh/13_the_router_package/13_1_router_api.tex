@@ -1,8 +1,15 @@
+% \section{Router API}
 \section{Router API}
 
 % The exported API of the Angular Router package can be represented as:
 
+Angular Router 包的导出 API 可以表示为：
+
+TODO：插图
+
 % The Angular Router source tree is at:
+
+Angular Router 源码位于：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/tree/master/packages/router}
@@ -12,11 +19,18 @@
 % Its root directory contains index.ts, which just exports the contents of public\_api.ts,
 % which in turn exports the contents of .src/index.ts.
 
+根目录包含 index.ts，它只是导出了 public\_api.t 的内容，
+而后者又导出 .src/index.ts 的内容。
+
 % This lists the exports and gives an initial impression of the size of the router package:
+
+这列出了 exports 内容并给出了路由器包大小的初步印象：
 
 \input{../output/13_the_router_package/code/13_1_0.tex}
 
 % It also has the line:
+
+它还有一行：
 
 \input{../output/13_the_router_package/code/13_1_1.tex}
 
@@ -24,5 +38,8 @@
 % Angular Framework itself, and not to be directly used by Angular applications. The
 % private\_export.ts file has these exports (note names are prepended with ’ ’);
 % ɵ
+
+正如已经讨论过的，此类私有导出旨在用于 Angular 框架本身，而不应该由 Angular 应用直接使用。
+private\_export.ts 文件具有这些导出（注意，它们的名称有 “ɵ” 字符）；
 
 \input{../output/13_the_router_package/code/13_1_2.tex}

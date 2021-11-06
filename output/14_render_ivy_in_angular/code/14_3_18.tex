@@ -1,19 +1,22 @@
-\begin{minted}{ts}
-private _emitRender3(
-1    {emitFlags = EmitFlags.Default, cancellationToken, customTransformers,
-2     emitCallback = defaultEmitCallback}: {
-        emitFlags?: EmitFlags,
-        cancellationToken?: ts.CancellationToken,
-        customTransformers?: CustomTransformers,
-        emitCallback?: TsEmitCallback
- 3  } = {}): ts.EmitResult {
+\begin{minted}{typescript}
+  private _emitRender3({
+    %\step{1}% emitFlags = EmitFlags.Default,
+    cancellationToken,
+    customTransformers,
+    %\step{2}% emitCallback = defaultEmitCallback,
+  }: {
+    emitFlags?: EmitFlags;
+    cancellationToken?: ts.CancellationToken;
+    customTransformers?: CustomTransformers;
+    emitCallback?: TsEmitCallback; %\step{3}%
+  } = {}): ts.EmitResult {
     const emitStart = Date.now();
 
-// .. Check emitFlags
-// .. Set up code to emit partical modules
-// .. Set up code for file writing (not shown)
-// .. Build list of custom transformers
-// .. Make emitResult
+    // .. Check emitFlags
+    // .. Set up code to emit partical modules
+    // .. Set up code for file writing (not shown)
+    // .. Build list of custom transformers
+    // .. Make emitResult
     return emitResult;
   }
 \end{minted}

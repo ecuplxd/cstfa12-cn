@@ -1,6 +1,9 @@
+% \subsection{router/src}
 \subsection{router/src}
 
 % The router/src directory contains:
+
+router/src 目录包含：
 
 \begin{itemize}
   \item apply\_redirects.ts
@@ -30,6 +33,8 @@
 
 % We’ll start by looking at:
 
+我们将先查看：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts}
         {<ANGULAR-MASTER>/packages/router/src/router\_module.ts}
@@ -37,7 +42,11 @@
 
 % which defines the RouterModule class and related types.
 
+它定义了 RouterModule 类和相关类型。
+
 % It defines three consts:
+
+它定义了三个常量：
 
 \input{../output/13_the_router_package/code/13_3_0_0.tex}
 
@@ -54,9 +63,17 @@
 % \texttt{RouterModule}
 % :
 
+第一个，\texttt{ROUTER\_DIRECTIVES} 是路由器指令的集合，
+可以出现在 Angular 模板中，定义路由内容在页面上的位置，
+以及如何显示用于路由的链接。
+\texttt{ROUTER\_DIRECTIVES} 在 \texttt{RouterModule} 的 \texttt{@NgModule}
+元数据的声明和导出中指定：
+
 \input{../output/13_the_router_package/code/13_3_0_1.tex}
 
 % The other two are injection tokens for DI:
+
+另外两个是 DI 的注入令牌：
 
 \input{../output/13_the_router_package/code/13_3_0_2.tex}
 
@@ -64,6 +81,8 @@
 % \texttt{ROUTER\_PROVIDERS}
 % array of providers (which is only used by
 % forRoot, not forChild):
+
+它还定义了提供程序的 \texttt{ROUTER\_PROVIDERS} 数组（仅用于 forRoot，不用于 forChild）：
 
 \input{../output/13_the_router_package/code/13_3_0_3.tex}
 
@@ -75,14 +94,25 @@
 % factory method. An abbreviated
 % version of this is as follows:
 
+一个重要的 provider 是\texttt{Router}，这是实际的路由服务。
+这是在 DI 中设置以返回 \texttt{setupRouter} 工厂方法的结果。
+其缩写版本如下：
+
 \input{../output/13_the_router_package/code/13_3_0_4.tex}
 
 % It instantiates the router service and for each specified option / strategy takes
 % appropciarte action. Then it returns the new router service instance. It is important
-% that there is only a single router service per application the web browser only have a
+% that there is only a single router service per application (the web browser only have a
 % single URL per session) and we need to track how this is so.
 
+它实例化路由服务，并为每个指定的选项/策略采取适当的行动。
+然后它返回新的路由服务实例。
+重要的是每个应用只有一个路由服务（Web 浏览器每个会话只有一个 URL），
+我们需要跟踪这是如何发生的。
+
 % RouterModule is defined as:
+
+RouterModule 定义如下：
 
 \input{../output/13_the_router_package/code/13_3_0_5.tex}
 
@@ -95,12 +125,18 @@
 % instance. What
 % they put in it is different. Recall that this type is defined in:
 
+请注意，\texttt{forRoot} 和 \texttt{forChild} 都返回一个 \texttt{ModuleWithProviders} 实例。
+他们放进去的东西不一样。
+回想一下，这种类型定义在：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/metadata/ng_module.ts}
         {<ANGULAR-MASTER>/packages/core/src/metadata/ng\_module.ts}
 \end{itemize}
 
 % as follows:
+
+如下：
 
 \input{../output/13_the_router_package/code/13_3_0_6.tex}
 
@@ -112,12 +148,19 @@
 % \texttt{provideRoutes}
 % :
 
+\texttt{ForChild} 适用于除根路由模块之外的所有模块。
+它返回 \texttt{ngModule} 和一个
+仅包含调用 \texttt{provideRoutes} 结果的 providers 列表：
+
 \input{../output/13_the_router_package/code/13_3_0_7.tex}
 
 % Critically, it does not contain ROUTER\_PROVIDERS. In contrast,
 % \texttt{forRoot}
 % adds this and
 % many more providers:
+
+重要的是，它不包含 ROUTER\_PROVIDERS。
+相比之下，\texttt{forRoot} 添加了这个和更多的 providers：
 
 \input{../output/13_the_router_package/code/13_3_0_8.tex}
 
@@ -128,15 +171,21 @@
 % \texttt{forChild}
 % ):
 
+\texttt{ExtraOptions} 是传递给 \texttt{forRoot} 的附加选项（它不与 \texttt{forChild} 一起使用）：
+
 \input{../output/13_the_router_package/code/13_3_0_9.tex}
 
 % For example, if we wished to customize how preloading worked, we need to set the
 % \texttt{preloadingStrategy}
 % option.
 
+例如，如果我们希望自定义预加载的工作方式，我们需要设置 \texttt{preloadingStrategy} 选项。
+
 % The
 % \texttt{provideRouterInitializer()}
 % function providers a list of initializers:
+
+\texttt{provideRouterInitializer()} 函数提供了一个 initializers 列表：
 
 \input{../output/13_the_router_package/code/13_3_0_10.tex}
 
@@ -145,9 +194,13 @@
 % class, whose purpose is best explained by this
 % comment in the code:
 
+这使用了 \texttt{RouterInitializer} 类，其目的最好通过代码中的此注释来解释：
+
 \input{../output/13_the_router_package/code/13_3_0_11.tex}
 
 % We saw when examining the Core package that its:
+
+我们在检查 Core 包时看到它：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/application_init.ts}
@@ -158,9 +211,13 @@
 % \texttt{APP\_INITIALIZER}
 % as:
 
+将 \texttt{APP\_INITIALIZER} 定义为：
+
 \input{../output/13_the_router_package/code/13_3_0_12.tex}
 
 % Interfaces.ts declares a number of useful interfaces.
+
+Interfaces.ts 声明了许多有用的接口。
 
 \input{../output/13_the_router_package/code/13_3_0_13.tex}
 
@@ -173,9 +230,14 @@
 % creates a new instance of
 % LoadedRouterConfig it:
 
+router\_config\_loader.ts 定义了一个类 —— \texttt{RouterConfigLoader} —— 和一个 opaque 令牌，
+经过一些簿记后，\texttt{RouterConfigLoader} 创建了 LoadedRouterConfig 的一个新实例：
+
 \input{../output/13_the_router_package/code/13_3_0_14.tex}
 
 % The router\_state.ts file contains these classes (and some helper functions):
+
+router\_state.ts 包含这些类（和一些辅助函数）：
 
 \begin{itemize}
   \item RouterState
@@ -187,10 +249,14 @@
 % \texttt{RouterState}
 % is defined as:
 
+\texttt{RouterState} 定义为：
+
 \input{../output/13_the_router_package/code/13_3_0_15.tex}
 
 % \texttt{RouterStateSnapshot}
 % is defined as:
+
+\texttt{RouterStateSnapshot} 定义为：
 
 \input{../output/13_the_router_package/code/13_3_0_16.tex}
 
@@ -198,15 +264,21 @@
 % \texttt{setRouterStateSnapshot()}
 % function is defined as:
 
+\texttt{setRouterStateSnapshot()} 函数定义为：
+
 \input{../output/13_the_router_package/code/13_3_0_17.tex}
 
 % So its sets the router state for the current node, and then recursively calls
 % \texttt{setRouterState()}
 % to set it for all children.
 
+所以它为当前节点设置路由状态，然后递归调用 \texttt{setRouterState()} 为所有子节点设置它。
+
 % The
 % \texttt{ActivatedRoute}
 % class is used by the router outlet directive to describe the
 % component it has loaded:
+
+路由器出口指令使用 \texttt{ActivatedRoute} 类来描述它已加载的组件：
 
 \input{../output/13_the_router_package/code/13_3_0_18.tex}

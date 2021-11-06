@@ -1,5 +1,5 @@
-\begin{minted}{ts}
- for (let dependency of type.diDeps) {
+\begin{minted}{typescript}
+  for (let dependency of type.diDeps) {
     if (dependency.isValue) {
       unsupported('value dependencies');
     }
@@ -17,8 +17,9 @@
         args.push(o.importExpr(R3.injectViewContainerRef).callFn([]));
       } else {
         const value =
-            token.identifier != null ?
-outputCtx.importExpr(tokenRef) : o.literal(tokenRef);
+          token.identifier != null
+            ? outputCtx.importExpr(tokenRef)
+            : o.literal(tokenRef);
         args.push(o.importExpr(R3.inject).callFn([value]));
       }
     } else {
@@ -27,10 +28,14 @@ outputCtx.importExpr(tokenRef) : o.literal(tokenRef);
   }
 
   return o.fn(
-      [],
-      [new o.ReturnStatement(
-new o.InstantiateExpr(outputCtx.importExpr(type.reference), args))],
-      o.INFERRED_TYPE, null, type.reference.name ?
-`${type.reference.name}_Factory` : null);
-}
+    [],
+    [
+      new o.ReturnStatement(
+        new o.InstantiateExpr(outputCtx.importExpr(type.reference), args)
+      ),
+    ],
+    o.INFERRED_TYPE,
+    null,
+    type.reference.name ? `${type.reference.name}_Factory` : null
+  );
 \end{minted}

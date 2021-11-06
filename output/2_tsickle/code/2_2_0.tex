@@ -1,7 +1,7 @@
-\begin{minted}{ts}
+\begin{minted}{typescript}
 function main(args: string[]): number {
-1 const {settings, tscArgs} = loadSettingsFromArgs(args);
-2 const config = loadTscConfig(tscArgs);
+  %\step{1}% const { settings, tscArgs } = loadSettingsFromArgs(args);
+  %\step{2}% const config = loadTscConfig(tscArgs);
   if (config.errors.length) {
     console.error(tsickle.formatDiagnostics(config.errors));
     return 1;
@@ -11,27 +11,32 @@ function main(args: string[]): number {
     // This is not an upstream TypeScript diagnostic, therefore it does not
     // go through the diagnostics array mechanism.
     console.error(
-    'tsickle converts TypeScript modules to Closure modules via
-        'CommonJS internally. Set tsconfig.js "module": "commonjs"');
+      'tsickle converts TypeScript modules to Closure modules via CommonJS internally. Set tsconfig.js "module": "commonjs"'
+    );
     return 1;
   }
 
   // Run tsickle+TSC to convert inputs to Closure JS files.
-3 const result = toClosureJS(
-      config.options, config.fileNames, settings,
-      (filePath: string, contents: string) => {
-        mkdirp.sync(path.dirname(filePath));
-4       fs.writeFileSync(filePath, contents, {encoding: 'utf-8'});
-      });
+  %\step{3}% const result = toClosureJS(
+    config.options,
+    config.fileNames,
+    settings,
+    (filePath: string, contents: string) => {
+      mkdirp.sync(path.dirname(filePath));
+      %\step{4}% fs.writeFileSync(filePath, contents, { encoding: 'utf-8' });
+    }
+  );
   if (result.diagnostics.length) {
     console.error(tsickle.formatDiagnostics(result.diagnostics));
     return 1;
   }
 
-5 if (settings.externsPath) {
+  %\step{5}% if (settings.externsPath) {
     mkdirp.sync(path.dirname(settings.externsPath));
-    fs.writeFileSync(settings.externsPath,
-        tsickle.getGeneratedExterns(result.externs));
+    fs.writeFileSync(
+      settings.externsPath,
+      tsickle.getGeneratedExterns(result.externs)
+    );
   }
   return 0;
 }

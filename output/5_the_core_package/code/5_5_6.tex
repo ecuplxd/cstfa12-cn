@@ -1,18 +1,9 @@
-\begin{minted}{ts}
+\begin{minted}{typescript}
 @NgModule({
-  declarations: [
-    <your-components>
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule
-  ],
-  providers: [
-    Title,
-    <your-custom-providers>
-  ],
-  bootstrap: [AppComponent]
+  declarations: [<your-components>],
+  imports: [BrowserModule, FormsModule, HttpModule],
+  providers: [Title, <your-custom-providers>],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 \end{minted}

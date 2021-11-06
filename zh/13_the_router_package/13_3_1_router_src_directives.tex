@@ -1,6 +1,9 @@
+% \subsection{router/src/directives}
 \subsection{router/src/directives}
 
 % This directory has the following files:
+
+该目录有如下文件：
 
 \begin{itemize}
   \item router\_link.ts
@@ -12,9 +15,13 @@
 % \texttt{RouterLink}
 % directive:
 
+router\_link.ts 文件包含 \texttt{RouterLink} 指令：
+
 \input{../output/13_the_router_package/code/13_3_1_0.tex}
 
 % The router link commands are set via:
+
+router link 命令通过以下方式设置：
 
 \input{../output/13_the_router_package/code/13_3_1_1.tex}
 
@@ -22,11 +29,15 @@
 % \texttt{onClick()}
 % method is called:
 
+当链接被点击时，会调用 \texttt{onClick()} 方法：
+
 \input{../output/13_the_router_package/code/13_3_1_2.tex}
 
 % The urlTree getter uses
 % \texttt{Router.createlUrlTree()}
 % :
+
+urlTree getter 使用 \texttt{Router.createlUrlTree()}：
 
 \input{../output/13_the_router_package/code/13_3_1_3.tex}
 
@@ -34,9 +45,13 @@
 % \texttt{RouterLinkWithHref}
 % directive:
 
+该文件还包含了 \texttt{RouterLinkWithHref} 指令：
+
 \input{../output/13_the_router_package/code/13_3_1_4.tex}
 
 % This has a href:
+
+一个 href：
 
 \input{../output/13_the_router_package/code/13_3_1_5.tex}
 
@@ -44,16 +59,23 @@
 % \texttt{urlTree}
 % as a field and sets it from the constructor via a call to:
 
+并将 \texttt{urlTree} 作为字段进行管理，并通过调用从构造函数设置它：
+
 \input{../output/13_the_router_package/code/13_3_1_6.tex}
 
 % The router\_link\_active.ts file contains the
 % \texttt{RouterLinkActive}
 % directive:
 
+router\_link\_active.ts 文件包含 \texttt{RouterLinkActive} 指令：
+
 \input{../output/13_the_router_package/code/13_3_1_7.tex}
 
 % This is used to add a CSS class to an element representing an active route. Its
 % constructor is defiend as:
+
+用于向活动路由元素添加 CSS 类。
+它的构造函数定义如下：
 
 \input{../output/13_the_router_package/code/13_3_1_8.tex}
 
@@ -61,11 +83,15 @@
 % \texttt{update}
 % method uses the configured renderer to set the element class:
 
+它的 \texttt{update} 方法使用配置的渲染器来设置元素的 class：
+
 \input{../output/13_the_router_package/code/13_3_1_9.tex}
 
 % The router\_outlet.ts file contains the
 % \texttt{RouterOutlet}
 % class:
+
+router\_outlet.ts 文件包含了 \texttt{RouterOutlet} 类：
 
 \input{../output/13_the_router_package/code/13_3_1_10.tex}
 
@@ -79,6 +105,11 @@
 % parameters to the
 % constructor.
 
+这是生命周期取决于路由器的应用程序组件所在的位置。
+我们注意到构造函数的
+\texttt{ViewContainerRef} \step{1} 和
+\texttt{ComponentFactoryResolver} \step{2} 参数。
+
 % \texttt{ngOnInit}
 % will either call
 % \texttt{attach}
@@ -89,14 +120,22 @@
 % , depending on whether there is
 % an existing component:
 
+\texttt{ngOnInit} 将调用
+\texttt{attach} \step{1} 或 \texttt{activateWith} \step{2}，
+具体取决于是否存在现有组件：
+
 \input{../output/13_the_router_package/code/13_3_1_11.tex}
 
 % attach is defined as:
+
+attach 定义为：
 
 \input{../output/13_the_router_package/code/13_3_1_12.tex}
 
 % When its activateWith method is called, the resolver will be asked to resolve a
 % component factory for the component:
+
+当它的 activateWith 方法被调用时，resolver 将被要求为组件解析一个组件工厂：
 
 \input{../output/13_the_router_package/code/13_3_1_13.tex}
 
@@ -106,6 +145,9 @@
 % constructor.
 % \texttt{ViewContainerRef}
 % is defined in:
+
+location 字段的类型为 \texttt{ViewContainerRef}，我们看到它是在构造函数中设置的。
+\texttt{ViewContainerRef} 定义在：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/linker/view_container_ref.ts}
@@ -117,3 +159,5 @@
 % So the component is appended as the last entry in the
 % \texttt{ViewContainer}
 % .
+
+因此该组件被附加为 \texttt{ViewContainer} 中的最后一个条目。

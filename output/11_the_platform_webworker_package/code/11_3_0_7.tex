@@ -1,19 +1,19 @@
-\begin{minted}{ts}
+\begin{minted}{typescript}
 function initWebWorkerRenderPlatform(injector: Injector): () => void {
   return () => {
-1   BrowserDomAdapter.makeCurrent();
+    %\step{1}% BrowserDomAdapter.makeCurrent();
     BrowserGetTestability.init();
     let scriptUri: string;
     try {
-2     scriptUri = injector.get(WORKER_SCRIPT);
+      %\step{2}% scriptUri = injector.get(WORKER_SCRIPT);
     } catch (e) {
       throw new Error(
-          'You must provide your WebWorker\'s
-           initialization script with the WORKER_SCRIPT token');
+        "You must provide your WebWorker's initialization script with the WORKER_SCRIPT token"
+      );
     }
     const instance = injector.get(WebWorkerInstance);
-3   spawnWebWorker(scriptUri, instance);
-4   initializeGenericWorkerRenderer(injector);
+    %\step{3}% spawnWebWorker(scriptUri, instance);
+    %\step{4}% initializeGenericWorkerRenderer(injector);
   };
 }
 \end{minted}

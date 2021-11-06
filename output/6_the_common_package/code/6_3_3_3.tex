@@ -1,5 +1,5 @@
-\begin{minted}{ts}
-export abstract class PlatformLocation { }
+\begin{minted}{typescript}
+export abstract class PlatformLocation {
   abstract getBaseHrefFromDOM(): string;
   abstract onPopState(fn: LocationChangeListener): void;
   abstract onHashChange(fn: LocationChangeListener): void;
