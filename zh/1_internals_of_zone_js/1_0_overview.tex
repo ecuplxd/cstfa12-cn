@@ -1,4 +1,5 @@
-\section{Overview}
+% \section{Overview}
+\section{概览}
 
 % The Zone.js project provides multiple asynchronous execution contexts running within
 % a single JavaScript thread (i.e. within the main browser UI thread or within a single
@@ -8,6 +9,15 @@
 % stacks, and sub-divide the JavaScript event loop into multiple mini event loops that
 % seemingly run concurrently (but really share the same VM event loop). In effect,
 % Zone.js helps you write multithreaded code within a single thread.
+
+Zone.js 项目提供了在单个 JavaScript 线程中运行多个异步执行上下文
+（即主浏览器 UI 线程或单个 web worker 中）。
+Zone 使用了将 JavaScript 事件循环分割单个线程的方式。
+单个 zone 不会跨越线程边界。
+考虑 zone 的良好方法是它们将 JavaScript 线程内的栈分割成多个小栈，
+并将 JavaScript 事件循环分划分为多个小的事件循环，
+这些循环似乎同时运行（但却共享相同的 VM 事件循环）。
+实际上，Zone.js 有助于你在单线程中编写多线程代码。
 
 % When Zone.js is loaded by your app, it monkey-patches certain asynchronous calls
 % (e.g.
@@ -23,6 +33,14 @@
 % work items upon entering and leaving a zone (all of which might be of great interest
 % to implementors of change detection in a modern web UI framework, like Angular).
 
+当你的应用程序加载 Zone.js 时，
+它会修补某些异步调用（例如 \texttt{setTimer}、\texttt{addEventListener}）来实现 zone 功能。
+Zone.js 通过向应用提供的回调函数添加包装器做到这点，
+当超时或检测到事件时，它首先运行包装器，然后运行回调。
+执行应用程序代码形成任务的块，每个任务在 zone 的上下文。
+Zones 按层次排列并提供有用的功能在错误处理、性能测量和执行配置等领域进入和离开 zone 时的工作项目
+（所有这些对自己实现现代 Web UI 框架中变更检测有参考价值）。
+
 % Zone.js is mostly transparent to application code. Zone.js runs in the background and
 % for the most part “just works”. For example, Angular uses Zone.js and Angular
 % application code usually runs inside a zone. Tens of thousands of Angular application
@@ -31,7 +49,14 @@
 % and become more actively involved in zone management. Some application
 % developers may wish to take certain steps to move some non-UI performance-critical
 % code outside of the Angular zone – using the
-% \texttt{NgZone}
+% \href{https://next.angular.io/api/core/NgZone}{NgZone}
 % class).
+
+Zone.js 对应用代码大多是透明的。Zone.js 在后台运行，大部分“只是默默工作”。
+例如，Angular 使用 Zone.js，Angular 应用代码通常运行在 zone 内。
+成千上万的 Angular 应用开发人员甚至都没意识到这点。
+如果有需要，可以自定义 zone API 调用，手动管理 zone 的运行。
+有些应用开发人员可能希望采取某些步骤将非 UI 性能关键代码移出 Angular zone ——
+这时可以使用 \href{https://next.angular.io/api/core/NgZone}{NgZone} 类。
 
 \input{1_internals_of_zone_js/1_0_0_project_information.tex}

@@ -1,6 +1,9 @@
-\section{Source Model}
+% \section{Source Model}
+\section{源码模型}
 
 % The main source for Zone.js is in:
+
+Zone.js 的主要源码位于:
 
 \begin{itemize}
   \item \href{https://github.com/angular/zone.js/tree/master/lib/zone-spec}
@@ -8,6 +11,8 @@
 \end{itemize}
 
 % It contains a number of sub-directories:
+
+它包含一系列的子目录:
 
 \begin{itemize}
   \item browser
@@ -25,11 +30,15 @@
 
 % along with one source file:
 
+以及单一文件:
+
 \begin{itemize}
   \item zone.ts
 \end{itemize}
 
 % It is best to think of them arranged as follows:
+
+它们的组织整理如下:
 
 % To enable Zone.js to function, any JavaScript APIs related to asynchronous code
 % execution must be patched – a Zone.js specific implementation of the API is needed.
@@ -41,6 +50,11 @@
 % own handling, so that when timeouts and events and promises get triggered, zone
 % code runs first.
 
+为了使 Zone.js 能用于函数，任何和异步代码执行有关的 JavaScript API 都需要打补丁
+—— 这些 API Zone.js 都有一个特定实现。
+所以对于诸如 \texttt{setTimeout} 或 \texttt{addEventListener} 之类的调用，
+Zone.js 都需要能够自己处理，这样，当超时、事件和 promise 触发，zone 代码就会首先运行。
+
 % There are a number of environments supported by Zone.js that need monkey
 % patching, such as the browser, the server (node) and Jasmine and each of these has a
 % sub-direcory with patching code. The common patching code reside in the common
@@ -50,5 +64,11 @@
 % zone.ts file. The additional directory is for zone specs, which are the configurable logic
 % one can add to a zone to change its behavior. There are multiple implementations of
 % these, and applications could create their own.
+
+Zone.js 支持对多种环境打补丁，browser、server(node)、Jasmine 都有一个子目录包含了补丁代码。
+通用补丁代码位于 common 目录。
+Zone.js API（不包括 \texttt{ZoneSpec}）的核心实现位于 zone.ts 文件。
+zone\_spec 目录包含可配置逻辑可以添加到 zone 以更改其行为。
+有多种实现，应用可以创建自定义实现。
 
 \input{1_internals_of_zone_js/1_4_0_zone_ts.tex}

@@ -1,6 +1,9 @@
-\subsection{Project Information}
+% \subsection{Project Information}
+\subsection{项目信息}
 
 % The homepage + root of the source tree for Zone.js are in the main Angular repo at:
+
+Zome.js 源码主页 + 根目录在 Angular 仓库中：
 
 \begin{itemize}
   \item \url{https://github.com/angular/angular/tree/master/packages/zone.js}
@@ -11,6 +14,11 @@
 % that. We also will look at the Angular code that calls Zone.js and we use the
 % <ANGULAR-MASTER> as the root of that source tree.
 
+下面我们假设你已经在被称为 <ZONE-MASTER> 的目录下将 Zone.js 源码下载到了本地，
+任何将要使用到的路径名会以此作为相对路径。
+我们还将查看调用 Zone.js 的 Angular 代码，我们使用
+<ANGULAR-MASTER> 作为该源码的根目录。
+
 % Zone.js is written in TypeScript. It has no package dependencies (its package.json has
 % this entry:
 % \texttt{"dependencies": {}}
@@ -18,3 +26,8 @@
 % \texttt{devDependencies}
 % . It is quite a
 % small source tree, whose size (uncompressed) is about 3 MB.
+
+Zone.js 是用 TypeScript 编写的。
+它没有包依赖（它的 package.json 有这个条目：\texttt{"dependencies": {}})，
+虽然它有很多 devDependencies。
+这是一个相当小型源码，其大小（未压缩）约为 3 MB。

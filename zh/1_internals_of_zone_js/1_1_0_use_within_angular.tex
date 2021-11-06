@@ -1,4 +1,5 @@
-\subsection{Use Within Angular}
+% \subsection{Use Within Angular}
+\subsection{在 Angular 中使用}
 
 % When writing Angular applications, all your application code runs within a zone, unless
 % you take specific steps to ensure some of it does not. Also, most of the Angular
@@ -10,9 +11,19 @@
 % {<ZONE-MASTER>/blob/master/MODULE.md}
 % explains where Angular uses zones:
 
-% \emph{“Angular uses zone.js to manage async operations and decide when to perform}
-% \emph{change detection. Thus, in Angular, the following APIs should be patched, otherwise}
-% \emph{Angular may not work as expected.}
+编写 Angular 应用时，你的所有应用代码都在一个 zone 内运行，
+除非你采取具体步骤以确保其中一些不会。
+此外，大多数 Angular 框架代码本身在一个 zone 中运行。
+开始 Angular 应用时开发，你可以简单地忽略 zones，
+它们默认为你的应用配置好了，无需做任何特别的事情就能从中受益。
+文件
+\href{https://github.com/angular/zone.js/blob/master/MODULE.md}
+{<ZONE-MASTER>/blob/master/MODULE.md} 文件结尾
+结尾解释了 Angular 在哪里使用到了 zones：
+
+\emph{“Angular uses zone.js to manage async operations and decide when to perform}
+\emph{change detection. Thus, in Angular, the following APIs should be patched, otherwise}
+\emph{Angular may not work as expected.}
 
 \begin{itemize}
   \item ZoneAwarePromise
@@ -28,17 +39,27 @@
 % is called. A default implementation is provided and applications can supply a custom
 % implementation via dependency injection. For details, see here:
 
+Zones 是 Angular 启动变更检测的方式 —— 当 zone 的小块栈是空时，发生变更检测。
+此外，zones 是 Angular 配置全局异常处理的方式。
+当任务发生错误时，其 zone 配置的错误处理程序被调用。
+Zone 提供了默认实现，应用可以通过依赖注入提供自定义实现。
+有关详细信息，请参见此处：
+
 \begin{itemize}
   \item \url{https://angular.io/api/core/ErrorHandler}
 \end{itemize}
 
 % On that page note the code sample about setting up your own error handler:
 
+在该页面上，提供了自定义错误处理程序的代码示例：
+
 \input{../output/1_internals_of_zone_js/code/1_1_0_0.tex}
 
 % Angular provide a class,
 % \texttt{NgZone}
 % , which builds on zones:
+
+Angular 提供了一个类 \texttt{NgZone}，它建立在 zone 上：
 
 \begin{itemize}
   \item \url{https://angular.io/api/core/NgZone}
@@ -51,6 +72,11 @@
 % \texttt{NgZone}
 % for that.
 
+当你开始创建更高级的 Angular 应用程序时，
+特别是那些涉及不会在中途更改 UI 的计算密集型代码计算（但可能在最后），
+您会看到放置这样的 CPU 是可取的-
+在单独的区域中进行密集的工作，您将为此使用自定义 \texttt{NgZone}。
+
 % Elsewhere we will be looking in detail at
 % \texttt{NgZone}
 % and the use of zones within Angular in
@@ -59,12 +85,18 @@
 % \texttt{NgZone}
 % is in:
 
+在其他地方，
+我们将详细介绍 \texttt{NgZone} 和 Angular 中 zones 的使用一般当我们稍后探索主要 Angular 项目的源码时，
+但对于现在，请注意 \texttt{NgZone} 的源码在：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/tree/master/packages/core/src/zone}
         {<ANGULAR-MASTER>/packages/core/src/zone}
 \end{itemize}
 
 % and the zone setup during bootstrap for an application is in:
+
+应用程序引导期间的 zone 设置位于：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/application_ref.ts}
@@ -86,11 +118,19 @@
 % \texttt{2}
 % \texttt{.}
 
+
+当我们引导 Angular 应用程序时，我们要么使用 \texttt{bootstrapModule<M>}
+（使用动态编译器）或 \texttt{bootstrapModuleFactory<M>}（使用离线编译器）。
+这两个函数都在 application\_ref.ts. \texttt{bootstrapModule<M>}
+调用 Angular 编译器 \step{1} 然后调用 \texttt{bootstrapModuleFactory<M>} \step{2}。
+
 \input{../output/1_internals_of_zone_js/code/1_1_0_1.tex}
 
 % It is in
 % \texttt{bootstrapModuleFactory}
 % we see how zones are initialized for Angular:
+
+在 \texttt{bootstrapModuleFactory} 中，我们看到了如何为 Angular 初始化 zone：
 
 \input{../output/1_internals_of_zone_js/code/1_1_0_2.tex}
 
@@ -115,5 +155,15 @@
 % 5
 % , we see the call to the actual bootstrapping.
 
+在 \step{1} 我们看到一个新的 \texttt{NgZone} 被创建，
+在 \step{2} 它的 \texttt{run()} 方法被调用，
+在 \step{3} 我们看到依赖注入请求了一个错误处理实现
+（除非应用提供自定义实现，否则将返回默认实现）
+在 \step{4} 处，我们看到错误处理程序将被用于配置新创建的 \texttt{NgZone}。
+最后在 \step{5} 处，我们看到对实际引导的调用。
+
 % So in summary, Angular application developers should clearly learn about zones, since
 % that is the execution context within which their application code will run.
+
+所以总而言之，Angular 应用开发人员应该清楚地了解 zones，
+因为他们的应用代码将在其中的执行上下文运行。

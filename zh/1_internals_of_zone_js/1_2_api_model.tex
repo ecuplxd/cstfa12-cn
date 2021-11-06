@@ -1,19 +1,32 @@
-\section{API Model}
+% \section{API Model}
+\section{API 模型}
 
 % Zone.js exposes an API for applications to use in the
 % \href{https://github.com/angular/zone.js/blob/master/dist/zone.js.d.ts}
 % {<ZONE-MASTER>/dist/zone.js.d.ts}
 % file.
 
+Zone.js 在
+\href{https://github.com/angular/zone.js/blob/master/dist/zone.js.d.ts}
+{<ZONE-MASTER>/dist/zone.js.d.ts}
+文件中暴露了应用可以使用的 API。
+
 % The two main types it offers are for tasks and zones, along with some helper types. A
 % zone is a (usually named) asynchronous execution context; a task is a block of
 % functionality (may also be named). Tasks run in the context of a zone.
+
+它提供了两个主要的类型：task 和 zones，还有一些辅助类型。
+zone 是一个（通常是命名的）异步执行上下文；
+一个任务是一个函数块功能（也可以被命名）。
+任务在 zone 的上下文中运行。
 
 % Zone.js also supplies a const value, also called
 % \texttt{Zone}
 % , of type
 % \texttt{ZoneType}
 % :
+
+Zone.JS 还提供了一些 const 值，也称为 \texttt{Zone} 或者是 \texttt{ZoneType}：
 
 \input{../output/1_internals_of_zone_js/code/1_2_0.tex}
 
@@ -24,6 +37,10 @@
 % type. For further details, see the TypeScript
 % Language Specification – Section 2.3 – Declarations:
 
+回想一下，TypeScript 的声明空间区分为值和类型，
+因此 \texttt{Zone} 值与 \texttt{Zone} 类型是不同的。
+有关更多详细信息，请参阅 TypeScript 语言规范 —— 第 2.3 节 —— Declarations：
+
 \begin{itemize}
   \item \url{https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md#2.3}
 \end{itemize}
@@ -33,6 +50,9 @@
 % value,
 % \texttt{ZoneType}
 % is not used further.
+
+
+除了用于定义 \texttt{Zone} 值外，\texttt{ZoneType} 不会进一步使用。
 
 % When your application code wishes to find out the current zone it simply uses
 % \texttt{Zone.current}
@@ -45,12 +65,20 @@
 % is not
 % undefined. If we examine:
 
+当你的应用代码想要找到当前 zone 只需要简单使用 \texttt{Zone.current} 即可，
+当它想要发现该 zone 内的当前任务时，使用 \texttt{Zone.currentTask}。
+如果你需要确定 Zone.js 是否可用于你的应用（它将用于 Angular 应用），
+只需确保 \texttt{Zone} 不是未定义的。
+如果我们查阅：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/zone/ng_zone.ts}
         {<ANGULAR-MASTER>/packages/core/src/zone/ng\_zone.ts}
 \end{itemize}
 
 % – we see that is exactly what Angular’s NgZone.ts does:
+
+我们看到这恰好正是 Angular 的 NgZone.ts 所做的：
 
 \input{../output/1_internals_of_zone_js/code/1_2_1.tex}
 
@@ -63,6 +91,10 @@
 % is just a human-friendly string to associate with a task. It is usually set to one of the
 % three task types as noted in the comment:
 
+两个用来定义任务的简单辅助类分别是 \texttt{TaskType} 和 \texttt{TaskData}。
+\texttt{TaskType} 只是一个与任务相关联的可读性字符串。
+它通常设置为以下注释中提到的三种任务类型之一：
+
 \input{../output/1_internals_of_zone_js/code/1_2_2.tex}
 
 % \texttt{TaskData}
@@ -71,9 +103,14 @@
 % \texttt{setTimout}
 % .
 
+\texttt{TaskData} 包含一个布尔值（这个任务是周期性的，即要重复）
+和两个数字 —— 在执行此任务前的 delay 和来自 setTimeout 的 handler id。
+
 \input{../output/1_internals_of_zone_js/code/1_2_3.tex}
 
 % A task is an interface declared as:
+
+一个任务是被声明为如下的接口：
 
 \input{../output/1_internals_of_zone_js/code/1_2_4.tex}
 
@@ -81,18 +118,22 @@
 % \texttt{Task}
 % :
 
+有三个标记接口继承自 \texttt{Task}：
+
 \input{../output/1_internals_of_zone_js/code/1_2_5.tex}
 
 % The comments for Task nicely explains their purpose:
 
+注释很好地解释了他们的目的：
+
 \input{../output/1_internals_of_zone_js/code/1_2_6.tex}
 
 % There are three helper types used to define
-% \texttt{Zone}
-% .
-% \texttt{HasTaskState}
+% \texttt{Zone.HasTaskState}
 % just contains
 % booleans for each of the task types and a string:
+
+有三个辅助类被用来定义 \texttt{Zone.HasTaskState}，每个任务类型包含一个布尔值，一个字符串。
 
 \input{../output/1_internals_of_zone_js/code/1_2_7.tex}
 
@@ -102,6 +143,9 @@
 % intercepting, invoking and error handling, the delegate may be called upon to carry
 % out the action.
 
+当一个 zone 希望将某些操作的执行方式委托给另一个 zone 时，使用 \texttt{ZoneDelegate}。
+所以对于 forcking（创建新任务）、调度、拦截、调用和错误处理时，可能会调用委托来执行操作。
+
 \input{../output/1_internals_of_zone_js/code/1_2_8.tex}
 
 % \texttt{ZoneSpec}
@@ -110,11 +154,16 @@
 % \texttt{ZoneDelegate}
 % and the current zone:
 
+\texttt{ZoneSpec} 是一个接口，允许实现在需要某些操作时声明应该拥有什么。
+它使用 \texttt{ZoneDelegate} 和当前 zone：
+
 \input{../output/1_internals_of_zone_js/code/1_2_9.tex}
 
 % The definition of the
 % \texttt{Zone}
 % type is:
+
+\texttt{Zone} 类型的定义如下：
 
 \input{../output/1_internals_of_zone_js/code/1_2_10.tex}
 

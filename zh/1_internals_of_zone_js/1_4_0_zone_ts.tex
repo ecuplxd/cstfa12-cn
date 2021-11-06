@@ -1,3 +1,4 @@
+% \subsection{zone.ts}
 \subsection{zone.ts}
 
 % The first six hundred lines of the zone.ts file is the well-commented definition of the
@@ -6,18 +7,27 @@
 % \texttt{Zone}
 % const:
 
+zone.ts 的前 600 行代码是注释良好的 Zone.js API 定义，最后会导出到 zone.d.ts。
+文件稍大的剩余部分是 \texttt{Zone} const 的实现：
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_0.tex}
 
 % The
 % \texttt{\_ZonePrivate}
 % interface defines private information that is managed per zone:
 
+\texttt{\_ZonePrivate} 接口定义了管理每个 zone 的私有信息：
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_1.tex}
 
 % When using the client API you will not see this, but when debugging through the
 % Zone.js implementation, it will crop up from time to time.
 
+当使用客户端 API 时是不会看到这些的，但当你调试 Zone.js 的实现时候，它会不时的出现。
+
 % A microtask queue is managed, which requries these variables:
+
+管理微任务队列，需要如下变量：
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_2.tex}
 
@@ -33,12 +43,20 @@
 % microtask queue. Which is stored as a global is not set. Two functions manage a
 % microtask queue:
 
+\texttt{\_microTaskQueue} 是一个微任务数组，这必须在我们放弃 VM 轮转之前执行。
+\texttt{\_isDrainingMicrotaskQueue} 是一个布尔值，用于跟踪我们是否处于清空微任务队列的过程
+当一个任务运行在一个已经存在的任务时，它们是嵌套着，
+\texttt{\_nativeMicroTaskQueuePromise} 用于获取一个原生微任务队列。
+以下两个函数用于管理微任务队列：
+
 \begin{itemize}
   \item scheduleMicroTask
   \item drainMicroTaskQueue
 \end{itemize}
 
 % It also implements three classes:
+
+它还实现了三个类：
 
 \begin{itemize}
   \item Zone
@@ -51,14 +69,21 @@
 % in this file. They are in the separate zone-
 % spec sub-directory.
 
+该文件没有关于 \texttt{ZoneSpec} 的实现。
+他们在单独的 zone-spec 子目录中。
+
 % \texttt{ZoneTask}
 % is the simplest of these classes:
+
+\texttt{ZoneTask} 是这些类中最简单的：
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_3.tex}
 
 % The constructor just records the supplied parameters and sets up
 % \texttt{invoke}
 % :
+
+构造函数只记录提供的参数并设置 \texttt{invoke}：
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_4.tex}
 
@@ -79,6 +104,12 @@
 % \texttt{\_numberOfNestedTaskFrames}
 % .
 
+这里有趣的活动是设置 \texttt{invoke} 函数。
+它递增 \texttt{\_numberOfNestedTaskFrames} 计数器，调用 \texttt{zone.runTask()}，
+并在 \texttt{finally} 块中检查 \texttt{\_numberOfNestedTaskFrames} 是否为 1，
+如果是，则调用独立函数 \texttt{drainMicroTaskQueue()}，
+然后递减 \texttt{\_numberOfNestedTaskFrames} 计数器。
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_5.tex}
 
 % A custom
@@ -90,10 +121,16 @@
 % \texttt{toString()}
 % result:
 
+一个自定义的 \texttt{toString()} 返回 \texttt{data.handleId}（如果可用）
+或者对象 \texttt{toString()} 的结果。
+
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_6.tex}
 
 % \texttt{drainMicroTaskQueue()}
 % is defined as:
+
+\texttt{drainMicroTaskQueue()} 定义如下：
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_7.tex}
 
@@ -103,34 +140,38 @@
 % \texttt{scheduleMicroTask}
 % :
 
+\texttt{\_microTaskQueue} 通过调用 \texttt{scheduleMicroTask} 来填充：
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_8.tex}
 
-% If needed (not running in a task), this calls
-% \texttt{setTimeout}
-% with timeout set to 0, to
-% enqueue a request to drain the microtask queue. Even though the timeout is 0, this
-% does not mean that the
-% \texttt{drainMicroTaskQueue()}
-% call will execute immediately.
-% Instead, this puts an event in the JavaScript’s event queue, which after the already
-% scheduled events have been handled (there may be one or move already in the
-% queue), will itself be handled. The currently executing function will first run to
-% completion before any event is removed from the event queue. Hence in the above
-% code, where
-% \texttt{scheduleQueueDrain()}
-% is called before
-% \texttt{\_microTaskQueue.push()}
-% , is not
-% a problem.
-% \texttt{\_microTaskQueue.push()}
-% will execute first, and then sometime in future,
-% the
-% \texttt{drainMicroTaskQueue()}
-% function will be called via the timeout.
+If needed (not running in a task), this calls
+\texttt{setTimeout}
+with timeout set to 0, to
+enqueue a request to drain the microtask queue. Even though the timeout is 0, this
+does not mean that the
+\texttt{drainMicroTaskQueue()}
+call will execute immediately.
+Instead, this puts an event in the JavaScript’s event queue, which after the already
+scheduled events have been handled (there may be one or move already in the
+queue), will itself be handled. The currently executing function will first run to
+completion before any event is removed from the event queue. Hence in the above
+code, where
+\texttt{scheduleQueueDrain()}
+is called before
+\texttt{\_microTaskQueue.push()}
+, is not
+a problem.
+\texttt{\_microTaskQueue.push()}
+will execute first, and then sometime in future,
+the
+\texttt{drainMicroTaskQueue()}
+function will be called via the timeout.
 
 % The
 % \texttt{ZoneDelegate}
 % class has to handle eight scenarios:
+
+\texttt{ZoneDelegate} 类必须处理八个场景：
 
 \begin{itemize}
   \item fork
@@ -150,11 +191,16 @@
 % for each of
 % these, which are initialized in the constructor.
 
+它定义了变量来存储每个 \texttt{ZoneDelegate} 和 \texttt{ZoneSpec} 的值，这些值在构造函数中初始化。
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_9.tex}
 
 % \texttt{ZoneDelegate}
 % also declares three variables, to store the delegates zone and parent
 % delegate, and to represent task counts (for each kind of task):
+
+\texttt{ZoneDelegate} 还声明了三个变量，用来保存 delegates zone 和 parent zone，
+以及表示任务的计数器（针对每种任务）：
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_10.tex}
 
@@ -175,6 +221,11 @@
 % (if
 % not null), or the parent delegate’s:
 
+在 \texttt{ZoneDelegate} 的构造函数中，
+\texttt{zone} 和 \texttt{parentDelegate} 字段从提供的参数中进行初始化，
+设置 \texttt{ZoneDelegate} 以及 8 个场景的 \texttt{ZoneSpec} 字段（使用 Typescript 的类型守护），
+要么是 \texttt{ZoneSpec}（如果不为 null），要么是父的 delegate：
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_11.tex}
 
 % The
@@ -189,6 +240,12 @@
 % \texttt{onInvoke}
 % ,
 % otherwise it calls the supplied callback directly:
+
+针对 8 个场景的 \texttt{ZoneDelegate} 方法只是
+将调用转发到选定的 \texttt{ZoneSpec}（父代理）并做一些内部处理。
+例如，invoke 方法检查是否定义了 \texttt{\_invokeZS}，
+如果是，则调用其 \texttt{onInvoke}，
+否则直接调用给定的回调：
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_12.tex}
 
@@ -211,6 +268,11 @@
 % it is
 % an error:
 
+\texttt{scheduleTask} 方法有点不同，
+它首先 \step{1} 尝试使用 \texttt{\_scheduleTaskZS}（如果有定义），
+否则进入 \texttt{else} 分支进行一系列判断，\step{2} 尝试使用给定任务的 \texttt{scheduleFn}（如果有定义），
+否则 \step{3} 如果是微任务则调用 \texttt{scheduleMicroTask})"，其它情况 \step{4} 抛出错误：
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_13.tex}
 
 % The fork method is where new zones get created. If
@@ -222,6 +284,10 @@
 % \texttt{zoneSpec}
 % :
 
+fork 方法是创建新 zone 的地方。
+如果定义了 \texttt{\_forkZS}，则使用它，
+否则使用给定的 \texttt{targetZone} 和 \texttt{zoneSpec} 创建一个新 zone：
+
 \input{../output/1_internals_of_zone_js/code/1_4_0_14.tex}
 
 % The internal variable
@@ -229,5 +295,7 @@
 % is initialized to the root zone and
 % \texttt{\_currentTask}
 % to null:
+
+内部变量 \texttt{\_currentZoneFrame} 被初始化为根 zone，\texttt{\_currentTask} 初始化为 null：
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_15.tex}

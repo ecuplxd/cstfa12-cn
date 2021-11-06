@@ -1,14 +1,25 @@
-\section{Using Zone.js}
+% \section{Using Zone.js}
+\section{使用 Zone.js}
 
 % Before looking in detail at how Zone.js itself is implemented, we will first look at how
 % it is used in production, using the example of the very popular Angular project.
+
+在详细了解 Zone.js 自身是如何实现之前，我们首先了解在生产中如何使用它，
+这里以非常流行的 Angular 项目为例。
 
 % The use of Zone.js with Angular is optional, but used by default. Use of zones is
 % mostly a good idea but there are some scenarios (e.g. using Angular Elements to build
 % Web Compoenents) when this is not the case.
 
+在 Angular 中使用 Zone.js 是可选的，不过却是默认开启。
+使用 zones 通常来说是个好主意，
+但存在某些场景（比如，使用 Angular Elements 构建 Web Compoenents）下是不必要的。
+
 % To use Zone.js in your applications, you need to load it. Your package.json file will
 % need (if creating a project using Angular CLI, this is added automatically for you):
+
+要在你的应用中使用 Zone.js，你需要加载它。在 package.json 中写入
+（如果你的项目是通过 Angular CLI 创建，会自动帮你添加进去）：
 
 \input{../output/1_internals_of_zone_js/code/1_1_0.tex}
 
@@ -17,15 +28,24 @@
 % Angular CLI will generate a file called <project-name>/src/polyfills.ts and it will
 % contain:
 
+你应该在加载 core.js 之后加载 Zone.js（如果用到了它）。
+例如，如果使用一个通过 Angular CLI 生成的 Angular 应用（就像大多数生产应用程序一样），
+Angular CLI 将生成一个名为 <project-name>/src/polyfills.ts 的文件，它将包含：
+
 \input{../output/1_internals_of_zone_js/code/1_1_1.tex}
 
 % Angular CLI also generates an angular.json configuration file, with this line that sets
 % up polyfills:
 
+Angular CLI 还会生成一个 angular.json 配置文件，该行设置 polyfills：
+
 \input{../output/1_internals_of_zone_js/code/1_1_2.tex}
 
 % If writing your application in TypeScript (recommended), you also need to get access
 % to the ambient declarations. These define the Zone.js API and are supplied in:
+
+如果你的应用是用 TypeScript（推荐）编写的，
+您还需要配置声明访问。 这些定义了 Zone.js API 并在以下位置提供：
 
 \begin{itemize}
   \item \href{https://github.com/angular/zone.js/blob/master/dist/zone.js.d.ts}
@@ -54,12 +74,27 @@
 % includes zone.d.ts. Angular contains a file, types.d.ts under its packages directory
 % (and a similar one under its modules directory and tools directory):
 
+（注意：这个文件有着良好的文档说明，值得那些了解 Zone.js 的人仔细学习）。
+不同于其它库的声明文件，zone.js.d.ts 根本不使用 \texttt{import} 或 \texttt{export}
+（那些命令甚至没有出现在那个文件中一次）。
+这意味着通常情况下，希望使用 zones 的应用代码不能只简单地导入其 .d.ts 文件。
+相反，应该使用 \texttt{///reference} 命令。
+这包括网站上的参考文件 \texttt{///reference} 包含文件中的引用。
+这种方法的好处是包含文件本身不必（但可以）使用 \texttt{import}，因此可能是一个脚本，
+相比与其必须是一个模块。
+使用 zones 并不强制应用程序使用模块（然而，大多数大型应用，包括所有 Angular 应用会使用）。
+最好通过一个例子来研究它是如何工作的，
+所以让我们看看 Angular 是如何包括 zone.d.ts。 Angular 包含一个文件，
+types.d.ts 在包目录下（在它的模块目录和工具目录下有一个类似的）。
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/modules/types.d.ts}
         {<ANGULAR-MASTER>/packages/types.d.ts}
 \end{itemize}
 
 % and it has the following contents:
+
+它包含如下内容：
 
 \input{../output/1_internals_of_zone_js/code/1_1_3.tex}
 
