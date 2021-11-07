@@ -35,7 +35,7 @@ def write_result(structs: dict[str, DocStruct]):
 
 
 def main():
-    doc = fitz.open('clipcode-source-tour.pdf')
+    doc = fitz.open('raw.pdf')
     chapters = parse_toc(doc.get_toc()[1:])
     cur_struct = chapters[DocStruct.get_title_key(3, 'Preface')]
 

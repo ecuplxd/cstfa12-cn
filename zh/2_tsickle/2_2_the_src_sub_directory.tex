@@ -1,6 +1,9 @@
-\section{The src Sub-Directory}
+% \section{The src Sub-Directory}
+\section{src 子目录}
 
 % The src sub-directory contains the following source files:
+
+src 子目录有如下源码文件:
 
 \begin{itemize}
   \item class\_decorator\_downlevel\_transformer.ts
@@ -25,28 +28,38 @@
 % main.ts is where the call to tsickle starts executing and tsickle.ts is where the core
 % logic is – the other files are helpers.
 
+main.ts 是对 tsickle 的调用开始执行的地方，
+tsickle.ts 是核心逻辑所在的地方 —— 其他文件是辅助。
+
 % The entry point at the bottom of main.ts calls the main function passing in the
 % argument list as an array of strings.
+
+main.ts 底部的入口点调用 main 函数，将参数列表作为字符串数组传入。
 
 \input{../output/2_tsickle/code/2_2_0.tex}
 
 % The main function first loads the settings
-% 1
+% \step{1}
 % from the args and
-% 2
+% \step{2}
 % the tsc config. Then it
 % calls the
 % \texttt{toClosureJs()}
 % function
-% 3
+% \step{3}
 % , and outputs to a file
-% 4
+% \step{4}
 % each resulting JavaScript
 % file. If
 % \texttt{externsPath}
 % is set in settings, they too are written out to files
-% 5
+% \step{5}
 % .
+
+main 函数首先从 args \step{1} 和 tsc \step{2} 配置加载设置。
+然后它调用 \texttt{toClosureJs()} \step{3} 函数，
+并将每个结果 JavaScript 文件输出到一个文件 \step{4}。
+如果在设置中设置了 externsPath，它们也会被写出到文件中 \step{5}。
 
 % The
 % \texttt{loadSettingsfromArgs()}
@@ -55,37 +68,53 @@
 % specific arguments are –externs (generate externs file) and –untyped (every
 % TypeScript type becomes a Closure {?} type).
 
+\texttt{loadSettingsfromArgs()} 函数处理命令行参数，
+它可以是 tsickle 特定参数和常规 tsc 参数的混合。
+tsickle 特定的参数是 –externs（生成 externs 文件）和
+–untyped（每个 TypeScript 类型都变成 Closure {?} 类型）。
+
 % The
 % \texttt{toClosureJs()}
 % function is where the transformation occurs. It returns
-% 1
+% \step{1}
 % a map of
 % transformed file contents, optionally with externs information, it so configured.
+
+\texttt{toClosureJs()} 函数是转换发生的地方。
+它返回 \step{1} 转换文件内容的映射，可选地带有外部信息，它是这样配置的。
 
 \input{../output/2_tsickle/code/2_2_1.tex}
 
 % It first creates
-% 1
+% \step{1}
 % a compiler host based on the supplied options, then
-% 2
+% \step{2}
 % it uses
 % TypeScript’s
 % \texttt{createProgram}
 % method with the original program source to ensure it is
 % syntatically correct and any error messages refer the original source, not the modified
 % source. Then it creates
-% \texttt{3}
+% \step{3}
 % a
 % \texttt{tsickle.TsickleHost}
 % instance which it passes
-% \texttt{4}
+% \step{4}
 % to
 % \texttt{tsickle.emitWithTsickle()}
 % .
 
+它首先根据提供的选项创建 \step{1} 一个编译器宿主，
+然后 \step{2} 它使用 TypeScript 的 createProgram 方法和原始程序源来确保它在语法上是正确的，
+并且任何错误消息都引用原始源，而不是修改后的源。
+然后它创建 \step{3} 一个 \texttt{tsickle.TsickleHost} 实例，
+它传递 \step{4} 给 \texttt{tsickle.emitWithTsickle()}。
+
 % The
 % \texttt{annotate}
 % function is a simple function:
+
+\texttt{annotate} 是一个简单的函数：
 
 \input{../output/2_tsickle/code/2_2_2.tex}
 
@@ -95,14 +124,21 @@
 % \texttt{maybeProcess()}
 % .
 
+称为 rewriters 的类用于重写源码。
+rewriter.ts 文件具有 \texttt{Rewriter} 抽象类。
+一个重要的方法是 \texttt{maybeProcess()}。
+
 \input{../output/2_tsickle/code/2_2_3.tex}
 
 % tsickle.ts has some classes that derive from
 % \texttt{Rewriter}
 % , according to this hierarchy:
 
+根据此层次结构，tsickle.ts 有一些派生自 \texttt{Rewriter} 的类：
+
+TODO：插图
+
 % \texttt{Annotator.maybeProcess()}
 % is where the actual rewriting occurs.
-% Annotator
-% ClosureRewriter
-% Rewriter
+
+\texttt{Annotator.maybeProcess()} 是实际重写发生的地方。

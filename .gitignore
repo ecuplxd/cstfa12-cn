@@ -1,7 +1,7 @@
 .idea
 .vscode
 venv
-*.pdf
+raw.pdf
 __pycache__
 *.pyc
 *.aux

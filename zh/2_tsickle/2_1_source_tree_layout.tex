@@ -1,6 +1,9 @@
-\section{Source Tree Layout}
+% \section{Source Tree Layout}
+\section{目录结构}
 
 % The Tsickle source tree has these sub-directories:
+
+Tsickle 源码有以下子目录：
 
 \begin{itemize}
   \item src
@@ -10,6 +13,8 @@
 \end{itemize}
 
 % The main directory has these important files:
+
+主目录有这些重要文件：
 
 \begin{itemize}
   \item readme.md
@@ -21,20 +26,45 @@
 % The readme.md contains useful information about the project, including this important
 % guidance about the use of tsconfig.json:
 
-% \emph{Tsickle works by wrapping tsc. To use it, you must set up your project such}
-% \emph{that it builds correctly when you run tsc from the command line, by}
-% \emph{configuring the settings in tsconfig.json.}
+% \begin{quote}
+%   Project Setup
+%
+%   Tsickle works by wrapping tsc. To use it, you must set up your project such
+%   that it builds correctly when you run tsc from the command line, by
+%   configuring the settings in tsconfig.json.
 
-% \emph{If you have complicated tsc command lines and flags in a build file (like a}
-% \emph{gulpfile etc.) Tsickle won't know about it. Another reason it's nice to put}
-% \emph{everything in tsconfig.json is so your editor inherits all these settings as}
-% \emph{well.}
+%   If you have complicated tsc command lines and flags in a build file (like a
+%   gulpfile etc.) Tsickle won't know about it. Another reason it's nice to put
+%   everything in tsconfig.json is so your editor inherits all these settings as
+%   well.
+% \end{quote}
+
+readme.md 包含有关项目的有用信息，包括这个重要的
+tsconfig.json 使用指南：
+
+\begin{quote}
+  项目设置
+
+  Tsickle 通过包装 tsc 来工作。
+  要使用它，你必须通过配置 tsconfig.json 中的设置来设置您的项目，
+  以便在从命令行运行 tsc 时它可以正确构建。
+
+  如果您在构建文件（如 gulpfile 等）中有复杂的 tsc 命令行和标志，Tsickle 不会知道它。
+  将所有内容都放在 tsconfig.json 中的另一个原因是你的编辑器也可以继承所有这些设置。
+\end{quote}
+
+
+readme.md 包含有关项目的有用信息，包括有关使用 tsconfig.json 的重要指南：
 
 % The package.json file contains:
+
+package.json 文件包含：
 
 \input{../output/2_tsickle/code/2_1_0.tex}
 
 % The gulpfile.js file contains the following Gulp tasks:
+
+gulpfile.js 文件包含以下 Gulp 任务：
 
 \begin{itemize}
   \item gulp format
