@@ -1,22 +1,38 @@
+% \section{lib}
 \section{lib}
 
 % The lib sub-directory contains these files:
 
+lib 子目录包含这些文件：
+
+% \begin{itemize}
+%   \item cli.ts – command-line interface, processes argument list and invokes commands
+%   \item main.ts – main logic for generating and verifying golden files
+%   \item serializer.ts – code to serialize an API (to create the contents of a golden file)
+% \end{itemize}
+
 \begin{itemize}
-  \item cli.ts – command-line interface, processes argument list and invokes commands
-  \item main.ts – main logic for generating and verifying golden files
-  \item serializer.ts – code to serialize an API (to create the contents of a golden file)
+  \item cli.ts —— 命令行接口，处理参数列表和包装命令
+  \item main.ts —— 生成和验证 golden 文件主逻辑
+  \item serializer.ts —— 将代码序列化成 API（用于创建 golden 文件的内容）
 \end{itemize}
 
 % A golden file is a textual representation of an API and the two key tasks of ts-api-
 % guardian is to either create or verify golden files based on supplied command line
 % arguments.
 
+golden 文件是 API 的文本表示，
+ts-api-guardian 的两个关键任务是根据提供的命令行参数创建或验证 golden 文件
+
 % Cli.ts starts with some useful comments about how to call ts-api-guardian:
+
+Cli.ts 以一些关于如何调用 ts-api-guardian 的有用注释开始：
 
 \input{../output/3_ts_api_guardian/code/3_4_0.tex}
 
 % cli.ts accepts the following command line options:
+
+cli.ts 接受以下命令行选项：
 
 \input{../output/3_ts_api_guardian/code/3_4_1.tex}
 
@@ -37,6 +53,13 @@
 % - both are in main.ts and are actually quite short
 % functions:
 
+Angular API 允许将注释附加到每个 API 上，表明它是稳定的、已弃用的还是实验性的。
+\texttt{onStabilityMissing} 选项指示如果缺少这样的注释需要什么操作。
+\texttt{startCli()} 函数解析命令行并初始化 \texttt{SerializationOptions} 的实例，
+然后对于生成模式调用 \texttt{SerializationOptions} 或对于验证模式调用
+\texttt{verifyAgainstGoldenFile()} —— 两者都在 main.ts 中，
+实际上是非常短的函数：
+
 \input{../output/3_ts_api_guardian/code/3_4_2.tex}
 
 % generateGoldenFile calls publicApi (from Serializer.ts) to generate the contents of the
@@ -46,11 +69,18 @@
 % calls createPatch (from the diff package), to create a representation of the differences
 % between the actual and expected golden files.
 
+generateGoldenFile 调用 publicApi（来自 Serializer.ts）生成 golden 文件的内容，然后将其写入文件。
+VerifyAgainstGoldenFile() 也调用 publicApi 并将结果保存在名为 actual 的字符串中，
+然后将现有的 golden 文件数据加载到名为 expected 的字符串中，然后进行比较。
+如果不同，则调用 createPatch（来自 diff 包），以创建实际和预期 golden 文件之间差异的表示。
+
 \input{../output/3_ts_api_guardian/code/3_4_3.tex}
 
 % serializer.ts defines
 % \texttt{SerializationOptions}
 % which has three optional properties:
+
+serializer.ts 定义了 \texttt{SerializationOptions}，它具有三个可选属性：
 
 \input{../output/3_ts_api_guardian/code/3_4_4.tex}
 
@@ -61,6 +91,10 @@
 % \texttt{ResolvedDeclarationEmitter()}
 % , which is a 200-line class where
 % the actual work is performed. It has three methods which perform the serialization:
+
+Serializer.ts 定义了一个公共 API 函数，它只调用 \texttt{publicApiInternal()}，
+后者又调用 \texttt{ResolvedDeclarationEmitter()}，这是一个 200 行的类，在其中执行实际工作。
+它具有三种执行序列化的方法：
 
 \begin{itemize}
   \item emit(): string

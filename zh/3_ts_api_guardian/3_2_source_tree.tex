@@ -1,6 +1,9 @@
-\section{Source Tree}
+% \section{Source Tree}
+\section{目录结构}
 
 % The root directory contains these files:
+
+根目录包含这些文件：
 
 \begin{itemize}
   \item gulpfile.js
@@ -11,6 +14,8 @@
 
 % and these top-level directories:
 
+和一级目录：
+
 \begin{itemize}
   \item bin
   \item lib
@@ -18,6 +23,8 @@
 \end{itemize}
 
 % The primary tasks in the gulpfile are:
+
+gulpfile 中主要的任务为：
 
 \begin{itemize}
   \item compile
@@ -29,7 +36,11 @@
 % The unit tests are based on mocha (unlike most of the rest of Angular, which uses
 % jasmine).
 
+单元测试基于 mocha（不同于大多数其余的 Angular，它使用 jasmine）。
+
 % The package.json has the following dependencies:
+
+package.json 有如下 dependencies：
 
 \input{../output/3_ts_api_guardian/code/3_2_0.tex}
 
@@ -38,6 +49,10 @@
 % \url{https://www.npmjs.com/package/diff}
 % ).
 
+其中比较重要的是 diff 包，用来决定文本块之间的差异（\url{https://www.npmjs.com/package/diff}）。
+
 % Package.json also list the single callable program inside ts-api-guardian:
+
+Package.json 还列出了 ts-api-guardian 中的单个可调用程序：
 
 \input{../output/3_ts_api_guardian/code/3_2_1.tex}

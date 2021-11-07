@@ -1,8 +1,13 @@
-\section{Usage}
+% \section{Usage}
+\section{用法}
 
 % It is used in the Angular build to check for changes to the Angular public API and to
 % ensure that inadvertent changes to the public API are detected. Specifically, it you
 % examine gulpfile.ts in the main Angular project:
+
+它用于在构建 Angular 时以检查 Angular 公有 API 的更改
+确保检测到对公共 API 的无意中更改。具体来说，你
+检查 Angular 主项目中的 gulpfile.ts：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/gulpfile.js}
@@ -11,9 +16,13 @@
 
 % you will see it has these two lines:
 
+你会看到它有这样两行：
+
 \input{../output/3_ts_api_guardian/code/3_1_0.tex}
 
 % and when we look at:
+
+我们看向：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/tools/gulp-tasks/public-api.js}
@@ -27,5 +36,9 @@
 % and to
 % 2
 % generate a “golden file” representing the API:
+
+会看到名为 'public-api:enforce' 和 'public-api:update' 的两个任务，
+在这里我们会看到 ts-api-guardian 是如何被使用的。\step{1} 确保没有意外的改动，
+\step{2} 生成一个 “golden file” 代表 API：
 
 \input{../output/3_ts_api_guardian/code/3_1_1.tex}
