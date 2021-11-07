@@ -1,4 +1,5 @@
-\subsection{Impact enableIvy has on Angular CLI’s code generation}
+% \subsection{Impact enableIvy has on Angular CLI’s code generation}
+\subsection{enableIvy 对 Angular CLI 生成代码的影响}
 
 % To best see the differences the
 % \texttt{enableIvy}
@@ -10,6 +11,10 @@
 % \texttt{–-skipInstall}
 % option, which means npm install is not
 % run to download all the dependency packages.
+
+为了查看 \texttt{"enableIvy"} 选项对代码生成的不同，
+我们将创建两个新项目 —— 一个启用，另一个不启用 \texttt{"--enableIvy"} 选项。
+为了节省时间，我们将使用 \texttt{"–-skipInstall"} 选项，这意味着 npm install 不会下载依赖项。
 
 \input{../output/14_render_ivy_in_angular/code/14_2_0_0.tex}
 
@@ -23,13 +28,22 @@
 % has
 % this additional item:
 
+在 render2 代码搜索不到 \texttt{"ivy"}，这符合预期。
+在 render3 代码中能搜到到 2 个 \texttt{"ivy"}。
+在 package.json 中，\texttt{"scripts"} 有额外的字段：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_0_1.tex}
 
 % and in tsconfig.app.json,
 % \texttt{angularCompilerOptions}
 % has this entry:
 
+在 tsconfig.app.json 中 \texttt{"angularCompilerOptions"}，有如下字段：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_0_2.tex}
 
 % Now that we have seen how Angular CLI adds enableIvy, we are ready to move on to
 % explore how Compiler CLI detects and reacts to this.
+
+现在我们已经看到 Angular CLI 是如何添加 enableIvy，
+我们已准备好继续探索 Compiler CLI 如何检测和对此作出反应。

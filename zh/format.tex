@@ -9,7 +9,7 @@
 
 % \usepackage{geometry}
 \usepackage[showframe]{geometry}
-\geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=3.18cm}
+\geometry{left=2.54cm, right=2.54cm, top=3.18cm, bottom=1.28cm}
 
 % 应在 geometry 之后引入 不然页眉线不撑满整个宽度
 \usepackage{fancyhdr}
@@ -98,6 +98,7 @@
 \renewcommand{\theFancyVerbLine}{\ttfamily
   \textcolor[rgb]{0.5,0.5,1.0}{\small
     \oldstylenums{\arabic{FancyVerbLine}}}}
+\AtBeginEnvironment{minted}{\renewcommand{\colorbox}[3][]{#3}}
 
 % https://tex.stackexchange.com/questions/228058/how-to-space-before-and-after-a-minted-code-block-with-bgcolor
 \usepackage{etoolbox}

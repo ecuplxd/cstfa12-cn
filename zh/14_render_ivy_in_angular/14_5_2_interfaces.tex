@@ -1,7 +1,11 @@
-\subsection{Interfaces}
+% \subsection{Interfaces}
+\subsection{接口}
 
 % When trying to figure out how Render3 works, a good place to start is with its
 % interfaces. Let’s look at this first:
+
+当试图弄清楚 Render3 如何工作时，一个好的开始就是它的接口。
+让我们来看看这个：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/renderer.ts}
@@ -12,16 +16,23 @@
 % node. The node is defined as have three methods to insert, append and remove a
 % child:
 
+有一些简单的辅助接口描述节点，元素和文本节点。
+该节点定义为有三种方法用以插入，添加和删除一个子节点：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_0.tex}
 
 % The element allows adding and removing of listeners, working with attributes and
 % properties and style configuration – it is defined as:
+
+该元素允许添加和删除侦听器，使用 attributes、properties 和样式配置 —— 它定义为：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_1.tex}
 
 % The text node adds a
 % \texttt{textContent}
 % property:
+
+文本节点添加了一个 \texttt{textContent} property：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_2.tex}
 
@@ -39,6 +50,10 @@
 % \texttt{document}
 % :
 
+它有这个工厂代码。
+请注意，\texttt{createRenderer} 的返回类型是 Render3 \step{1} —— 对于 \texttt{domRendererFactory3} 实现 \step{2}，
+这是正常的 DOM \texttt{document}
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_3.tex}
 
 % This is key to moving back to regular DOM usage for code that runs in the main
@@ -46,15 +61,23 @@
 % \texttt{Renderer3}
 % is a type alias:
 
+这是在主浏览器 UI 线程中运行的代码返回到常规 DOM 使用的关键，但允许其他地方的替代方案。
+\texttt{Renderer3} 是一个类型别名：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_4.tex}
 
 % This represents the two kinds of renderers that are supported. The bolded text in the
 % comment highlights the usage scenario for the first of these:
 
+这表示支持的两种渲染器。
+注释中的粗体文本（4 - 6 行）突出显示了其中第一个的使用场景：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_5.tex}
 
 % \texttt{ProceduralRender3}
 % is intended to be used from web workers and server-side:
+
+\texttt{ProceduralRender3} 旨在用于 web workers 和服务器端：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_6.tex}
 
@@ -62,10 +85,17 @@
 % \url{view.ts}
 % . It includes the following to work with static data:
 
+现在让我们看看
+\href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/view.ts}
+{view.ts}。
+它包括以下用于处理静态数据的内容：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_7.tex}
 
 % \texttt{TData}
 % is defined as:
+
+\texttt{TData} 定义如下：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_8.tex}
 
@@ -76,12 +106,19 @@
 % s will be needed, so this type is a node in the
 % hierarchy:
 
+将需要 \texttt{LViews} 或 \texttt{LContainers} 树，因此该类型是层次结构中的一个节点：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_9.tex}
 
 % An LView stores info relating to processing a view’s instructions. Detailed comments
 % (not shown here) for each of its fields are in
 % \url{thesource}
 % .
+
+\texttt{LView} 存储与处理视图指令相关的信息。
+每个字段的详细注释（此处未显示）都在
+\href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/view.ts}
+{这里}。
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_10.tex}
 
@@ -92,6 +129,11 @@
 % \texttt{TContainer}
 % :
 
+\href{https://github.com/angular/angular/blob/0b38a039d0565cfc7beb010a87f897bece0cffde/packages/core/src/render3/interfaces/container.ts}
+{container.ts}
+文件查看 containers，它们是视图和子 containers 的集合。
+它导出一种类型，\texttt{TContainer}
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_11.tex}
 
 % and one interface,
@@ -101,6 +143,11 @@
 % contained detailed comments for
 % each field):
 
+和一个接口，\texttt{LContainer}：（注
+\href{https://github.com/angular/angular/blob/0b38a039d0565cfc7beb010a87f897bece0cffde/packages/core/src/render3/interfaces/container.ts}
+{源文件}
+包含每个字段的详细注释）：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_12.tex}
 
 % The
@@ -109,11 +156,17 @@
 % \texttt{QueryReadType}
 % class:
 
+\href{https://github.com/angular/angular/blob/0b38a039d0565cfc7beb010a87f897bece0cffde/packages/core/src/render3/interfaces/query.ts}
+{query.ts}
+文件包含 \texttt{QueryReadType} 类：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_13.tex}
 
 % and the
 % \texttt{LQuery}
 % interface:
+
+以及 \texttt{LQuery} 接口：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_14.tex}
 
@@ -121,20 +174,30 @@
 % \url{projection.ts}
 % file define LProjection as:
 
+\href{https://github.com/angular/angular/blob/0b38a039d0565cfc7beb010a87f897bece0cffde/packages/core/src/render3/interfaces/projection.ts}
+{projection.ts}
+文件定义 LProjection 如下：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_2_15.tex}
 
 % The injector.ts file has this:
+
+injector.ts 文件有这个：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_16.tex}
 
 % The node.ts file is large and contains a hierarchy of node-related types.
 
+node.ts 文件很大，包含节点相关类型的层次结构。
+
 % The root,
 % \texttt{LNode}
 % , is defined (abbreviated) as:
+
+根 \texttt{LNode} 定义（缩写）为：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_2_17.tex}
 
 % Each of the other types adds a few additional fields to represent that node type.
 
-% Render3 as  a View Processing Unit (VPU)
+其他每种类型都添加了一些额外的字段来表示该节点类型。

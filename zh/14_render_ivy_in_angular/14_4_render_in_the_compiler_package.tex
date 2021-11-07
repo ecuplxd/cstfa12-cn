@@ -1,27 +1,34 @@
-\section{Render3 in The Compiler Package}
+% \section{Render3 in The Compiler Package}
+\section{Compiler 包中的 Render3}
 
 % Inside the Angular Compiler package:
 
+在 Angular Compiler 包内：
+
 \begin{itemize}
-  \item \href{https://github.com/angular/angular/tree/master/packages/compiler/}
-        {<ANGULAR\_MASTER>/packages/compiler}
+      \item \href{https://github.com/angular/angular/tree/master/packages/compiler/}
+            {<ANGULAR\_MASTER>/packages/compiler}
 \end{itemize}
 
 % the Render3 feature resides mainly in four files. They are:
 
+Render3 特性主要在四个文件中。他们是：
+
 \begin{itemize}
-  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/aot/partial_module.ts}
-        {<ANGULAR-MASTER>/packages/compiler/src/aot/partial\_module.ts}
-  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/aot/compiler.ts}
-        {<ANGULAR-MASTER>/packages/compiler/src/aot/compiler.ts}
-  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_identifiers.ts}
-        {<ANGULAR-MASTER>/packages/compiler/src/render3/r3\_identifiers.ts}
-  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
-        {<ANGULAR-MASTER>/packages/compiler/src/render3/r3\_view\_compiler.ts}
+      \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/aot/partial_module.ts}
+            {<ANGULAR-MASTER>/packages/compiler/src/aot/partial\_module.ts}
+      \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/aot/compiler.ts}
+            {<ANGULAR-MASTER>/packages/compiler/src/aot/compiler.ts}
+      \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_identifiers.ts}
+            {<ANGULAR-MASTER>/packages/compiler/src/render3/r3\_identifiers.ts}
+      \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+            {<ANGULAR-MASTER>/packages/compiler/src/render3/r3\_view\_compiler.ts}
 \end{itemize}
 
 % Let’s start with partial\_module.ts. It has these few lines, to describe what a partial
 % module type is:
+
+让我们从 partial\_module.ts 开始。它只有几行，用以描述一个 partial module 的类型：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_0.tex}
 
@@ -34,15 +41,27 @@
 % (yes: same
 % files names, different directories):
 
+我们从之前的 Compiler-CLI 中看到，它调用了 Compiler 包的 \texttt{emitAllPartialModules}。
+这可以在
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/aot/compiler.ts}
+{src/compiler.ts} 文件中找到，
+因此从
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/compiler.ts}
+{src/compiler.ts} 的这一行导出（是的：相同的文件名，不同的目录）：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_1.tex}
 
 % it is defined as:
+
+它被定义为：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_2.tex}
 
 % It calls the internal
 % \texttt{\_emitPartialModule}
 % method:
+
+它调用内部的 \texttt{\_emitPartialModule} 方法：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_3.tex}
 
@@ -59,9 +78,14 @@
 % 3
 % :
 
+在初始化上下文信息后，遍历 \step{1} 指令数组，如果找到一个组件 \step{2}，
+则调用 \texttt{compileIvyComponent} \step{3}，否则 调用 \texttt{compileIvyDirective} \step{4}：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_4.tex}
 
 % We note the import at the top of the file:
+
+我们注意到文件顶部的导入：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_5.tex}
 
@@ -73,6 +97,11 @@
 % \texttt{compileDirective}
 % .
 
+所以在
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+{src/render3/r3\_view\_compiler.ts}
+让我们跟踪 \texttt{compileComponent} 和 \texttt{compileDirective}。
+
 % The
 % \url{render3sub-directory}
 % in the Compiler package’s src directory is new for Render3.
@@ -81,14 +110,30 @@
 % . r3\_identifiers.ts is
 % imported into r3\_view\_compiler.ts with this line:
 
+Compiler 包的 src 目录中的
+\href{https://github.com/angular/angular/tree/master/packages/compiler/src/render3}
+{render3 子目录}
+是 Render3 的新目录。
+它只包含两个文件，r3\_view\_compiler 和
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_identifiers.ts}
+{r3\_identifiers.ts}。
+r3\_identifiers.ts 通过这一行被导入到 r3\_view\_compiler.ts：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_6.tex}
 
 % So anywhere in r3\_view\_compiler.ts we see “R3” being used for naming (over 50
 % times), it means something in r3\_identifiers.ts is being used. r3\_identifiers.ts  is not
 % referenced from anywhere else in the Compiler package.
 
+所以在 r3\_view\_compiler.ts 的任何地方，我们看到“R3”被用于命名（超过 50 次），
+这意味着 r3\_identifiers.ts 中的某些东西正在被使用。
+r3\_identifiers.ts 未被编译器包中的任何其他地方引用。
+
 % r3\_identifier.ts contains a long list of external reference identifiers for the various
 % instructions. Here is a sampling (note that “o” is imported from output\_ast.ts):
+
+r3\_identifier.ts 包含用于各种指令的一长串外部引用标识符。
+这是一个例子（注意“o”是从 output\_ast.ts 导入的）：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_7.tex}
 
@@ -97,6 +142,10 @@
 % function is implemented in
 % \url{src/render3/r3_view_compiler.ts}
 % as:
+
+\texttt{compileDirective} 函数实现在
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+{src/render3/r3\_view\_compiler.ts}：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_8.tex}
 
@@ -119,6 +168,10 @@
 % 5
 % .
 
+它首先 \step{1} 创建一个模板工厂，然后将其添加到定义映射值数组上 \step{2}。
+然后它使用输出上下文 \step{3} 将新的 \texttt{Class} 语句添加到声明的数组上。
+我们注意到 \texttt{initializer} 设置为 \texttt{R3.defineDirective} \step{5}。
+
 % The
 % \texttt{compileComponent}
 % function (also in
@@ -126,9 +179,16 @@
 % ) is a little bit more
 % complex. Let’s look at it in stages. Its signature is:
 
+\texttt{compileComponent} 函数（也在
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+{r3\_view\_compiler.ts}中）
+稍微复杂一些。让我们分阶段来看。它的签名是：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_9.tex}
 
 % Then it sets up a template function expression on the definition map values:
+
+然后它在定义映射值上设置模板函数表达式：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_10.tex}
 
@@ -139,6 +199,9 @@
 % , which we need to follow up in a bit.
 % Then it sets up a template definition builder and again adds it to the definition map
 % values array:
+
+我们注意到对 \texttt{createFactory} 函数 \step{1} 的调用，我们需要稍后跟进。
+然后它设置一个模板定义构建器并再次将其添加到定义映射值数组中：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_11.tex}
 
@@ -154,9 +217,16 @@
 % sets up the class name (and uses the ! non-null assertion operator to ensure it is not
 % null):
 
+我们注意到 \texttt{TemplateDefinitionBuilder} 类的使用 \step{1}，
+以及对其 \texttt{buildTemplateFunction} 方法的调用 \step{2}，
+我们将很快检查这两个方法。
+然后它设置类名（并使用\, ! 非空断言运算符来确保它不为空）：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_12.tex}
 
 % Finally it adds the new class statement:
+
+最后它添加了新的 class 语句：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_13.tex}
 
@@ -167,13 +237,19 @@
 % 1
 % .
 
+我们注意到 \texttt{initializer} 设置为 \texttt{R3.defineComponent} \step{1}。
+
 % The
 % \texttt{createFactory}
 % function is defined as:
 
+\texttt{createFactory} 函数定义如下：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_14.tex}
 
 % It first resolves three reflectors:
+
+它首先处理了三个反射器：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_15.tex}
 
@@ -181,6 +257,8 @@
 % \texttt{type.diDeps}
 % dependencies, and pushes a relevant import
 % expression, based on the token ref:
+
+然后它循环遍历 \texttt{type.diDeps} 依赖项，并根据 token ref 添加相关的导入表达式：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_16.tex}
 
@@ -194,12 +272,21 @@
 % \texttt{TemplateAstVisitor}
 % interface. This interface is defined in:
 
+\texttt{TemplateDefinitionBuilder} 类（也位于
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+{r3\_view\_compiler.ts}）很大（350 行+），
+可以认为是 Render3 编译的核心。
+它实现了 \texttt{TemplateAstVisitor} 接口。
+该接口定义在：
+
 \begin{itemize}
-  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/template_parser/template_ast.ts}
-        {<ANGULAR-MASTER>/packages/compiler/src/template\_parser/template\_ast.ts}
+      \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/template_parser/template_ast.ts}
+            {<ANGULAR-MASTER>/packages/compiler/src/template\_parser/template\_ast.ts}
 \end{itemize}
 
 % as follows:
+
+内容如下：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_17.tex}
 
@@ -210,6 +297,11 @@
 % begins
 % with:
 
+回到
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+{r3\_view\_compiler.ts}，
+\texttt{TemplateDefinitionBuilder} 的定义以如下内容开始：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_18.tex}
 
 % We saw the call to
@@ -219,11 +311,16 @@
 % – its has this
 % signature:
 
+我们在 \texttt{compileComponent} 早期看到了对 \texttt{buildTemplateFunction} 的调用 —— 它具有以下签名：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_19.tex}
 
 % It returns an instance of
 % \texttt{o.FunctionExpr}
 % . We note the import at the top of the file:
+
+它返回 \texttt{o.FunctionExpr} 的实例。
+我们注意到文件顶部的导入：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_20.tex}
 
@@ -233,12 +330,16 @@
 % \texttt{FunctionExpr}
 % class in:
 
+所以 \texttt{o.FunctionExpr} 意味着 \texttt{FunctionExpr} 类在：
+
 \begin{itemize}
-  \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/output/output_ast.ts}
-        {<ANGULAR-MASTER>/packages/compiler/src/output/output\_ast.ts}
+      \item \href{https://github.com/angular/angular/blob/master/packages/compiler/src/output/output_ast.ts}
+            {<ANGULAR-MASTER>/packages/compiler/src/output/output\_ast.ts}
 \end{itemize}
 
 % This class is defined as follows:
+
+该类定义如下：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_21.tex}
 
@@ -246,17 +347,25 @@
 % \texttt{fn}
 % function:
 
+当我们查看 output\_ast.ts 时，我们看到了这个 \texttt{fn} 函数：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_22.tex}
 
 % It just makes a
 % \texttt{FunctionExpr}
 % from the supplied parameters.
 
+它只是从给定的参数中生成一个 \texttt{FunctionExpr}。
+
 % An interesting function in
 % \url{src/template_parser/template_ast.ts}
 % is
 % \texttt{templateVisitAll}
 % :
+
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/template_parser/template_ast.ts}
+{src/template\_parser/template\_ast.ts}
+中一个有趣的函数是 \texttt{templateVisitAll}：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_23.tex}
 
@@ -267,6 +376,14 @@
 % in
 % \url{r3_view_compiler.ts}
 % – a summary of its definition is:
+
+现在让我们回到
+\href{https://github.com/angular/angular/blob/master/packages/compiler/src/render3/r3_view_compiler.ts}
+{r3\_view\_compiler.ts}
+中 \texttt{TemplateDefinitionBuilder} 的
+极其重要的
+\texttt{buildTemp}
+\texttt{lateFunction} 方法 —— 它的定义总结如下：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_24.tex}
 
@@ -291,6 +408,14 @@
 % being emitted to the output statement array with the correct Render3 instruction. The
 % instruction function is used to add a statement like so:
 
+我们看到它首先访问模板树 \step{1}。
+然后它返回我们刚刚看到的 \texttt{fn} 函数调用 \step{2} 的结果，
+传入三个条目 —— \step{3} 一个 \texttt{FnParams} 数组 \step{4}、
+一个语句数组和 \texttt{o.INFERRED\_TYPE} \step{5}。
+这里发生的事情是模板树中的每个节点都被访问，并且在适当的情况下，
+使用正确的 Render3 指令将语句 emit 到输出语句数组。
+指令函数用于添加如下语句：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_25.tex}
 
 % For example, when a text node is visited, the Render3 text instruction (
@@ -300,6 +425,9 @@
 % \texttt{visitText}
 % method:
 
+例如，当访问文本节点时，应发出 Render3 文本指令（\texttt{R3.text}）。
+我们在 \texttt{visitText} 方法中看到了这种情况：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_26.tex}
 
 % There is an equivalent method for elements,
@@ -307,11 +435,16 @@
 % , which is somewhat more
 % complex. After some setup code, it has this:
 
+元素有一个等效的方法 \texttt{visitElement}，它稍微复杂一些。
+在一些 setup 代码之后，它有这个：
+
 \input{../output/14_render_ivy_in_angular/code/14_4_27.tex}
 
 % There is also a
 % \texttt{visitEmbeddedTemplate}
 % method, which emits a number of Render3
 % instructions:
+
+还有一个 \texttt{visitEmbeddedTemplate} 方法，它 emit 许多 Render3 指令：
 
 \input{../output/14_render_ivy_in_angular/code/14_4_28.tex}

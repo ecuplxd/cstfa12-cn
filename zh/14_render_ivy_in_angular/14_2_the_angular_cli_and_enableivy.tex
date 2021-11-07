@@ -1,8 +1,11 @@
-\section{The Angular CLI And enableIvy}
+% \section{The Angular CLI And enableIvy}
+\section{Angular CLI 和 enableIvy}
 
 % Application developers wishing to use Ivy will mostly do so via the
 % \emph{enableIvy}
 % command line option to Angular CLI:
+
+希望使用 Ivy 的应用开发人员主要通过 Angular CLI 命令行选项：
 
 \begin{itemize}
   \item \url{https://next.angular.io/guide/ivy}
@@ -10,6 +13,9 @@
 
 % We can see from the Angular CLI 8.2 source tree this option impacts the code base in
 % a few places. The schema for Angular Application options is defined here:
+
+我们可以从 Angular CLI 8.2 源码中看到这个选项影响了基本代码的几个地方。
+Angular 应用选项的 schema 定义在此处：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/application/schema.json}
@@ -20,9 +26,13 @@
 % \texttt{enableIvy}
 % :
 
+它包含了 \texttt{enableIvy}：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_0.tex}
 
 % The entry point for Angular Application schematics:
+
+Angular 应用原理图的入口：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/application/index.ts}
@@ -31,11 +41,15 @@
 
 % has this code :
 
+有如下代码：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_1.tex}
 
 % The schema for Angular Ng New options is defined here:
 % enableIvy option set
 % in tsconfig.app.json
+
+Angular NG New 选项的模式在此处定义：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/ng-new/schema.json}
@@ -44,9 +58,13 @@
 
 % and has these entries:
 
+有如下条目：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_2.tex}
 
 % The description string from above ends up here in the generated documentation:
+
+上面的描述字段最终在生成的文档中可以找到：
 
 \begin{itemize}
   \item \url{https://next.angular.io/cli/new}
@@ -55,6 +73,8 @@
 % The
 % \texttt{ng-new}
 % entrypoint:
+
+\texttt{ng}new" 入口：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/ng-new/index.ts}
@@ -65,11 +85,15 @@
 % \texttt{enableIvy}
 % parameter as follows:
 
+接受 \texttt{enableIvy} 参数，如下所示：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_3.tex}
 
 % The template for tsconfig.app.json reacts to
 % \texttt{enableIvy}
 % if present:
+
+如果存在的话，tsconfig.app.json 的模板会对 \texttt{enableIvy} 作出相应处理：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular-cli/blob/master/packages/schematics/angular/application/files/tsconfig.app.json.template}
@@ -77,6 +101,8 @@
 \end{itemize}
 
 % as it has this entry:
+
+做了如下处理：
 
 \input{../output/14_render_ivy_in_angular/code/14_2_4.tex}
 
@@ -86,12 +112,17 @@
 % \texttt{enableIvy}
 % is enabled. In this file:
 
+当启用 \texttt{enableIvy} 时，webpack 的 ngtools 功能对引导代码的配置略有不同。
+在下面文件：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular-cli/blob/master/packages/ngtools/webpack/src/transformers/replace_bootstrap.ts}
         {<ANGULAR-CLI-MASTER>/packages/ngtools/webpack/src/transformers/replace\_bootstrap.ts}
 \end{itemize}
 
 % we see:
+
+我们可以看到：
 
 \input{../output/14_render_ivy_in_angular/code/14_2_5.tex}
 
@@ -102,6 +133,11 @@
 % \texttt{replaceBootstrap}
 % get called? When we examine:
 
+所以当 \texttt{enableIvy} 不存在时，
+factory 构建产物的名称是不同的。
+从哪里调用 \texttt{replaceBootstrap} 呢？
+我们可以查看：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular-cli/blob/master/packages/ngtools/webpack/src/angular_compiler_plugin.ts}
         {<ANGULAR-CLI-MASTER>/packages/ngtools/webpack/src/angular\_compiler\_plugin.ts}
@@ -111,17 +147,23 @@
 % \texttt{\_makeTransformers}
 % method is as follows:
 
+我们看到 \texttt{\_maketransformers} 方法如下：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_6.tex}
 
 % We also see ivy used in
 % \texttt{\_processLazyRoutes}
 % :
 
+我们还看到 Ivy 用于 \texttt{\_processlazyroutes}：
+
 \input{../output/14_render_ivy_in_angular/code/14_2_7.tex}
 
 % We also see ivy impacting on how
 % \texttt{\_createOrUpdateProgram}
 % works:
+
+我们还看到 Ivy 对 \texttt{\_createorupdateprogram} 的影响：
 
 \input{../output/14_render_ivy_in_angular/code/14_2_8.tex}
 

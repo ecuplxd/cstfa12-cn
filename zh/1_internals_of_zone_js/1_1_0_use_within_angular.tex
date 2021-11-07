@@ -21,17 +21,19 @@
 {<ZONE-MASTER>/blob/master/MODULE.md} 文件结尾
 结尾解释了 Angular 在哪里使用到了 zones：
 
-\emph{“Angular uses zone.js to manage async operations and decide when to perform}
-\emph{change detection. Thus, in Angular, the following APIs should be patched, otherwise}
-\emph{Angular may not work as expected.}
+\begin{quote}
+Angular uses zone.js to manage async operations and decide when to perform
+change detection. Thus, in Angular, the following APIs should be patched, otherwise
+Angular may not work as expected.
 
 \begin{itemize}
   \item ZoneAwarePromise
   \item timer
   \item on\_property
   \item EventTarget
-  \item XHR”
+  \item XHR
 \end{itemize}
+\end{quote}
 
 % Zones are how Angular initiates change detection – when the zone’s mini-stack is
 % empty, change detection occurs. Also, zones are how Angular configures global

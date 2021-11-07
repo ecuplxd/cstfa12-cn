@@ -1,4 +1,5 @@
-\subsection{API Model}
+% \subsection{API Model}
+\subsection{API}
 
 % There is no public API to Render3. The
 % \url{Corepackage}
@@ -12,7 +13,24 @@
 % \url{./src/core.ts}
 % .
 
+Render3 没有公共 API。
+\href{https://github.com/angular/angular/tree/master/packages/core}
+{Core 包}
+包含 Render3（和 Render2）代码。
+它的
+\href{https://github.com/angular/angular/blob/master/packages/core/index.ts}
+{index.ts}
+文件只是导出
+\href{https://github.com/angular/angular/blob/master/packages/core/public_api.ts}
+{public\_api.ts}
+的内容，而后者又导出了
+\href{https://github.com/angular/angular/blob/master/packages/core/src/core.ts}
+{./src/core.ts}
+的内容。
+
 % Regarding the public API, this has one render-related line, an export of:
+
+关于公共 API，这有一个与渲染相关的行，导出：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_0_0.tex}
 
@@ -20,6 +38,11 @@
 % \url{./src/render.ts}
 % file exports no Render3 API. It does export the Render2 API, like
 % so:
+
+\href{https://github.com/angular/angular/blob/master/packages/core/src/render.ts}
+{./src/render.ts}
+文件导出没有 Render3 API。
+它导出Render2 API，如下：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_0_1.tex}
 
@@ -31,6 +54,13 @@
 % sub-directory only contains that one file)- it defines the above
 % types but does not contain an implementation. You can read it in full here:
 
+请注意，Render2 只是少于 200 行代码的
+\href{https://github.com/angular/angular/blob/master/packages/core/src/render/api.ts}
+{./src/render/api.ts}
+文件（\href{https://github.com/angular/angular/tree/master/packages/core/src/render}
+{core/src/render} 子目录仅包含该文件）—— 它定义了上述类型但不包含执行。
+你可以在这里阅读全文：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render/api.ts}
         {<ANGULAR-MASTER>/packages/core/src/render/api.ts}
@@ -38,9 +68,15 @@
 
 % Render3 does have a private API. The ./src/core.ts file contain this line:
 
+Render3 确实有私有 API。./src/core.ts 文件包含此行：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_0_2.tex}
 
-% file has this:
+% The ./src/core\_render3\_private\_export .ts file has this:
+
+\href{https://github.com/angular/angular/blob/master/packages/core/src/core_render3_private_export.ts}
+{./src/core\_render3\_private\_export.ts}
+文件有这个：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_0_3.tex}
 
@@ -49,13 +85,22 @@
 % ɵ
 % private APIs, as in common with other such private APIs within Angular.
 
+私有 API 适用于其他 Angular，而不是常规使用 Angular 的应用。
+因此，私有 API 前缀为希腊语 Theta 字符（“ɵ”），与 Angular 内的其他此类私有 API 共同。
+
 % The reason for the many very short type names is that the Angular Compiler will be
 % generating lots of source code based on Render3 for your application’s Angular
 % template files and it is desirable to have this as compact as possible, without the need
 % to run a minifier. Typically no human reads this generated code, so compactness is
 % desired rather than readability.
 
+许多非常短的类型名称的原因是 Angular 编译器将为你应用的 Angular 模板文件生成大量基于 Render3 的源代码，
+并且希望它尽可能紧凑，而不需要运行压缩器。
+通常没有人阅读这个生成的代码，所以需要紧凑而不是可读性。
+
 % If we examine:
+
+如果我们查阅：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/render3/index.ts}
@@ -64,9 +109,13 @@
 
 % we see it starts by explaining the naming scheme:
 
+我们看到它首先解释命名方案：
+
 \input{../output/14_render_ivy_in_angular/code/14_5_0_4.tex}
 
 % Then it has a long list of exports of instructions, many with abbreviations:
+
+然后它有很长的指令导出列表，许多有缩写：
 
 \input{../output/14_render_ivy_in_angular/code/14_5_0_5.tex}
 
@@ -76,6 +125,13 @@
 % and the full name, which more clearly explains the intent of the instruction. We have
 % seen how Core’s Render3 is being used by the compiler and compiler-cli packages:
 
+每个一个或两个字母的导出对应于
+\href{https://github.com/angular/angular/blob/master/packages/core/src/render3/instructions.ts}
+{.src/Render3/instructions.ts}
+中的一条指令。
+在下图中，我们给出了短导出名称和全名，这更清楚地说明了指令的意图。
+我们已经看到 compiler 和 compielr-cli 包如何使用 Core 的 Render3：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/tree/master/packages/compiler/src/render3}
         {<ANGULAR-MASTER>/packages/compiler/src/render3}
@@ -84,3 +140,5 @@
 \end{itemize}
 
 % It is not used by the Router or the platform- packages (which do use  Render2).
+
+Router 或 platform 包（使用 Render2）不使用它。

@@ -1,7 +1,11 @@
-\section{Render3 In The Compiler-CLI Package}
+% \section{Render3 In The Compiler-CLI Package}
+\section{Compiler-CLI 包中的 Render3}
 
 % Despite its name, Compiler CLI is both a set of command-line interfaces and an API (a
 % library). It has three apps, that we see defined in:
+
+就像其名字一样，Compiler CLI 是命令行接口和 API（一个库）的一个集合。
+它有三个应用，我们可以看到是在定义：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/package.json}
@@ -10,10 +14,16 @@
 
 % as follows, which lists their entry points:
 
+如下，列出了他们的入口点：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_0.tex}
 
 % Ngc is the main Angular template compiler, ivy-ngcc is the Angular Compatibility
 % Compiler and ng-xi18n is for internationalization.
+
+Ngc 是主要的 Angular 模板编译器，
+ivy-ngcc 是 Angular 兼容性编译器（Angular Compatibility Compiler），
+ng-xi18n 用于国际化。
 
 % As a library, Compiler CLI mostly exports types from the Compiler package, as seen
 % by its
@@ -22,23 +32,43 @@
 % Compiler CLI. The naming of none of these exports is Ivy-specific, but their internals
 % are impacted by use of Ivy, as we shall soon see.
 
+作为一个库，Compiler CLI几乎导出了来自 Compiler 包中的类型，
+如
+\href{https://github.com/angular/angular/blob/master/packages/compiler-cli/index.ts}
+{index.ts} 文件所示，
+以及一些在 Compiler CLI 内定义的有用的诊断类型。
+其余的命名导出则是 Ivy-specific，但它们的内部结构受到 Ivy 使用的影响，我们很快就会看到。
+
 % In root of the src tree, there are references to Ivy in main.ts and perform\_compile.ts.
+
+在 src 根目录中，main.ts 和 perform\_compile.ts 中有对 Ivy 的引用。
 
 % \url{main.ts}
 % has this:
 
+\href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/main.ts}{main.ts}
+有如下内容：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_1.tex}
 
 % and this detailed error reporter:
+
+和一个详细的错误报告：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_2.tex}
 
 % \url{perform_compile.ts}
 % has this:
 
+\href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/perform_compile.ts}
+{perform\_compile.ts}
+有如下内容：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_3.tex}
 
 % The CompilerOptions interface is defined in the transformers sub-directory. In:
+
+CompilerOptions 接口定义在 transformers 子目录：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/transformers/api.ts}
@@ -51,6 +81,9 @@
 % \texttt{ts.CompilerOptions}
 % with Angular-specific fields.
 
+我们看到它定义了 \texttt{CompilerOptions} 接口，
+它继承自 \texttt{ts.CompilerOptions}，有一些 Angular 特殊字段。
+
 \input{../output/14_render_ivy_in_angular/code/14_3_4.tex}
 
 % Despite this comment about aot-compiler.md, that Markdown file actually contains no
@@ -58,10 +91,18 @@
 % \texttt{CompilerOptions}
 % interface in api.ts does contain this addition:
 
+尽管有关于 aot-compiler.md 的注释，
+但 Markdown 文件实际上没有提及 Ivy。
+api.ts 中的 \texttt{CompilerOptions} 接口确实包含以下附加内容：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_5.tex}
 
 % So we see there is a new ngtsc compiler in addition to the normal tsc compiler, and
 % this switch is used to select one or the other. We will soon explore how ngtsc works.
+
+所以我们看到除了正常的 tsc 编译器，
+还有一个新的 ngtsc 编译器，这个开关是用来选择一个的。
+我们很快就会探索 ngtsc 是如何工作的。
 
 % The api.ts file also defines
 % \texttt{EmitFlags}
@@ -69,13 +110,20 @@
 % \texttt{default}
 % includes codegen):
 
+api.ts 文件还定义了 \texttt{EmitFlags}，
+这是我们感兴趣的（注意，\texttt{default"} 包含了代码生成）：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_6.tex}
 
 % The tsc\_pass\_through.ts file defines an implementation of the Program API:
 
+tsc\_pass\_through.ts 文件定义了程序 API 的实现：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_7.tex}
 
 % We see Ivy impacting the program.ts file in a number of ways.
+
+我们看到 Ivy 以多种方式影响 program.ts 文件。
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/transformers/program.ts}
@@ -86,9 +134,13 @@
 % \texttt{getAotCompilerOptions()}
 % :
 
+命令行选项通过 \texttt{getaotCompilerOptions(}) 提取：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_8.tex}
 
 % Metadata is expected to be lower case:
+
+Metadata 预期将是小写的：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_9.tex}
 
@@ -96,16 +148,23 @@
 % \texttt{AngularCompilerProgram}
 % we see the use of reified decorators for Render3:
 
+在 \texttt{AngularCompilerProgram} 中，我们还看到了对 Render3 使用的具象化装饰器：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_10.tex}
 
 % The
 % \texttt{emit}
 % method has protection against being inadvertently called for Ivy:
 
+\texttt{emit} 方法可以防止被 Ivy 无意中调用：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_11.tex}
 
 % The createProgram function is where the decision is made which compilation program
 % to use; this is influenced by the value for enableIvy:
+
+createProgram 函数是决定使用哪个编译程序的地方；
+这受 enableIvy 值的影响：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_12.tex}
 
@@ -114,15 +173,23 @@
 % \texttt{defaultEmitCallback}
 % :
 
+在离开 program.ts 之前，我们想提一下另外两个函数。
+该文件还包含 \texttt{defaultEmitCallback}：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_13.tex}
 
 % We see at
 % 1
 % where the compilation is actually initiated with the set of custom
 % transformers which was passed in as a parameter.
+
+在 \step{1} 处我们可以看到编译器实际上是被一组通过参数传入的自定义转换器初始化的。
+
 % One other important helper function is
 % \texttt{calculateTransforms()}
 % , defined as:
+
+另一个重要的辅助函数是 \texttt{calculateTransforms()}，定义如下：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_14.tex}
 
@@ -133,12 +200,19 @@
 % \texttt{getAngularClassTransformerFactory}
 % function. It is defined in:
 
+我们在 \step{1} 处看到这些 partial modules 是如何处理的。
+特别是，我们看到了新的 \texttt{getAngularClassTransformerFactory}
+函数的使用。
+它定义在：
+
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/c8a1a14b87e5907458e8e87021e47f9796cb3257/packages/compiler-cli/src/transformers/r3_transform.ts}
         {<ANGULAR-MASTER>/packages/compiler-cli/src/transformers/r3\_transform.ts}
 \end{itemize}
 
 % as follows:
+
+如下：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_15.tex}
 
@@ -148,11 +222,16 @@
 % \texttt{TransformerFactory}
 % are:
 
+两个重要的类型也在 r\_transform.ts 中定义，
+用以描述 \texttt{Transformer} 和 \texttt{TransformerFactory}：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_16.tex}
 
 % The
 % \texttt{PartialModuleMetadataTransformer}
 % function is defined in:
+
+\texttt{PartialModuleMetadataTransformer} 定义在：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/compiler-cli/src/transformers/r3_metadata_transform.ts}
@@ -161,11 +240,18 @@
 
 % as:
 
+如下：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_17.tex}
 
 % Now we are ready go back to Compiler-CLI’s
 % \url{program.ts}
 % file to look at:
+
+现在我们准备回过头去看一下 Compiler-CLI 的
+\href{https://github.com/angular/angular/blob/c8a1a14b87e5907458e8e87021e47f9796cb3257/packages/compiler-cli/src/transformers/program.ts}
+{program.ts}
+文件：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_18.tex}
 
@@ -184,6 +270,10 @@
 % says what needs to be
 % emitted – if nothing, then we return immediately:
 
+这需要一系列输入参数（注意 \texttt{emitFlags} \step{1} 和 \texttt{emitCallback} \step{2}），
+然后返回 \texttt{ts.EmitResult} \step{3} 的实例。
+\texttt{emitFlags} 说明需要 emitted 什么 —— 如果没有，那么我们立即返回：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_19.tex}
 
 % The partial modules are processed with this important call to
@@ -191,11 +281,16 @@
 % in Angular’s Compiler package (we will examine this in detail
 % shortly):
 
+partial modules 将被 Angular 编译器包中的 \texttt{emitAllPartialModules} 的这个重要调用进行处理
+（我们将很快对此进行详细研究）：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_20.tex}
 
 % The
 % \texttt{this.analyzedModules}
 % getter is defined as:
+
+\texttt{this.analyzedModules} getter 定义如下:
 
 \input{../output/14_render_ivy_in_angular/code/14_3_21.tex}
 
@@ -205,6 +300,9 @@
 % 1
 % : this is the TypeScript non-null assertion
 % operator, a new language feature explained as:
+
+注意返回位置 \step{1} 处的 !：这是 TypeScript 非空断言运算符，
+这是一个新特性，解释如下：
 
 % \emph{“A new ! post-fix expression operator may be used to assert that its operand}
 % \emph{is non-null and non-undefined in contexts where the type checker is unable}
@@ -216,6 +314,8 @@
 % The
 % \texttt{\_analyzedModules}
 % field is initialized earlier as:
+
+\texttt{\_AnalyzedModules} 字段之前初始化为：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_22.tex}
 
@@ -229,9 +329,14 @@
 % \texttt{emitOnlyDtsFiles}
 % consts are set up:
 
+回到我们对 \texttt{\_emitRender3} 的讨论 —— 在调用 \texttt{this.compiler.emitAllPartialModules} 以 emit 模块之后，
+设置了 \texttt{writeTSFile} 和 \texttt{emitOnlyDtsFiles} 常量：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_23.tex}
 
 % Then the custom transformers are configured (note the partial modules parameter):
+
+然后配置自定义转换器（请注意 partial modules 参数）：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_24.tex}
 
@@ -241,6 +346,8 @@
 % \texttt{customTransformers}
 % in there) and
 % then returned:
+
+最后，\texttt{emitResult} 像如下这样设置（注意那里的 \texttt{customTransformers}）然后返回：
 
 \input{../output/14_render_ivy_in_angular/code/14_3_25.tex}
 
@@ -254,6 +361,12 @@
 % . The latter is a much larger function compared to
 % \texttt{\_emitRender3:}
 
+我们应该在
+\href{https://github.com/angular/angular/blob/c8a1a14b87e5907458e8e87021e47f9796cb3257/packages/compiler-cli/src/transformers/program.ts}
+{program.ts}
+中简要提及 \texttt{\_emitRender3} 和 \texttt{\_emitRender2} 之间的区别。
+与 \texttt{\_emitRender3} 相比，后者是一个更大的函数：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_26.tex}
 
 % It also used a different helper function,
@@ -262,10 +375,16 @@
 % call into Angular’s Compiler package. So importantly we have two separate call paths
 % into the Angular Compiler package depending on which renderer we are using:
 
+它还使用了一个不同的辅助函数 \texttt{generateFilesForEmit} 来对 Angular Compiler 进行不同的调用。
+所以重要的是，根据我们使用的渲染引擎，我们有两个单独的调用路径进入 Angular Compiler 包：
+
 \input{../output/14_render_ivy_in_angular/code/14_3_27.tex}
 
 % The ivy-ngcc tool called here is the Angular Compatibility Compiler from Complier-CLI
 % which is described here:
+
+此处调用的 ivy-ngcc 工具是来自 Complier-CLI 的 Angular Compatibility Compiler\footnote{译者注：简称 ngcc}，
+其描述在：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/tree/master/packages/compiler-cli/src/ngcc}
@@ -279,10 +398,21 @@
 % \emph{conversion will allow such "legacy" packages to be used by the Ivy}
 % \emph{rendering engine.}
 
+如下：
+
+\begin{quote}
+  此编译器将使用 ngc 编译的 node\_modules 转换为使用 ngtsc 编译的 node\_modules。
+  此转换将允许 Ivy 渲染引擎使用此类 “遗留” 包。
+\end{quote}
+
 % The is a mention of ngcc here:
+
+这里提到了 ngcc：
 
 \begin{itemize}
   \item \url{https://next.angular.io/guide/ivy#ngcc}
 \end{itemize}
 
 % When exploring Compiler-CLI soon, we will look at ngcc.
+
+在后面探索 Compiler-Cli 时，我们会看看 ngcc。

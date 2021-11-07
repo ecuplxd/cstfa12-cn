@@ -1,4 +1,5 @@
-\section{Preliminaries – Paths and names}
+% \section{Preliminaries – Paths and names}
+\section{前置 - 路径和名称}
 
 % This document is a guided tour of the new “Ivy” rendering functionality within the
 % modern Angular source tree. We mostly look at the main Angular repository (paths
@@ -6,6 +7,13 @@
 % Angular CLI repository (paths within which we prefix with ANGULAR-CLI-MASTER).
 % You may wish to clone these repositories to your local machine or you may wish to
 % refer to them on Github. If the latter, you should expand these placeholders to:
+
+本章探讨现代 Angular 源码中新的渲染引擎 —— “Ivy”。
+我们查看了主要的 Angular 仓库（以 ANGULAR-MASTER 为前缀的路径），
+并且还讨论了 Angular CLI 仓库（以 ANGULAR-CLI-MASTER 为前缀的路径）。
+你可能希望将这些仓库克隆到您的本地机器上，
+或者你可能希望在 Github 上参考它们。
+如果是后者，你应该将这些占位符替换为：
 
 \begin{itemize}
   \item ANGULAR-MASTER - https://github.com/angular/angular
@@ -20,6 +28,13 @@
 % added via Angular CLI’s
 % \texttt{ng new}
 % command, as described here:
+
+我们更倾向于使用名称 “Render3”（而不是带空格的 “Render 3”），
+因为它有助于 Google 搜索等。
+它的代号是“Ivy”，
+我们将看到它在代码中的地方使用，
+并带有用于 Compiler-CLI 的新 \texttt{"enableIvy"} 选项，
+可以通过 Angular CLI 的 \texttt{"ng new"} 命令添加，如下所述：
 
 \begin{itemize}
   \item \url{https://next.angular.io/guide/ivy}

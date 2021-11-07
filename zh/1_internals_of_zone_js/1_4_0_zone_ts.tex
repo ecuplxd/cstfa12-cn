@@ -105,10 +105,11 @@ zone.ts 的前 600 行代码是注释良好的 Zone.js API 定义，最后会导
 % .
 
 这里有趣的活动是设置 \texttt{invoke} 函数。
-它递增 \texttt{\_numberOfNestedTaskFrames} 计数器，调用 \texttt{zone.runTask()}，
+它递增 \texttt{\_numberOfNestedTaskFrames} 计数器，
+调用 \texttt{zone.runTask()}，
 并在 \texttt{finally} 块中检查 \texttt{\_numberOfNestedTaskFrames} 是否为 1，
 如果是，则调用独立函数 \texttt{drainMicroTaskQueue()}，
-然后递减 \texttt{\_numberOfNestedTaskFrames} 计数器。
+然后递减 \texttt{\_numberOfNestedTaskFrames}。
 
 \input{../output/1_internals_of_zone_js/code/1_4_0_5.tex}
 

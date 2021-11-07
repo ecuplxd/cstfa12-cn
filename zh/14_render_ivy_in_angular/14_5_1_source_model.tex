@@ -1,6 +1,9 @@
-\subsection{Source Model}
+% \subsection{Source Model}
+\subsection{目录结构}
 
 % The source tree for the Render3 feature directly contains these source files:
+
+Render3 功能的源码树直接包含这些源文件：
 
 \begin{itemize}
   \item assert.ts
@@ -22,12 +25,16 @@
 
 % and these documents:
 
+以及这些文档：
+
 \begin{itemize}
   \item perf\_notes.md
   \item TREE\_SHAKING.md
 \end{itemize}
 
 % It also has one sub-directory, interfaces, which contains these files:
+
+一个 interfaces 子目录，包含这些文件：
 
 \begin{itemize}
   \item container.ts
@@ -48,5 +55,14 @@
 
 % In some pieces of Render3 code, we see use of the ‘L’ and ‘R’ prefixes. This is
 % explained in a comment in the source:
+
+在某些 Render3 代码中，我们看到使用了“L”和“R”前缀。
+源码中进行了注释：
+
+% \begin{quote}
+%  “L” 代表 “Logical” 以区分 `RNodes`（实际渲染的 DOM 节点）和我们对 DOM 节点的逻辑表示，`LNodes`。
+% \href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/node.ts}
+%  {<ANGULAR-MASTER>/packages/core/src/render3/interface/node.ts}
+% \end{quote}
 
 \input{../output/14_render_ivy_in_angular/code/14_5_1_0.tex}

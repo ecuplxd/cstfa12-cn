@@ -1,14 +1,24 @@
-\section{Overview}
+% \section{Overview}
+\section{概览}
 
 % Rendering in Angular is undergoing further evolution. It seems it was not too long ago
 % that Angular 2’s original Render architecture evolved to Render2, and now along
 % comes the very new Render3, quite a different approach to a view engine.
+
+Angular 的渲染正在进行进一步的进化。
+似乎还不久前 Angular2 的原始渲染架构演变为 Render2，
+现在是新的 Render3，一种完全不同的视图引擎方法。
 
 % The main change can be summed up with just this one function
 % (from
 % \href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/renderer.ts}
 % {<ANGULAR-MASTER>/packages/core/src/render3/interfaces/renderer.ts}
 % ):
+
+主要变化可以用一个函数来总结
+（来自
+\href{https://github.com/angular/angular/blob/master/packages/core/src/render3/interfaces/renderer.ts}
+{<ANGULAR-MASTER>/packages/core/src/render3/interfaces/renderer.ts}）:
 
 \input{../output/14_render_ivy_in_angular/code/14_1_0.tex}
 
@@ -32,6 +42,18 @@
 % \texttt{document}
 % object will need to be provided.
 
+默认情况下，新渲染引擎与标准 DOM 中的 document 对象兼容。
+其实，最好不要只说“兼容”，而要说“是”。
+当在浏览器 UI 线程中运行时，DOM 可用，然后是浏览器的原生 document 对象
+（由 Web 浏览器本身提供，而不是 Angular）
+真的是渲染器——它直接用于渲染内容。
+从字面上看，应用的执行速度不会比这更快。
+无论你使用哪种框架以及它如何构建其渲染管道，最终都必须调用真实 DOM 中的这个 document 对象。
+那么为什么不在支持它的场景中直接调用它（即意味着在浏览器 UI 线程内）？
+这正是 Ivy 在可能的情况下所做的。
+对于其他渲染场景（Web Worker、服务器或更专业的，例如 WebRTC），
+则需要提供类似于 document 对象的内容。
+
 % For readers coming from a C++, C\#, Java or similar background, it is very important
 % to understand that TypeScript (and JavaScript) uses
 % \url{structuralsubtyping}
@@ -53,10 +75,23 @@
 % needs (which it does, as we shall soon
 % discover).
 
+对于来自 C++、C\#、Java 或类似背景的读者来说，
+理解 TypeScript（和 JavaScript）使用
+\href{https://www.typescriptlang.org/docs/handbook/interfaces.html}{结构子类型}
+（也被亲切地称为“鸭子类型”）而不是那些使用的名义类型（命名类型）的其它语言非常重要。
+在 TypeScript 中，可以使用实现另一种类型字段的类型来代替它 —— 没有必要实现公共接口或具有公共父类。
+因此，标准 DOM 中的 document 对象没有实现 Angular 的 Render3，
+但在函数中使用以返回这种类型（参见上面的 \step{1}）这一事实不是问题，
+只要它实现了 Render3 所需要的字段（它确实需要，我们很快就会发现）。
+
 % Now we will explore in more depth what is happening when we use
 % \texttt{enableIvy}
 % with
 % Angular CLI and how the main Angular project delivers Render3 functionality. We will
 % see three of its packages are involved – Compiler-CLI, Compiler and Core.
+
+现在我们将更深入地探索当我们将 \texttt{"enableIvy"} 与 Angular CLI 结合使用时会发生什么，
+以及主要的 Angular 项目如何提供 Render3 功能。
+我们将看到涉及到它的三个包 —— Compiler-CLI、Compiler 和 Core。
 
 \input{14_render_ivy_in_angular/14_1_0_public_documentation.tex}
