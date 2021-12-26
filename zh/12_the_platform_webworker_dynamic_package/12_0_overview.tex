@@ -1,4 +1,5 @@
-\section{Overview}
+% \section{Overview}
+\section{概览}
 
 % Platform-WebWorkers-Dynamic is the smallest of all the Angular packages. It define
 % one const,
@@ -7,9 +8,18 @@
 % \texttt{createPlatformFactory()}
 % .
 
+Platform-WebWorkers-Dynamic 是所有 Angular 包中最小的一个。
+它定义了一个常量，\texttt{platformWorkerAppDynamic}，
+这是对 \texttt{createPlatformFactory()} 的调用。
+
 % The reason to manage this as a separate package is this one line from package.json:
+
+将它作为一个单独的包管理的原因是 package.json 中的这一行：
 
 \input{../output/12_the_platform_webworker_dynamic_package/code/12_0_0.tex}
 
 % It brings in the runtime compiler, which is quite large. We wish to avoid this if it not
 % used (it is not needed in the non-dynamic packages, which use the offline compiler).
+
+它引入了相当大的运行时编译器。
+如果不使用它，我们希望避免这种情况（在使用离线编译器的非动态包中不需要它）。

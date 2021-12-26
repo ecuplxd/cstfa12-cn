@@ -1,22 +1,40 @@
+% \section{Platform-Server API}
 \section{Platform-Server API}
 
 % Its index.ts is:
+
+index.ts 如下：
 
 \input{../output/10_the_platform_server_package/code/10_1_0.tex}
 
 % Its public\_api.ts file is:
 
+它的 public\_api.ts 文件如下：
+
 \input{../output/10_the_platform_server_package/code/10_1_1.tex}
 
 % Its src/platfrom-server.ts file (that’s a hyphen rather than an underscore) is:
+
+它的 src/platfrom-server.ts 文件（这是一个连字符而不是下划线）如下：
 
 \input{../output/10_the_platform_server_package/code/10_1_2.tex}
 
 % The main src directory for Platform-Server also contains this private\_export.ts file:
 
+Platform-Server 主要的 src 目录也包含这个 private\_export.ts 文件：
+
 \input{../output/10_the_platform_server_package/code/10_1_3.tex}
 
 % The exported API of the Platform-Server package can be represented as:
+
+Platform-Server 包的导出 API 表示\fref{fig:platform_server_public_api}：
+
+\begin{figure}[!hbt]
+  \centering
+  \caption{Platform-Server Public API}
+  \includegraphics[width=0.75\linewidth]{10_the_platform_server_package/platform_server_public_api}
+  \label{fig:platform_server_public_api}
+\end{figure}
 
 % \texttt{ServerModule}
 % represents the
@@ -30,3 +48,8 @@
 % to the Core Module’s
 % \texttt{createPlatformFactory()}
 % .
+
+\texttt{ServerModule} 代表这个模块的 \texttt{NgModule}。
+\texttt{platformServer()} 使用离线编译器。
+\texttt{plaformDynamicServer()} 使用运行时编译器。
+两者都是对核心模块的 \texttt{createPlatformFactory()} 的调用。

@@ -1,12 +1,18 @@
-\section{Source Tree Layout}
+% \section{Source Tree Layout}
+\section{源码结构}
 
 % The source tree for the Platform-WebWorker-Dynamic package contains this directory:
+
+Platform-WebWorker-Dynamic 包源码树包含如下目录：
 
 \begin{itemize}
   \item src
 \end{itemize}
 
 % Currently there are no test nor testing sub-directories. It also has these files:
+
+当前，不包含测试或者测试子目录。
+它还包含了如下这些文件：
 
 \begin{itemize}
   \item index.ts
@@ -18,14 +24,19 @@
 
 % The index.ts file is simply:
 
+index.ts 文件比较简单：
+
 \input{../output/12_the_platform_webworker_dynamic_package/code/12_2_0.tex}
 
 % The public\_api.ts file is:
-% @Angular/Platform-WebWorker-Dynamic API
+
+public\_api.ts 文件如下：
 
 \input{../output/12_the_platform_webworker_dynamic_package/code/12_2_1.tex}
 
 % The src/platform-webworker-dynamic.ts file is:
+
+src/platform-webworker-dynamic.ts 文件如下：
 
 \input{../output/12_the_platform_webworker_dynamic_package/code/12_2_2.tex}
 
@@ -35,3 +46,5 @@
 % \texttt{platformCoreDynamic}
 % are imported from
 % the platform-browser-dynamic package.
+
+请注意，\texttt{ResourceLoaderImpl} 和 \texttt{platformCoreDynamic} 都是从 platform-browser-dynamic 包中导入的。

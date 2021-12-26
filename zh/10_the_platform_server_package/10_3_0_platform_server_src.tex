@@ -1,6 +1,9 @@
+% \subsection{platform-server/src}
 \subsection{platform-server/src}
 
 % These source files are present:
+
+这些源文件存在：
 
 \begin{itemize}
   \item domino\_adapter.ts
@@ -19,7 +22,11 @@
 
 % There are no sub-directories beneath src.
 
+src 下没有子目录。
+
 % The server.ts file declares this const:
+
+server.ts 文件声明了这个常量：
 
 \input{../output/10_the_platform_server_package/code/10_3_0_0.tex}
 
@@ -30,6 +37,9 @@
 % create server
 % platforms that use the offline template compiler and the runtime template compiler
 % respectively.
+
+工厂函数 \texttt{platformServer} 和 \texttt{platformDynamicServer}
+分别创建使用离线模板编译器和运行时模板编译器的服务器平台。
 
 % It adds two additional provider configurations. Firstly,
 % \texttt{PLATFORM\_INITIALIZER}
@@ -43,6 +53,11 @@
 % \texttt{DominoAdapter}
 % :
 
+它添加了两个额外的 provider 配置。
+首先是 \texttt{PLATFORM\_INITIALIZER}，它是一个在引导前调用的初始化函数。
+在这里，我们看到它在调用本地函数 \texttt{initDominoAdapter()} 中初始化 domino 适配器，
+该函数为 \texttt{DominoAdapter} 调用 \texttt{makeCurrent()}：
+
 \input{../output/10_the_platform_server_package/code/10_3_0_1.tex}
 
 % Secondly, it adds
@@ -52,15 +67,23 @@
 % \texttt{ServerPlatformLocation}
 % , which mostly just throws exceptions:
 
+其次，它添加了 \texttt{PlatformLocation}，
+应用使用它与 location（URL）信息进行交互。
+它被设置为 location.ts 中定义的一个类，\texttt{ServerPlatformLocation}，它主要只是抛出异常：
+
 \input{../output/10_the_platform_server_package/code/10_3_0_2.tex}
 
 % server.ts declares two exported functions:
+
+server.ts 声明了两个导出函数：
 
 \input{../output/10_the_platform_server_package/code/10_3_0_3.tex}
 
 % We saw earlier that
 % \texttt{platformCore}
 % is defined in:
+
+我们之前看到 \texttt{platformCore} 定义在：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/platform_core_providers.ts}
@@ -69,6 +92,8 @@
 
 % as:
 
+如下：
+
 \input{../output/10_the_platform_server_package/code/10_3_0_4.tex}
 
 % \texttt{platformCoreDynamic}
@@ -76,17 +101,23 @@
 % \texttt{platformCore}
 % and is defined in:
 
+\texttt{platformCoreDynamic} 向 platformCore 添加了额外的 provider 配置（用于动态编译器）并定义在：
+
 \begin{itemize}
-  \item \href{fix: href loss url}
-        {fix: href loss url}
+  \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser-dynamic/src/platform_core_dynamic.ts}
+        {<ANGULAR-MASTER>/packages/platform-browser-dynamic/src/platfrom-browser-dynamic.ts}
 \end{itemize}
 
 % as:
+
+如下：
 
 \input{../output/10_the_platform_server_package/code/10_3_0_5.tex}
 
 % \texttt{createPlatformFactory()}
 % is defined in:
+
+\texttt{createPlatformFactory()} 定义在：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/core/src/application_ref.ts}
@@ -98,22 +129,37 @@
 % with the supplied parameters, resulting in a new
 % platform being constructed.
 
+它使用给定的参数调用 Core 的 \texttt{createPlatform()}，从而构建一个新平台。
+
 % The remain part of Platform-Server’s server.ts file to discuss is the definition of the
 % \texttt{NgModule}
 % called
 % \texttt{ServerModule}
 % :
 
+Platform-Server 的 server.ts 文件的其余部分要讨论的是名为
+\texttt{ServerModule} 的 \texttt{NgModule} 的定义：
+
 \input{../output/10_the_platform_server_package/code/10_3_0_6.tex}
 
 % The domino\_adapter.ts file create a DOM adapter for Domino. The Domino library is a
 % DOM engine for HTML5 that runs in Node. Its project page is:
+
+domino\_adapter.ts 文件为 Domino 创建一个 DOM 适配器。
+Domino 库是在 Node.js 中运行的 HTML5 DOM 引擎。
+它的项目主页是：
 
 \begin{itemize}
   \item \url{https://github.com/fgnass/domino}
 \end{itemize}
 
 % and states:
+
+并指出：
+
+\begin{quote}
+  \emph{顾名思义，domino 的目标是在 Node.js 中提供一个 DOM。}
+\end{quote}
 
 % \emph{“As the name might suggest, domino's goal is to provide a DOM in Node.”}
 
@@ -125,13 +171,21 @@
 % suitable for use in
 % server environments.
 
+domino\_adapter.ts 文件提供了一个适配器类 \texttt{DominoDomAdapter}，
+它基于 Domino 的序列化功能，
+它实现了一个适用于服务器环境的 \texttt{DomAdapter}。
+
 % The domino\_adapter.ts file has these functions to parse and serialze a document:
+
+domino adapter.ts 文件具有以下功能来解析和序列化文档：
 
 \input{../output/10_the_platform_server_package/code/10_3_0_7.tex}
 
 % We see
 % \texttt{serializeDocument}
 % being called from:
+
+我们看到 \texttt{serializeDocument} 被调用：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-server/src/platform_state.ts}
@@ -140,10 +194,14 @@
 
 % as:
 
+如下：
+
 \input{../output/10_the_platform_server_package/code/10_3_0_8.tex}
 
 % \texttt{BrowserDomAdapter}
 % is defined in:
+
+\texttt{BrowserDomAdapter} 定义在：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser/src/browser/browser_adapter.ts}
@@ -155,6 +213,8 @@
 % \texttt{BrowserDomAdapter}
 % :
 
+\texttt{DominoAdapter} 只是简单的继承 \texttt{BrowserDomAdapter}：
+
 \input{../output/10_the_platform_server_package/code/10_3_0_9.tex}
 
 % Its static
@@ -164,11 +224,17 @@
 % \texttt{setRootDomAdapter()}
 % :
 
+它的静态 \texttt{makeCurrent()} 方法，
+我们看到 Universal Angular 用于服务器端渲染，
+初始化这三个变量，然后调用 \texttt{setRootDomAdapter()}：
+
 \input{../output/10_the_platform_server_package/code/10_3_0_10.tex}
 
 % Recall that
 % \texttt{setRootDomAdapter()}
 % is defined in:
+
+回想一下 \texttt{setRootDomAdapter()} 定义在：
 
 \begin{itemize}
   \item \href{https://github.com/angular/angular/blob/master/packages/platform-browser/src/dom/dom_adapter.ts}
@@ -176,6 +242,8 @@
 \end{itemize}
 
 % as:
+
+如下：
 
 \input{../output/10_the_platform_server_package/code/10_3_0_11.tex}
 
@@ -187,7 +255,13 @@
 % \texttt{DominoAdapter}
 % gets wired
 % into the DOM renderer.
-% Many of the  DOM adapter methods throw exceptions as they do not make sense
+
+并且 \texttt{getDOM()} 被 \texttt{DOMRenderer} 使用。
+因此我们的 \texttt{DominoAdapter} 被连接到 DOM 渲染器中。
+
+% Many of the DOM adapter methods throw exceptions as they do not make sense
 % server-side:
+
+许多 DOM 适配器方法抛出异常，因为它们在服务器端没有意义：
 
 \input{../output/10_the_platform_server_package/code/10_3_0_12.tex}

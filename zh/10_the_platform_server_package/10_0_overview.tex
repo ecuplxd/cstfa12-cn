@@ -1,6 +1,9 @@
-\section{Overview}
+% \section{Overview}
+\section{概览}
 
 % Platform-Server represents a platform when the application is running on a server.
+
+Platform-Server 表示应用在服务器上运行时的平台。
 
 % Most of the time Angular applications run in the browser and use either
 % Platform-Browser (with the offline template compiler) or Platform-Browser-Dynamic
@@ -10,6 +13,15 @@
 % initial display of content to users for some types of applications; and also ease
 % development with backend databases that might not be exposed via REST API to
 % browser code). Platform-Server is used by Angular Universal as its platform module.
+
+大多数情况下，
+Angular 应用在浏览器中运行并使用 Platform-Browser
+（使用离线模板编译器）或 Platform-Browser-Dynamic（使用运行时模板编译器）。
+在服务器上运行 Angular 应用是一种更专业的部署。
+它可能对搜索引擎优化和预渲染输出感兴趣，这些输出后来下载到浏览器
+（这可以加快向用户显示某些类型应用的内容的速度；
+还可以简化后端数据库的开发，这些数据库可能不是通过 REST API 暴露给浏览器代码）。
+Angular Universal 使用 Platform-Server 作为其平台模块。
 
 % When considering Platform-Server, there are two questions the curious software
 % engineer might ponder. Firstly, we wonder, if for the browser there are dynamic and
@@ -21,8 +33,22 @@
 % server platforms (one that uses the offline template compiler, the other - “dynamic” -
 % that uses the runtime template compiler) in the same module simplifies matters.
 
+在考虑 Platform-Server 时，
+好奇的软件工程师可能会思考两个问题。
+首先，我们想知道，如果浏览器有平台的动态和非动态版本，为什么服务器没有？
+这个问题的答案是，对于浏览器来说，希望支持网络连接较差的低端设备，
+因此减轻浏览器的负担很重要（因此仅使用离线模板编译器）；
+但是假设服务器有足够的磁盘空间和 RAM 以及少量额外的代码不是问题，
+所以捆绑两种服务器平台（一个使用离线模板编译器，另一个 - “动态” - 使用运行时模板编译器）
+在同一模块中简化了事情。
+
 % The second question is how rendering works on the server (where there is no DOM)?
 % The answer is the rendered output is written via the Angular renderer API to an HTML
 % file, which then can be downloaded to a browser or made available to a search engine
 % - we need to explore how this rendering works (but for the curious, a library called
 % Domino is used which provides a DOM for node apps).
+
+第二个问题是渲染如何在服务器（没有 DOM）上工作？
+答案是渲染输出通过 Angular 渲染器 API 写入 HTML 文件，
+然后可以将其下载到浏览器或提供给搜索引擎 - 我们需要探索这种渲染是如何工作的
+（但对于好奇的人，一个库 使用称为 Domino，它为节点应用程序提供 DOM）。
